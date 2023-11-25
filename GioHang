@@ -1,0 +1,65 @@
+
+package bookshops;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class GioHang {
+    private ArrayList<ChiTietGioHang> dsSach = new ArrayList<>();
+    private String maKhachHang;
+    private Double tongTien;
+    
+    public GioHang() {
+    }
+
+    public ArrayList<ChiTietGioHang> getDsSach() {
+        return dsSach;
+    }
+
+    public void setDsSach(ArrayList<ChiTietGioHang> dsSach) {
+        this.dsSach = dsSach;
+    }
+
+    public String getMaKhachHang() {
+        return maKhachHang;
+    }
+
+    public void setMaKhachHang(String maKhachHang) {
+        this.maKhachHang = maKhachHang;
+    }
+
+    public Double getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(Double tongTien) {
+        this.tongTien = tongTien;
+    }
+    
+    public Double tinhTongTien() {
+        for (ChiTietGioHang giohang : dsSach) {
+            tongTien +=  giohang.tinhThanhTien();
+        }
+        return tongTien;
+    }
+    
+    public String toString() {
+       StringBuilder sb = new StringBuilder();
+       sb.append("\n");
+       for (ChiTietGioHang giohang : dsSach) {
+           sb.append(giohang.toString()).append("\n");
+       }
+       sb.append("Tong tien: ").append(this.getTongTien()).append("\n");
+       return sb.toString();
+    }
+    
+    public void xemGioHang() {
+        
+    }
+    public static void main(String [] args){
+        GioHang giohang = new GioHang();
+        Scanner input = new Scanner(System.in);
+    }
+}
+    
+ 
