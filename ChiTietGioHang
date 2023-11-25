@@ -1,0 +1,54 @@
+
+package bookstore;
+
+public class ChiTietGioHang {
+
+    private Sach sach;
+    private int soLuong;
+
+    public ChiTietGioHang(Sach sach, int soLuong) {
+        this.sach = sach;
+        this.soLuong = soLuong;
+    }
+
+    public ChiTietGioHang() {
+    }
+    
+    public Sach getSach() {
+        return sach;
+    }
+
+    public void setSach(Sach sach) {
+        this.sach = sach;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+    
+    public Double tinhThanhTien() {
+        return this.getSoLuong()* this.getSach().getDonGia();
+    }
+    
+//    public void ktraSoLuongTonKho() {
+//        
+//   }
+    
+    public String toString() {
+       StringBuilder sb = new StringBuilder();
+       sb.append("\n");
+       sb.append("Ten sach: ").append(this.getSach().getTenSach()).append("\n");
+       sb.append("Ma sach: ").append(this.getSach().getMaSach()).append("\n");
+       sb.append("Loai sach: ").append(this.getSach().getLoaiSach()).append("\n");
+       sb.append("Don gia: ").append(this.getSach().getDonGia()).append("\n");
+       sb.append("So luong: ").append(this.getSoLuong()).append("\n");
+       return sb.toString();
+   }
+    
+    
+
+}
