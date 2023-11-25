@@ -1,5 +1,5 @@
 
-package bookshops;
+package bookstore;
 import java.util.ArrayList;
 import java.util.Scanner;
 
