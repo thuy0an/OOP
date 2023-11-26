@@ -84,7 +84,7 @@ import java.util.Scanner;
                 }
             }while(!validSize);
         }
-        public void checkLoaiBia(){
+       public void checkLoaiBia(){
             String loaiBia = this.loaiBia;
             boolean validBia = false;
             do{
@@ -92,6 +92,9 @@ import java.util.Scanner;
                     System.out.println("Loai bia khong hop le, moi ban nhap lai.....");
                     this.loaiBia=nhapttsach.nextLine();
                     loaiBia=this.loaiBia;
+                }
+                else{
+                    validBia=true;
                 }
             }while(!validBia);
         }
