@@ -1,0 +1,189 @@
+
+package bookStore;
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class CT_DonHang {
+    private String maDonHang;
+    private String maKhachHang;
+    private DiaChi diaChi;
+    private String email;
+    private Ngaythangnam ngayDH;
+    private String ptThanhToan;
+    private int trangThai; //0: chưa xác nhận đặt hàng; 1: xác nhận đặt hàng
+    private Double tongTien;
+    private static int soLuong_DonHang = 0;
+    private HashSet<CT_GioHang> dsSach_DonHang = new HashSet<>();
+    Scanner scan = new Scanner(System.in);
+    
+    public CT_DonHang() {
+    }
+   
+    public CT_DonHang(String maDonHang, String maKhachHang, DiaChi diaChi, String email, Ngaythangnam ngayDH, String ptThanhToan, int trangThai, Double tongTien) {
+        this.maDonHang = maDonHang;
+        this.maKhachHang = maKhachHang;
+        this.diaChi = diaChi;
+        this.email = email;
+        this.ngayDH = ngayDH;
+        this.ptThanhToan = ptThanhToan;
+        this.trangThai = trangThai;
+        this.tongTien = tongTien;
+    }
+
+    public String taoMaDH() {
+        String maDonHang = "DH" + this.maKhachHang + (++soLuong_DonHang);
+        return maDonHang;
+    }
+    
+    public String getMaDonHang() {
+        return maDonHang;
+    }
+
+    public void setMaDonHang(String maDonHang) {
+        this.maDonHang = maDonHang;
+    }
+
+    public DiaChi getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(DiaChi diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Ngaythangnam getNgayDH() {
+        return ngayDH;
+    }
+
+    public void setNgayDH(Ngaythangnam ngayDH) {
+        this.ngayDH = ngayDH;
+    }
+
+    public String getPtThanhToan() {
+        return ptThanhToan;
+    }
+
+    public void setPtThanhToan(String ptThanhToan) {
+        this.ptThanhToan = ptThanhToan;
+    }
+
+    public Double getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(Double tongTien) {
+        this.tongTien = tongTien;
+    }
+    
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public String getMaKhachHang() {
+        return maKhachHang;
+    }
+
+    public void setMaKhachHang(String maKhachHang) {
+        this.maKhachHang = maKhachHang;
+    }
+      
+    public HashSet<CT_GioHang> getDsSach_DonHang() {
+        return dsSach_DonHang;
+    }
+
+    public void setDsSach_DonHang(HashSet<CT_GioHang> dsSach_DonHang) {
+        this.dsSach_DonHang = dsSach_DonHang;
+    }
+
+    public Double tinhTongTien() {
+        for (CT_GioHang sanpham : dsSach_DonHang) {
+        tongTien += sanpham.getThanhTien();
+        }
+        return tongTien;
+    }
+    
+    public String hienThiSanPham() {
+        String sanpham = null;
+        for (CT_GioHang sp : dsSach_DonHang){
+            sanpham += sp.getSach().getTenSach() + " x" + sp.getSoLuong() + "; ";
+        }
+        return sanpham;
+    }
+    
+//    public double giamGia() {
+//        if (this.tinhTongTien() >= 500000) {
+//            return (10/100)*this.tinhTongTien();
+//        } else { 
+//            if (this.tinhTongTien() >= 300000) {
+//                return (5/100)*this.tinhTongTien();
+//            } else return 0;
+//        }
+//    }
+//        
+//    public double giaSauKhiGiam() {
+//        this.tongTien = this.tinhTongTien() - this.giamGia();
+//        return this.tongTien;
+//    }
+    
+    
+    public void setInfo() {
+        taoMaDH();
+        this.setTongTien(tinhTongTien());
+        System.out.println("Chọn địa chỉ: ");
+        DiaChi diachi = new DiaChi();
+        diachi.setInfo();
+        this.setDiaChi(diachi);
+        System.out.println("Nhập email: ");
+        this.setEmail(ktraEmail(scan.nextLine()));
+        System.out.println("Chọn phương thức thanh toán: ");
+        System.out.println("1. Tiền mặt");
+        System.out.println("2. Chuyển khoản");
+        //
+        this.setTrangThai(0);
+    }
+    
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+       sb.append("\n");
+       sb.append("Ma khach hang: ").append(this.getMaKhachHang()).append("\n");
+       sb.append("Ma don: ").append(this.getMaDonHang()).append("\n");
+       sb.append("Email: ").append(this.getEmail()).append("\n");
+       sb.append("Dia chi: ").append(this.getDiaChi()).append("\n");
+       sb.append("Ngay dat: ").append(this.getNgayDH().toString()).append("\n");
+       sb.append("San pham: ").append(this.hienThiSanPham()).append("\n");
+       sb.append("Tong tien: ").append(this.getTongTien()).append("\n");
+       sb.append("ptThanhToan: ").append(this).append("\n");
+       return sb.toString();   
+    }
+
+    private String ktraEmail(String email) {
+        email = this.email;
+        boolean validEmail =false;
+        do{
+            if(!email.matches("@\"^([\\w\\.\\-]+)@([\\w\\-]+)((\\.(\\w){2,3})+)$\"")||email.isEmpty()){
+                System.out.println("Email khong hop le. Moi ban nhap lai.....");
+                this.email = scan.nextLine();
+                email = this.email;
+            }
+            else{
+                validEmail = true;
+            }
+        }while(!validEmail);
+        return email;
+    }
+
+}
