@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import bookStore.KhachHang;
 
 
 public class GioHang {
@@ -18,8 +19,6 @@ public class GioHang {
     public void setDsGioHang(ArrayList<CT_GioHang> dsGioHang) {
         this.dsGioHang = dsGioHang;
     }
-
-
     
 //    public Double tinhTongTien() {
 //        for (CT_GioHang giohang : dsGioHang) {
@@ -66,50 +65,51 @@ public class GioHang {
                 sach.setLoaiSach(parts[3]);
                 giohang.setSoLuong(Integer.parseInt(parts[4]));
                 giohang.setThanhTien(Double.parseDouble(parts[5]));
-
                 dsGioHang.add(giohang);
             }
         } catch (FileNotFoundException e) {
-            System.err.println("Không tìm thấy file: " + e.getMessage());
+            System.out.println("Không tìm thấy file: " + e.getMessage());
         } catch (NumberFormatException e) {
-            System.err.println("Lỗi khi phân tích số nguyên: " + e.getMessage());
+            System.out.println("Lỗi khi phân tích số nguyên: " + e.getMessage());
         }
     }
     
-    public void xemGioHang() {
-
-}
-    
-    /*
-    public void ghiGioHangVaoFile(String tenFile) {  
-    try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(tenFile))) {
-        for (CT_GioHang giohang : dsSach) {
-        dos.writeUTF(this.getMaKhachHang());
-        dos.writeUTF(giohang.getSach().getMaSach());
-        dos.writeUTF(giohang.getSach().getTenSach());
-        dos.writeUTF(giohang.getSach().getLoaiSach());
-        dos.writeInt(giohang.getSoLuong());
-        dos.writeDouble(giohang.getThanhTien());
-        // Ghi ngày, tháng, năm dưới dạng các số nguyên
-//        if (this.ngayThanhlap != null) {
-//            dos.writeInt(this.ngayThanhlap.getNgay());
-//            dos.writeInt(this.ngayThanhlap.getThang());
-//            dos.writeInt(this.ngayThanhlap.getNam());
-//        } else {
-//            // Ghi giá trị mặc định nếu ngayThanhlap là null
-//            dos.writeInt(0); // Ngày mặc định
-//            dos.writeInt(0); // Tháng mặc định
-//            dos.writeInt(0); // Năm mặc định
-//        }
+    public void hienThiGioHang() {
+        for (CT_GioHang giohang : dsGioHang) {
+            System.out.println(giohang.toString());
         }
-        dos.flush();
-    } catch (IOException e) {
-        System.err.println("Có lỗi khi ghi vào file: " + e.getMessage());
     }
-}
+    
+    public static void xemGioHang() {
+        try (Scanner scanner = new Scanner("GioHang.data")) {
+            System.out.println("\n\n+-------------------------------------------------------------------------------+");
+            System.out.println("|                                 GIO HANG CUA TOI                                  |");
+            System.out.println("|___________________________________________________________________________________|");
+            System.out.printf("| %-20s| %-9s| %-10s| %-9s| %-8s| %\n", "Ten Sach", "Ma Sach", "Loai Sach", "So Luong", "Thanh Tien", "|");
+            System.out.println("+----------------------------+----------+--------------+----------+-----------------+");
 
-
-    */
+            while(scanner.hasNextLine()){ 
+                String line = scanner.nextLine();
+                String[] gioHang = line.split("#");
+                if(gioHang.length == 7){
+                    String maKhachHang = gioHang[0];
+                    String maSach = gioHang[1];
+                    String tenSach = gioHang[2];
+                    String loaiSach = gioHang[3];
+                    int soLuong = Integer.parseInt(gioHang[4]);
+                    double thanhTien = Double.parseDouble(gioHang[5]);
+                    if (timGioHangTheoMaKhachHang(maKhachHang)) {
+                        System.out.printf("| %-20s| %-9s| %-15s| %-9d| %-8f| %\n",tenSach, maSach, loaiSach, soLuong, thanhTien, "|");
+                    }
+                }
+            }
+        }
+    }
+    public static boolean timGioHangTheoMaKhachHang(String maKhachHang) {
+        ArrayList<KhachHang> dsKhachHang = new ArrayList<>();
+        for (KhachHang khachHang : dsKhachHang) {
+            return maKhachHang.equalsIgnoreCase(khachHang.getMaKH());
+    }
 
 }
     
