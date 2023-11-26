@@ -70,6 +70,31 @@ import java.util.Scanner;
                 }
             }while(!validHienCo);
         }
+       public void checkKichThuoc(){
+            String kichThuoc = this.kichThuoc;
+            boolean validSize = false;
+            do{
+                if(!kichThuoc.equalsIgnoreCase("A4")&&!kichThuoc.equalsIgnoreCase("A5")){
+                    System.out.println("Kich thuoc sach khong hop le, moi ban nhap lai.....");
+                    this.kichThuoc=nhapttsach.nextLine();
+                    kichThuoc=this.kichThuoc;
+                }
+                else{
+                    validSize = true;
+                }
+            }while(!validSize);
+        }
+        public void checkLoaiBia(){
+            String loaiBia = this.loaiBia;
+            boolean validBia = false;
+            do{
+                if(!loaiBia.toLowerCase().equalsIgnoreCase("Bia cung")&&!loaiBia.toLowerCase().equalsIgnoreCase("Bia mem")){
+                    System.out.println("Loai bia khong hop le, moi ban nhap lai.....");
+                    this.loaiBia=nhapttsach.nextLine();
+                    loaiBia=this.loaiBia;
+                }
+            }while(!validBia);
+        }
         public void nhapThongTinSachGiay(){
             // Call inherited methods to input common book information
             super.nhapThongTinSachChoNhanVien(); // Utilize the input method from the Sach class
@@ -78,10 +103,11 @@ import java.util.Scanner;
             // Input specific information for paper books
             System.out.println("Nhap kich thuoc sach: ");
             this.kichThuoc = nhapttSachGiay.nextLine();
+            checkKichThuoc();
             
             System.out.println("Nhap loai bia: ");
             this.loaiBia = nhapttSachGiay.nextLine();
-            
+            checkLoaiBia();
 //            System.out.println("Nhap so luong: ");
 //            this.hienCo = Integer.parseInt(nhapttSachGiay.nextLine());
             nhapVaCheckHienCo();
