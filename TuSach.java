@@ -65,42 +65,38 @@ public class TuSach {
     
     public void themSach() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Nhap so sach ban muon them: ");
-        int soLuongSach = Integer.parseInt(input.nextLine());
-        Sach sach = null;
-        for(int i=0;i<soLuongSach;i++){
+        String tiepTuc=null;
+        do{
+            Sach sach = null;
             System.out.println("Ban muon them loai sach nao?");
             System.out.println("1: Sach giay | 2: Sach mem");
             
             int choice = Integer.parseInt(input.nextLine());
             switch (choice) {
-                case 1:
-                    sach = new SachGiay();
-                    ((SachGiay) sach).nhapThongTinSachGiay();
-                    books.add(sach);
-                    soSach++;
-                    vietSachVaoFile(choice);
-                    break;
-                case 2:
-                    sach = new SachMem();
-                    ((SachMem) sach).nhapThongTinSachMem();
-                    books.add(sach);
-                    soSach++;
-                    vietSachVaoFile(choice);
-                    break;
-                default:
-                    System.out.println("Lua chon khong phu hop.....");
-                    i--; //Decrement i to repeat the current iteration and ask user to retype the choice
-                   break;
+            case 1:
+                sach = new SachGiay();
+                ((SachGiay) sach).nhapThongTinSachGiay();
+                books.add(sach);
+                soSach++;
+                vietSachVaoFile(choice);
+                break;
+            case 2:
+                sach = new SachMem();
+                ((SachMem) sach).nhapThongTinSachMem();
+                books.add(sach);
+                soSach++;
+                vietSachVaoFile(choice);
+                break;
+            default:
+                System.out.println("Lua chon khong phu hop.....");
+                break;
             }
-//            if(sach!=null){
-//                
-//                books.add(sach);
-//                soSach++;
-//                vietSachVaoFile(choice);
-//            }
-        }
+            System.out.println("Ban co muon tiep tuc them sach?");
+            System.out.println("Y/N");
+            tiepTuc=input.nextLine();
+        }while(!tiepTuc.equalsIgnoreCase("N"));  
     }
+    
     public void vietSachVaoFile(int choice) {
         String fileName = "Sach.dat";
         File file = new File(fileName);
@@ -136,7 +132,7 @@ public class TuSach {
                 sb.append(System.lineSeparator());
                 fileWriter.write(sb.toString());
             }
-
+            books.clear();
             fileWriter.flush();
             System.out.println("Viet sach vao file thanh cong.....");
         } catch (IOException e) {
