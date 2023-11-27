@@ -241,6 +241,7 @@ public class TaiKhoanKhachHang {
                 case 4:
                     break;
                 case 5:
+                    GioHang.xemGioHang();
                     break;
                 case 6:
                     break;
