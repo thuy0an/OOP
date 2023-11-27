@@ -6,7 +6,7 @@
 package BookStore;
 
 
-import java.util.InputMismatchException;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 /**
@@ -25,7 +25,6 @@ public class App {
     }
     
     public static void main(String[] args) {
-    TaiKhoanKhachHang display= new TaiKhoanKhachHang();
         int choice=0;
         do {
             Scanner input= new Scanner(System.in);
@@ -36,10 +35,10 @@ public class App {
                 switch(choice)
                 {
                     case 1:
-                        int check=display.kiemTraDangNhap();
+                        int check=TaiKhoanKhachHang.kiemTraDangNhap();
                         if ( check==1)
                         {
-                            display.giaodienKhachHang();
+                            TaiKhoanKhachHang.giaodienKhachHang();
 
                         }
                         break;
@@ -51,6 +50,13 @@ public class App {
                     case 3:
                         System.out.println("Đăng nhập thành công");
                         break;
+                    case 4:
+                        FileWriter userLogin= new FileWriter("userLogin.txt");
+                            userLogin.write("");
+                            userLogin.flush();
+                            break;
+                        
+                        
                 }
                 if ( choice < 1 || choice > 4)
                 System.out.println("\n--Vui lòng chọn đúng các thao tác đã hiển thị!!!--\n");

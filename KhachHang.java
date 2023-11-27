@@ -66,6 +66,18 @@ public class KhachHang {
     
     public KhachHang() {
     }
+
+    public KhachHang(String MaKH,String tenKH, String sdt, String email,String diachi) {
+        this.tenKH = tenKH;
+        this.sdt = sdt;
+        this.email = email;
+        this.MaKH = MaKH;
+        String dulieu[]=diachi.split("/");
+        this.diaChi.add( new DiaChi(dulieu[0],dulieu[1],dulieu[2],dulieu[3]));
+
+    }
+
+    
     
     public KhachHang(String tenKH, String sdt, String email, ArrayList<DonHang> donHang, ArrayList<DiaChi> diaChi, String MaKH) {
         this.tenKH = tenKH;
@@ -123,11 +135,15 @@ public class KhachHang {
         this.setSdt(ktraSdt(input.nextLine()));
         System.out.print("Nhập email: ");
         this.setEmail(input.nextLine());
-    //    DiaChi dchi= new DiaChi();
-    //    dchi.setInfo();
-    //    this.setDiachi(dchi);
+        DiaChi dchi= new DiaChi();
+        dchi.setInfo();
+        this.setDiachi(dchi);
         taoMaKH();
+        
+        
     }
+    
+    
     
     @Override
     public String toString()
@@ -139,14 +155,9 @@ public class KhachHang {
             + "1.Mã khách Hàng: " + this.getMaKH() +"\n"
             + "2.Họ tên: " + this.getTenKH() +"\n"
             + "3.Số điện thoại: " + this.getSdt() +"\n" 
-            + "4.Email: " + this.getEmail()+"\n";
-            //+ "5.Địa chỉ: " +this.getDiachi().toString() +"\n";
+            + "4.Email: " + this.getEmail()+"\n"
+            + "5.Địa chỉ: " +this.getDiachi().toString() +"\n";
         
-    }
-
-    public static void main(String[] args) {
-
-     
     }
     
 }

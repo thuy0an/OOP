@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -20,7 +22,6 @@ import java.util.Scanner;
 public class TaiKhoanKhachHang {
     private String username;
     private String userpassword;
-
     
     
     public TaiKhoanKhachHang() {
@@ -61,6 +62,9 @@ public class TaiKhoanKhachHang {
         {
             StringBuilder sb= new StringBuilder();
             sb.append(this.getUsername()).append("#").append(this.getUserpassword());
+            KhachHang demo= new KhachHang();
+            demo.setInfo();
+            sb.append("#").append(demo.getMaKH()).append(("#")).append(demo.getTenKH()).append(("#")).append(demo.getSdt()).append("#").append(demo.getEmail()).append("#").append(demo.getDiachi());
             sb.append(System.lineSeparator());
             fileWtr.write(sb.toString());
             fileWtr.flush();
@@ -100,6 +104,9 @@ public class TaiKhoanKhachHang {
                 if ( flag ==1)
                 {
                     System.out.println("Đăng nhập thành công !");
+                    FileWriter userlogin= new FileWriter("userLogin.txt",true);
+                    userlogin.write(username.trim() +"#"+userpass.trim() + System.lineSeparator());
+                    userlogin.flush();
                     tieptuc=0;
                 }
                 else 
@@ -122,9 +129,36 @@ public class TaiKhoanKhachHang {
             catch(NumberFormatException ei)
             {
                 System.out.println("\n--Vui lòng không nhập ký tự!!!--\n");
+            } catch (IOException ex) {
+                System.out.println("Khong tim thay file user.txt");
             }
         }while(tieptuc==1);
         return flag;
+    }
+   
+    private static String[] capNhatThongTin()
+    {
+        File file1= new File("user.txt");
+        File file2= new File("userLogin.txt");
+        try{
+            Scanner scan1= new Scanner(file1);
+            Scanner scan2= new Scanner(file2);
+            while ( scan1.hasNextLine())
+            {
+                String duLieu=scan1.nextLine();
+                String tkDangNhap=scan2.nextLine();
+                String thongTin[]=duLieu.split("#");
+                String thongtinTk[]=tkDangNhap.split("#");
+                if ( thongTin[0].equalsIgnoreCase(thongtinTk[0]) && thongTin[1].equalsIgnoreCase(thongtinTk[1]))
+                {
+                    return thongTin;
+                }
+            }
+            
+        } catch (FileNotFoundException ex) {
+           System.out.println("Không tìm thấy file !!!");
+        }
+        return null;
     }
     
     public void timKiem(){
@@ -159,10 +193,16 @@ public class TaiKhoanKhachHang {
         
     }
     
+    
+    
     public static void chucNangNguoiDung(){
         Scanner input= new Scanner(System.in);
-        KhachHang demo= new KhachHang();
-        int choice=9;
+        KhachHang demo = null;
+        File file= new File("user.txt");
+        String thongtin[]=TaiKhoanKhachHang.capNhatThongTin();
+        if ( thongtin != null)
+            demo= new KhachHang(thongtin[2],thongtin[3],thongtin[4],thongtin[5],thongtin[6]);
+        int choice;
         do {
             System.out.println("----------Chức năng người dùng---------");
             System.out.println("1. Xem thông tin cá nhân");
@@ -187,6 +227,7 @@ public class TaiKhoanKhachHang {
                         if(choiceCase1==1)
                         {
                             demo.setInfo();
+                            
                             System.out.println(demo.toString());
                         }
                     }else System.out.println(demo.toString());
@@ -250,9 +291,5 @@ public class TaiKhoanKhachHang {
         }while (choice !=2);
     }
     
-    public static void main(String[] args) {
-        TaiKhoanKhachHang demo = new TaiKhoanKhachHang();
-        demo.setInfo();
-    }
     
 }
