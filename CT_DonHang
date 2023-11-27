@@ -1,5 +1,10 @@
 
-package bookStore;
+package BookStore;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,9 +13,9 @@ public class CT_DonHang {
     private String maKhachHang;
     private DiaChi diaChi;
     private String email;
-    private Ngaythangnam ngayDH;
+    private String ngayDH;
     private String ptThanhToan;
-    private int trangThai; //0: chưa xác nhận đặt hàng; 1: xác nhận đặt hàng
+    private int trangThai; //0: chưa đặt hàng; 1: chờ xử lý (đã đặt hàng); 2: đã xử lý , 3: đang giao; 4: đã nhận hàng
     private Double tongTien;
     private static int soLuong_DonHang = 0;
     private ArrayList<CT_GioHang> dsSach_DonHang = new ArrayList<>();
@@ -19,7 +24,7 @@ public class CT_DonHang {
     public CT_DonHang() {
     }
    
-    public CT_DonHang(String maDonHang, String maKhachHang, DiaChi diaChi, String email, Ngaythangnam ngayDH, String ptThanhToan, int trangThai, Double tongTien) {
+    public CT_DonHang(String maDonHang, String maKhachHang, DiaChi diaChi, String email, String ngayDH, String ptThanhToan, int trangThai, Double tongTien) {
         this.maDonHang = maDonHang;
         this.maKhachHang = maKhachHang;
         this.diaChi = diaChi;
@@ -59,11 +64,11 @@ public class CT_DonHang {
         this.email = email;
     }
 
-    public Ngaythangnam getNgayDH() {
+    public String getNgayDH() {
         return ngayDH;
     }
 
-    public void setNgayDH(Ngaythangnam ngayDH) {
+    public void setNgayDH(String ngayDH) {
         this.ngayDH = ngayDH;
     }
 
@@ -98,14 +103,14 @@ public class CT_DonHang {
     public void setMaKhachHang(String maKhachHang) {
         this.maKhachHang = maKhachHang;
     }
-      
-     public ArrayList<CT_GioHang> getDsSach_DonHang() {
+
+    public ArrayList<CT_GioHang> getDsSach_DonHang() {
         return dsSach_DonHang;
     }
 
     public void setDsSach_DonHang(ArrayList<CT_GioHang> dsSach_DonHang) {
         this.dsSach_DonHang = dsSach_DonHang;
-    }
+    }   
 
     public Double tinhTongTien() {
         for (CT_GioHang sanpham : dsSach_DonHang) {
@@ -114,6 +119,7 @@ public class CT_DonHang {
         return tongTien;
     }
     
+    
     public String hienThiSanPham() {
         String sanpham = null;
         for (CT_GioHang sp : dsSach_DonHang){
@@ -121,6 +127,40 @@ public class CT_DonHang {
         }
         return sanpham;
     }
+    
+    //Chưa có trường hợp khách mua sách điện tử phải bắt buộc thanh toán chuyển khoản
+    public String chonPTTT() {
+        int chon=0;
+        String ptThanhToan = new String();
+        do {
+            try {
+                System.out.println(" Chon phuong thuc thanh toan(chọn 1 hoặc 2): ");
+                System.out.println("1. Tien mat");
+                System.out.println("2. Chuyen khoan");
+                chon = Integer.parseInt(scan.nextLine());
+                    switch (chon) {
+                        case 1: 
+                            ptThanhToan = "tien mat";
+                            break;
+                        case 2: 
+                            ptThanhToan = "chuyen khoan";
+                            break;
+                    }   
+                if (chon < 1 || chon > 2)
+                    System.out.println(" Vui long chon phuong thuc thanh toan! ");
+            } catch(NumberFormatException e)
+            {
+                System.out.println("\n--Vui lòng chọn đúng các thao tác đã hiển thị!!!--\n");
+            }
+            catch ( Exception e)
+            {
+                System.out.println(e.getMessage());
+            }
+        } while (chon != 2);
+        return ptThanhToan;
+        
+    }
+
     
 //    public double giamGia() {
 //        if (this.tinhTongTien() >= 500000) {
@@ -139,51 +179,103 @@ public class CT_DonHang {
     
     
     public void setInfo() {
-        taoMaDH();
-        this.setTongTien(tinhTongTien());
-        System.out.println("Chọn địa chỉ: ");
+        System.out.println("-----THONG TIN DAT HANG-----");
+        /*System.out.println("\n Vui long chon dia chi: \n");
         DiaChi diachi = new DiaChi();
         diachi.setInfo();
-        this.setDiaChi(diachi);
-        System.out.println("Nhập email: ");
+        this.setDiaChi(diachi);*/
+        System.out.println("\n Vui long nhap email: \n");
         this.setEmail(ktraEmail(scan.nextLine()));
-        System.out.println("Chọn phương thức thanh toán: ");
-        System.out.println("1. Tiền mặt");
-        System.out.println("2. Chuyển khoản");
-        //
-        this.setTrangThai(0);
+        
+        //this.chonPTTT();
+        
+        System.out.println("\n --BAN CO XAC NHAN DAT HANG?-- \n");
+        System.out.println("1. Dong y dat hang");
+        System.out.println("2. Xem them san pham");
+        int chon = 0;
+        do {
+            this.setTrangThai(0);
+            chon = Integer.parseInt(scan.nextLine());
+            switch (chon) {
+                case 1:
+                    this.setTrangThai(1);
+                    this.setMaDonHang(taoMaDH());
+                    this.hienThiSanPham();
+                    this.setTongTien(tinhTongTien()); 
+                    LocalDateTime myDateObj = LocalDateTime.now();   
+                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    this.setNgayDH(myDateObj.format(myFormatObj));
+                    try (FileWriter fileWriter = new FileWriter("DonHang.txt", true)) {
+                            StringBuilder sb = new StringBuilder();
+                            sb.append(maKhachHang).append("#");
+                            sb.append(maDonHang).append("#");
+                            sb.append(email).append("#");
+                            sb.append(diaChi).append("#");
+                            sb.append(ngayDH).append("#");
+                            sb.append(hienThiSanPham()).append("#");
+                            sb.append(tinhTongTien()).append("#");
+                            sb.append(trangThai).append("#");
+                            sb.append(System.lineSeparator()); //Xuống dòng
+                            fileWriter.write(sb.toString()); //Ghi chuỗi thông tin vào file
+                            fileWriter.flush(); 
+                            System.out.println("DAT HANG THANH CONG!");
+                            
+                            //phương thức cập nhật số lượng sách tồn kho
+                    }
+                        catch (IOException e) {
+                            System.out.println("\n DAT HANG KHONG THANH CONG! \n");
+                            System.out.println("Có lỗi khi ghi vào file: " + e.getMessage());
+                    }
+                    break;
+                case 2:
+                     //ve trang chu    
+            }
+            if (chon < 1 || chon > 2)
+                    System.out.println("\n Vui long xac nhan dat hang! \n");
+        } while (chon != 3);
     }
     
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+       if (this.getTrangThai() ==0) return " ";
+       StringBuilder sb = new StringBuilder();
        sb.append("\n");
        sb.append("Ma khach hang: ").append(this.getMaKhachHang()).append("\n");
        sb.append("Ma don: ").append(this.getMaDonHang()).append("\n");
        sb.append("Email: ").append(this.getEmail()).append("\n");
-       sb.append("Dia chi: ").append(this.getDiaChi()).append("\n");
-       sb.append("Ngay dat: ").append(this.getNgayDH().toString()).append("\n");
+       sb.append("Dia chi: ").append(this.getDiaChi().toString()).append("\n");
+       sb.append("Ngay dat hang: ").append(this.getNgayDH()).append("\n");
        sb.append("San pham: ").append(this.hienThiSanPham()).append("\n");
        sb.append("Tong tien: ").append(this.getTongTien()).append("\n");
-       sb.append("ptThanhToan: ").append(this).append("\n");
-       return sb.toString();   
+       sb.append("ptThanhToan: ").append(this.getPtThanhToan()).append("\n");
+       sb.append("Trang thai: ").append(this.getTrangThai()).append("\n");
+       return sb.toString();
+        
     }
-
-    private String ktraEmail(String email) {
-        email = this.email;
-        boolean validEmail =false;
+    
+    public String ktraEmail(String email){
+        boolean validEmail = false;
+        String Email = "";
         do{
-            if(!email.matches("@\"^([\\w\\.\\-]+)@([\\w\\-]+)((\\.(\\w){2,3})+)$\"")||email.isEmpty()){
-                System.out.println("Email khong hop le. Moi ban nhap lai.....");
-                this.email = scan.nextLine();
-                email = this.email;
-            }
-            else{
-                validEmail = true;
-            }
+                if(!email.matches("^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$")||email.isEmpty()){
+                    System.out.println("Email khong hop le! Vui long nhap lai email");
+                    email = scan.nextLine();
+                }
+                else{
+                    validEmail = true; 
+                    Email = email; 
+                    
+                }
         }while(!validEmail);
-        return email;
+        return Email;
     }
-
+    
+        public static void main(String[] args) {
+       
+        CT_DonHang donhang = new CT_DonHang();
+        donhang.setInfo();
+        System.out.println(donhang.toString());
+    }
 }
+
