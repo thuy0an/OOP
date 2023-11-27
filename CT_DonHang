@@ -99,11 +99,11 @@ public class CT_DonHang {
         this.maKhachHang = maKhachHang;
     }
       
-    public HashSet<CT_GioHang> getDsSach_DonHang() {
+     public ArrayList<CT_GioHang> getDsSach_DonHang() {
         return dsSach_DonHang;
     }
 
-    public void setDsSach_DonHang(HashSet<CT_GioHang> dsSach_DonHang) {
+    public void setDsSach_DonHang(ArrayList<CT_GioHang> dsSach_DonHang) {
         this.dsSach_DonHang = dsSach_DonHang;
     }
 
