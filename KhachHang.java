@@ -72,13 +72,16 @@ public class KhachHang {
         this.sdt = sdt;
         this.email = email;
         this.MaKH = MaKH;
-        String dulieu[]=diachi.split("/");
-        this.diaChi.add( new DiaChi(dulieu[0],dulieu[1],dulieu[2],dulieu[3]));
+        
+        String dulieu[]=diachi.split(";");
+        for (String dulieu1: dulieu) 
+        {
+            String dulieuDiaChi[]=dulieu1.split("/");
+            this.diaChi.add( new DiaChi(dulieuDiaChi[0],dulieuDiaChi[1],dulieuDiaChi[2],dulieuDiaChi[3]));
+        }
 
     }
 
-    
-    
     public KhachHang(String tenKH, String sdt, String email, ArrayList<DonHang> donHang, ArrayList<DiaChi> diaChi, String MaKH) {
         this.tenKH = tenKH;
         this.sdt = sdt;
@@ -108,6 +111,10 @@ public class KhachHang {
         this.tenKH = tenKH;
     }
 
+    public ArrayList<DiaChi> getDiaChi() {
+        return diaChi;
+    }
+
     public void setSdt(String sdt) {
         this.sdt = sdt;
     }
@@ -121,11 +128,6 @@ public class KhachHang {
         this.diaChi.add(dchi);
     }
     
-    public DiaChi getDiachi()
-    {
-        return this.diaChi.get(0);
-    }
-    
     public void setInfo(){
         Scanner input= new Scanner(System.in);
         System.out.println("----Tạo Thông Tin Khách Hàng----");
@@ -135,12 +137,16 @@ public class KhachHang {
         this.setSdt(ktraSdt(input.nextLine()));
         System.out.print("Nhập email: ");
         this.setEmail(input.nextLine());
-        DiaChi dchi= new DiaChi();
-        dchi.setInfo();
-        this.setDiachi(dchi);
-        taoMaKH();
-        
-        
+        System.out.print("Nhập số lượng địa chỉ (tối đa 3): ");
+        int soluong=Integer.parseInt(input.nextLine().trim());
+        for( int i=1; i <=soluong; i++)
+        {
+            DiaChi dchi= new DiaChi();
+            dchi.setInfo();
+            this.setDiachi(dchi);
+        }
+        // đang fix nhập nhìu địa chỉ
+        taoMaKH();  
     }
     
     
@@ -151,13 +157,16 @@ public class KhachHang {
         if ( this.getMaKH() == null || this.getMaKH().isEmpty()){
             return "";
         }
-        return "--Thông tin của Khách Hàng--\n"
-            + "1.Mã khách Hàng: " + this.getMaKH() +"\n"
-            + "2.Họ tên: " + this.getTenKH() +"\n"
-            + "3.Số điện thoại: " + this.getSdt() +"\n" 
-            + "4.Email: " + this.getEmail()+"\n"
-            + "5.Địa chỉ: " +this.getDiachi().toString() +"\n";
         
+        StringBuilder thongtin= new StringBuilder();
+        thongtin.append("--Thông tin của Khách Hàng--\n");
+        thongtin.append("1.Mã khách Hàng: ").append(this.getMaKH()).append("\n");
+        thongtin.append("2.Họ tên: ").append(this.getTenKH()).append("\n");
+        thongtin.append("3.Số điện thoại: ").append(this.getSdt()).append("\n");
+        thongtin.append("4.Email: ").append(this.getEmail()).append("\n");
+        thongtin.append("5.Dịa chỉ:\n");
+        for( int i=0; i <this.diaChi.size();i++)
+            thongtin.append("Địa chỉ ").append(i+1).append(": ").append(this.diaChi.get(i)).append("\n");
+        return thongtin.toString();
     }
-    
 }

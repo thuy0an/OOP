@@ -62,9 +62,11 @@ public class TaiKhoanKhachHang {
         {
             StringBuilder sb= new StringBuilder();
             sb.append(this.getUsername()).append("#").append(this.getUserpassword());
-            KhachHang demo= new KhachHang();
-            demo.setInfo();
-            sb.append("#").append(demo.getMaKH()).append(("#")).append(demo.getTenKH()).append(("#")).append(demo.getSdt()).append("#").append(demo.getEmail()).append("#").append(demo.getDiachi());
+            KhachHang thongtin= new KhachHang();
+            thongtin.setInfo();
+            sb.append("#").append(thongtin.getMaKH()).append(("#")).append(thongtin.getTenKH()).append(("#")).append(thongtin.getSdt()).append("#").append(thongtin.getEmail()).append("#");
+            for ( int i=0; i< thongtin.getDiaChi().size();i++)
+             sb.append(thongtin.getDiaChi().get(i)).append(";");
             sb.append(System.lineSeparator());
             fileWtr.write(sb.toString());
             fileWtr.flush();
@@ -197,11 +199,11 @@ public class TaiKhoanKhachHang {
     
     public static void chucNangNguoiDung(){
         Scanner input= new Scanner(System.in);
-        KhachHang demo = null;
+        KhachHang thongTin = null;
         File file= new File("user.txt");
-        String thongtin[]=TaiKhoanKhachHang.capNhatThongTin();
-        if ( thongtin != null)
-            demo= new KhachHang(thongtin[2],thongtin[3],thongtin[4],thongtin[5],thongtin[6]);
+        String dulieu[]=TaiKhoanKhachHang.capNhatThongTin();
+        if ( dulieu != null)
+            thongTin= new KhachHang(dulieu[2],dulieu[3],dulieu[4],dulieu[5],dulieu[6]);
         int choice;
         do {
             System.out.println("----------Chức năng người dùng---------");
@@ -219,18 +221,18 @@ public class TaiKhoanKhachHang {
             switch(choice)
             {
                 case 1:
-                    if ( demo.toString().isEmpty())
+                    if ( thongTin.toString().isEmpty())
                     {
                         System.out.println("Không có thông tin. Bạn có muốn nhập thông tin không ?");
                         System.out.print("1. Có || 0. Không ");
                         int choiceCase1=Integer.parseInt(input.nextLine());
                         if(choiceCase1==1)
                         {
-                            demo.setInfo();
+                            thongTin.setInfo();
                             
-                            System.out.println(demo.toString());
+                            System.out.println(thongTin.toString());
                         }
-                    }else System.out.println(demo.toString());
+                    }else System.out.println(thongTin.toString());
                    break;
                 case 2:
                     break;
