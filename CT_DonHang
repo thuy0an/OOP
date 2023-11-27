@@ -1,6 +1,6 @@
 
 package bookStore;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CT_DonHang {
@@ -13,7 +13,7 @@ public class CT_DonHang {
     private int trangThai; //0: chưa xác nhận đặt hàng; 1: xác nhận đặt hàng
     private Double tongTien;
     private static int soLuong_DonHang = 0;
-    private HashSet<CT_GioHang> dsSach_DonHang = new HashSet<>();
+    private ArrayList<CT_GioHang> dsSach_DonHang = new ArrayList<>();
     Scanner scan = new Scanner(System.in);
     
     public CT_DonHang() {
