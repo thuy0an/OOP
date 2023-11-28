@@ -458,14 +458,15 @@ public class TuSach {
         for(Sach sach: books)
             System.out.println(sach.toString());
     }
-    public void hienThiSachDangKinhDoanh() { 
+    public void hienThiSachDangKinhDoanh() { //có vấn đề
         File file= new File("Sach.txt");
         try (Scanner scanner = new Scanner(file)) 
         {
             System.out.println("\n\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
             System.out.println("|                                                                    BOOK  DATABASE                                                                                                                                                                                 |");
             System.out.println("|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
-            System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
+            //System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
+            System.out.printf("| %-50s| %-9s| %-30s| %-9s| %-15s| %-15s| %-10.3s| %50s| %-9s| %-4s| %-9s| %-4s| %-9s| %-9s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Kich Thuoc","Loai Bia","Kich Co Dung Luong","Dung Luong","So Luong", "|");
             System.out.println("+---------------------------------------------------+----------+-------------------------------+----------+----------------+----------------+-----------+---------------------------------------------------+----------+-----+----------+-----+----------+----------+");
 
             while(scanner.hasNextLine()){   //.availabe: tra ve 1 luong byte co the doc, neu <=0 tuc la doc khong thanh cong
