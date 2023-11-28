@@ -458,7 +458,7 @@ public class TuSach {
         for(Sach sach: books)
             System.out.println(sach.toString());
     }
-    public void hienThiSachDangKinhDoanh() { //có vấn đề
+    public static void hienThiSachDangKinhDoanh() { //có vấn đề
         File file= new File("Sach.txt");
         try (Scanner scanner = new Scanner(file)) 
         {
