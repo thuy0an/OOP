@@ -649,7 +649,7 @@ public class TuSach {
         
     }
 
-    public void hienThiSachDangKinhDoanh() { 
+    public static void hienThiSachDangKinhDoanh() { 
         File file= new File("book.txt");
         try (Scanner scanner = new Scanner(file)) 
         {
