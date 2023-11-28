@@ -459,36 +459,61 @@ public class TuSach {
             System.out.println(sach.toString());
     }
     public void hienThiSachDangKinhDoanh() { //có vấn đề
-        try (Scanner scanner = new Scanner("Sach.dat")) {
-            System.out.println("\n\n+---------------------------------------------------------------------------------------------------------------------------------------------------------+");
-            System.out.println("|                                                                    BOOK  DATABASE                                                                       |");
-            System.out.println("|_________________________________________________________________________________________________________________________________________________________|");
-            System.out.printf("| %-20s| %-9s| %-20s| %-8d| %-15s| %-15s| %-10f| %-20s| %-8d| %-15s| %-15s| %-8s| %-8f| %-8d| %\n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Kich Thuoc","Loai Bia","Kich Co Dung Luong","Dung Luong","So Luong", "|");
-            System.out.println("+---------------------+----------+---------------------+----------+----------------+----------------+---------------------+---------------------+---------+");
+        File file= new File("Sach.txt");
+        try (Scanner scanner = new Scanner(file)) 
+        {
+            System.out.println("\n\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+            System.out.println("|                                                                    BOOK  DATABASE                                                                                                                                                                                 |");
+            //System.out.println("|_____________________________________________________________________________________________________________________________________________________________________________________________________________________|");
+            //System.out.printf("| %-50s| %-9s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %50s| %-9s| %-4s| %-9s| %-4s| %-9s| %-9s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach", "Kich Thuoc", "Loai Bia", "Kich Co Dung Luong", "Dung Luong", "So Luong");
+            System.out.println("+---------------------------------------------------+----------+-------------------------------+----------+----------------+----------------+-----------+---------------------------------------------------+----------+-----+----------+-----+----------+----------+");
 
-            //Doc thong tin tung quyen sach tu file
             while(scanner.hasNextLine()){   //.availabe: tra ve 1 luong byte co the doc, neu <=0 tuc la doc khong thanh cong
                 String line = scanner.nextLine();
                 String[] sachDuocDoc = line.split("#");
-                if(sachDuocDoc.length==14){
-                    String tenSach = sachDuocDoc[0];
-                    String maSach = sachDuocDoc[1];
-                    String tacGia = sachDuocDoc[2];
-                    int soTrang = Integer.parseInt(sachDuocDoc[3]);
-                    String theloai = sachDuocDoc[4];
-                    String nXB = sachDuocDoc[5];
-                    double donGia = Double.parseDouble(sachDuocDoc[6]);
-                    String moTa = sachDuocDoc[7];
-                    String loaiSach = sachDuocDoc[8];
-                    String kichThuoc = sachDuocDoc[9];
-                    String loaiBia = sachDuocDoc[10];
-                    String kichCoDungLuong = sachDuocDoc[11];
-                    Double dungLuong = Double.parseDouble(sachDuocDoc[12]);
-                    int soLuong = Integer.parseInt(sachDuocDoc[13]);
-                    System.out.printf("| %-20s| %-9s| %-20s| %-8s| %-15s| %-15s| %-10s| %-20s| %-8s| %-15s| %-15s| %-8s| %-8s| %-8s| %\n",tenSach, maSach, tacGia, soTrang,theloai,nXB, donGia, moTa,loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                String tenSach = sachDuocDoc[0];
+                String maSach = sachDuocDoc[1];
+                String tacGia = sachDuocDoc[2];
+                int soTrang = Integer.parseInt(sachDuocDoc[3]);
+                String theloai = sachDuocDoc[4];
+                String nXB = sachDuocDoc[5];
+                double Gia = Double.parseDouble(sachDuocDoc[6]);
+                String moTa = sachDuocDoc[7];
+                String loaiSach = sachDuocDoc[8];
+                String kichThuoc="";
+                String loaiBia="";
+                String kichCoDungLuong="";
+                String dungLuong="";
+                String soLuong="";
+                if ( loaiSach.equals("Giay")){
+                    kichThuoc = sachDuocDoc[9];
+                    loaiBia = sachDuocDoc[10];
+                    kichCoDungLuong="////";
+                    dungLuong="////";
+                    soLuong=sachDuocDoc[13];
                 }
+                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                    kichThuoc="////";
+                    loaiBia="////";
+                    kichCoDungLuong = sachDuocDoc[11];
+                    dungLuong =sachDuocDoc[12];
+                    soLuong="////";
+                }
+//                int soLuong = Integer.parseInt(sachDuocDoc[11]);
+//                if (loaiSach.equals("Giay")) 
+//                    System.out.printf("| %-50s| %-9s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-50s| %-5s| %-5s| %-5s|%n",tenSach, maSach, tacGia, soTrang, theloai, nXB, donGia, moTa, loaiSach, kichThuoc, loaiBia, soLuong, "|");
+//                else{
+//                    System.out.printf("| %-50s| %-9s| %-30s| %-9d| %-15s| %-15s| %-10.2f| %-50s| %-5s| %-5s| %-5s| %n",tenSach, maSach, tacGia, soTrang, theloai, nXB, donGia, moTa, loaiSach, kichCoDungLuong, dungLuong, soLuong, "|");
+//                }
+                System.out.printf("| %-50s| %-9s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %50s| %-9s| %-4s| %-9s| %-4s| %-9s| %-9s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
             }
+        }catch (FileNotFoundException e) {
+        System.out.println("File not found: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Exception occurred: " + e.getMessage());
+            e.printStackTrace();
         }
+        System.out.println("+---------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+\n");
     }
     
     public void chinhSuaThongTinSach(){
