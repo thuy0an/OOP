@@ -175,8 +175,49 @@ public class TaiKhoanKhachHang {
         
     }
     
-    public void themVaoGiohang(){
-        
+    public  static void themVaoGiohang(){
+    File fileSach=new File("book.txt");
+    String thongTinKhachHang[]=TaiKhoanKhachHang.capNhatThongTin();
+        try {
+            Scanner docFileSach= new Scanner(fileSach);
+            Scanner input= new Scanner(System.in);
+            String maSanPham;
+            int soLuongSanPham, kiemTraSach=0;
+            System.out.print("Chọn mã sản phẩm để thêm vào giỏ: ");
+            maSanPham=input.nextLine();
+            while ( docFileSach.hasNextLine())
+            {
+                String Sach=docFileSach.nextLine();
+                String thongTinSach[]=Sach.split("#");
+                if ( maSanPham.equalsIgnoreCase(thongTinSach[1]))
+                {
+                    kiemTraSach=1;
+                    System.out.print("Chọn số lượng muốn thêm vào giỏ: ");
+                    soLuongSanPham=Integer.parseInt(input.nextLine());
+                    FileWriter fileWrt= new FileWriter("GioHang.txt",true);
+                    StringBuilder StrBuilder= new StringBuilder();
+                    StrBuilder.append(thongTinKhachHang[2]);
+                    StrBuilder.append("#").append(thongTinSach[1]);
+                    StrBuilder.append("#").append(thongTinSach[0]);
+                    StrBuilder.append("#").append(thongTinSach[8]);
+                    StrBuilder.append("#").append(soLuongSanPham);
+                    StrBuilder.append("#").append(Double.parseDouble(thongTinSach[6])*soLuongSanPham);
+                    StrBuilder.append(System.lineSeparator());
+                    fileWrt.write(StrBuilder.toString());
+                    fileWrt.flush();
+                    System.out.println("Bạn đã thêm sách thành công ^^");
+                }
+                
+                        
+            }
+            if (kiemTraSach != 1)
+                System.out.println("Không có mã sách này trong kho !!!");
+        } catch (FileNotFoundException ex) {
+            System.out.println("Không tìm thấy file !!!");
+        } catch (IOException ex) {
+            Logger.getLogger(TaiKhoanKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+              
     }
     
     public void xemDonHang(){
@@ -184,6 +225,7 @@ public class TaiKhoanKhachHang {
     }
     
     public void themVaoDonHang(){
+        
         
     }
     
@@ -207,15 +249,9 @@ public class TaiKhoanKhachHang {
         int choice;
         do {
             System.out.println("----------Chức năng người dùng---------");
-            System.out.println("1. Xem thông tin cá nhân");
-            System.out.println("2. Xem danh sách sản phẩm bán");
-            System.out.println("3. Tìm kiếm sản phẩm");
-            System.out.println("4. Thêm/xóa sản phẩm trong giỏ");
-            System.out.println("5. Xem giỏ hàng");
-            System.out.println("6. Đặt hàng");
-            System.out.println("7. Xem đơn đã đặt");
-            System.out.println("8. Hủy đơn");
-            System.out.println("9. Thoát khỏi chức năng người dùng");
+            System.out.printf("| %-35s| %-35s| %-35s|\n","1.Xem thông tin cá nhân","2.Xem danh sách sản phẩm bán","3.Tìm kiếm sản phẩm");
+            System.out.printf("| %-35s| %-35s| %-35s|\n","4.Thêm/xóa sản phẩm trong giỏ","5.Xem giỏ hàng","6.Đặt hàng");
+            System.out.printf("| %-35s| %-35s| %-35s|\n","7.Xem đơn đã đặt","8.Hủy đơn","9.Thoát khỏi chức năng người dùng");
             System.out.print("Chọn thao tác: ");
             choice=Integer.parseInt(input.nextLine());
             switch(choice)
@@ -235,15 +271,19 @@ public class TaiKhoanKhachHang {
                     }else System.out.println(thongTin.toString());
                    break;
                 case 2:
+                    TuSach.hienThiSachDangKinhDoanh();
                     break;
                 case 3:
                     break;
                 case 4:
+                    themVaoGiohang();
                     break;
                 case 5:
                     GioHang.xemGioHang();
                     break;
                 case 6:
+                    CT_DonHang demo= new CT_DonHang();
+                    demo.setInfo();
                     break;
                 case 7:
                     break;
