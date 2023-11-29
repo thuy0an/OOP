@@ -29,22 +29,22 @@ public class App {
         do {
             Scanner input= new Scanner(System.in);
             startMenu();
+            TaiKhoanKhachHang demo= new TaiKhoanKhachHang();
             try {
                 System.out.print("Chọn thao tác: ");
                 choice=Integer.parseInt(input.nextLine());
                 switch(choice)
                 {
                     case 1:
-                        int check=TaiKhoanKhachHang.kiemTraDangNhap();
+                        int check=demo.kiemTraDangNhap();
                         if ( check==1)
                         {
-                            TaiKhoanKhachHang.giaodienKhachHang();
+                            demo.giaodienKhachHang();
 
                         }
                         break;
                         
                     case 2:
-                        TaiKhoanKhachHang demo= new TaiKhoanKhachHang();
                         demo.setInfo();
                         break;
                     case 3:

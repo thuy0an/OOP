@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class TaiKhoanKhachHang {
     private String username;
     private String userpassword;
-    
+    private KhachHang khachhang;
     
     public TaiKhoanKhachHang() {
     }
@@ -77,27 +77,28 @@ public class TaiKhoanKhachHang {
         
     }
     
-    public static int kiemTraDangNhap()
+    public  int kiemTraDangNhap()
     {
         int tieptuc=1, flag=0;
         do
         {
             Scanner input= new Scanner(System.in);
-            String username, userpass;
             System.out.println("----Dăng nhập vào tài khoản----");
+            String tenDangNhap, matKhau;
             System.out.print("1.Tên đăng nhập: ");
-            username=input.nextLine();
+            tenDangNhap=input.nextLine();
             System.out.print("2.Mật khẩu: ");
-            userpass=input.nextLine();
+            matKhau=input.nextLine();
             File file= new File("user.txt");
             try (Scanner scan= new Scanner(file)){
+                String dong, dulieu[] = null, user, pass;
                 while (scan.hasNextLine())
                 {
-                    String dong=scan.nextLine();
-                    String dulieu[]=dong.split("#");
-                    String user=dulieu[0].trim();
-                    String pass=dulieu[1].trim();
-                    if ( user.equalsIgnoreCase(username.trim()) && pass.equalsIgnoreCase(userpass.trim()))
+                    dong=scan.nextLine();
+                    dulieu=dong.split("#");
+                    user=dulieu[0].trim();
+                    pass=dulieu[1].trim();
+                    if ( user.equalsIgnoreCase(tenDangNhap.trim()) && pass.equalsIgnoreCase(matKhau.trim()))
                     {
                         flag=1;
                         break;
@@ -106,9 +107,14 @@ public class TaiKhoanKhachHang {
                 if ( flag ==1)
                 {
                     System.out.println("Đăng nhập thành công !");
-                    FileWriter userlogin= new FileWriter("userLogin.txt",true);
-                    userlogin.write(username.trim() +"#"+userpass.trim() + System.lineSeparator());
-                    userlogin.flush();
+                    this.setUsername(tenDangNhap.trim());
+                    this.setUserpassword(matKhau.trim());
+                    this.khachhang = new KhachHang(dulieu[2],dulieu[3],dulieu[4],dulieu[5],dulieu[6]);
+                    FileWriter fileWrt= new FileWriter("userLogin.txt",true);
+                    StringBuilder StrBld= new StringBuilder();
+                    StrBld.append(this.getUsername()).append("#").append(this.getUserpassword());
+                    fileWrt.write(StrBld.toString());
+                    fileWrt.flush();
                     tieptuc=0;
                 }
                 else 
@@ -132,52 +138,23 @@ public class TaiKhoanKhachHang {
             {
                 System.out.println("\n--Vui lòng không nhập ký tự!!!--\n");
             } catch (IOException ex) {
-                System.out.println("Khong tim thay file user.txt");
-            }
+                System.out.println("Khong tim thay file userLogin.txt");
+            } 
         }while(tieptuc==1);
         return flag;
     }
    
-    private static String[] capNhatThongTin()
-    {
-        File file1= new File("user.txt");
-        File file2= new File("userLogin.txt");
-        try{
-            Scanner scan1= new Scanner(file1);
-            Scanner scan2= new Scanner(file2);
-            while ( scan1.hasNextLine())
-            {
-                String duLieu=scan1.nextLine();
-                String tkDangNhap=scan2.nextLine();
-                String thongTin[]=duLieu.split("#");
-                String thongtinTk[]=tkDangNhap.split("#");
-                if ( thongTin[0].equalsIgnoreCase(thongtinTk[0]) && thongTin[1].equalsIgnoreCase(thongtinTk[1]))
-                {
-                    return thongTin;
-                }
-            }
-            
-        } catch (FileNotFoundException ex) {
-           System.out.println("Không tìm thấy file !!!");
-        }
-        return null;
-    }
-    
     public void timKiem(){
         
     }
     
-    public void xemGioHang(){
-        
-    }
     
     public void xoaSanPhamTrongGioHang(){
         
     }
     
-    public  static void themVaoGiohang(){
+    public  void themVaoGiohang(){
     File fileSach=new File("book.txt");
-    String thongTinKhachHang[]=TaiKhoanKhachHang.capNhatThongTin();
         try {
             Scanner docFileSach= new Scanner(fileSach);
             Scanner input= new Scanner(System.in);
@@ -196,7 +173,7 @@ public class TaiKhoanKhachHang {
                     soLuongSanPham=Integer.parseInt(input.nextLine());
                     FileWriter fileWrt= new FileWriter("GioHang.txt",true);
                     StringBuilder StrBuilder= new StringBuilder();
-                    StrBuilder.append(thongTinKhachHang[2]);
+                    StrBuilder.append(this.khachhang.getMaKH());
                     StrBuilder.append("#").append(thongTinSach[1]);
                     StrBuilder.append("#").append(thongTinSach[0]);
                     StrBuilder.append("#").append(thongTinSach[8]);
@@ -215,7 +192,7 @@ public class TaiKhoanKhachHang {
         } catch (FileNotFoundException ex) {
             System.out.println("Không tìm thấy file !!!");
         } catch (IOException ex) {
-            Logger.getLogger(TaiKhoanKhachHang.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Không tìm thấy file !!!");
         }
               
     }
@@ -239,14 +216,11 @@ public class TaiKhoanKhachHang {
     
     
     
-    public static void chucNangNguoiDung(){
+    public  void chucNangNguoiDung(){
         Scanner input= new Scanner(System.in);
-        KhachHang thongTin = null;
         File file= new File("user.txt");
-        String dulieu[]=TaiKhoanKhachHang.capNhatThongTin();
-        if ( dulieu != null)
-            thongTin= new KhachHang(dulieu[2],dulieu[3],dulieu[4],dulieu[5],dulieu[6]);
         int choice;
+        
         do {
             System.out.println("----------Chức năng người dùng---------");
             System.out.printf("| %-35s| %-35s| %-35s|\n","1.Xem thông tin cá nhân","2.Xem danh sách sản phẩm bán","3.Tìm kiếm sản phẩm");
@@ -257,18 +231,18 @@ public class TaiKhoanKhachHang {
             switch(choice)
             {
                 case 1:
-                    if ( thongTin.toString().isEmpty())
+                    if ( this.khachhang.toString().isEmpty())
                     {
                         System.out.println("Không có thông tin. Bạn có muốn nhập thông tin không ?");
                         System.out.print("1. Có || 0. Không ");
                         int choiceCase1=Integer.parseInt(input.nextLine());
                         if(choiceCase1==1)
                         {
-                            thongTin.setInfo();
+                            this.khachhang.setInfo();
                             
-                            System.out.println(thongTin.toString());
+                            System.out.println(this.khachhang.toString());
                         }
-                    }else System.out.println(thongTin.toString());
+                    }else System.out.println(this.khachhang.toString());
                    break;
                 case 2:
                     TuSach.hienThiSachDangKinhDoanh();
@@ -297,7 +271,7 @@ public class TaiKhoanKhachHang {
     }
     
         
-    public static void giaodienKhachHang()
+    public  void giaodienKhachHang()
     {
         int choice=1;
         do {
@@ -305,6 +279,7 @@ public class TaiKhoanKhachHang {
             System.out.println("----------Giao diện của Khách Hàng----------");
             System.out.println("1. Chức năng người dùng");
             System.out.println("2. Thoát");
+            
             try{
                 do {
                     System.out.print("Chọn thao tác: ");
