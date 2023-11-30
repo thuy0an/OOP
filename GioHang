@@ -6,9 +6,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import BookStore.KhachHang;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class GioHang {
@@ -33,7 +30,7 @@ public class GioHang {
                 sb.append(giohang.getSach().getMaSach()).append("#");
                 sb.append(giohang.getSach().getTenSach()).append("#");
                 sb.append(giohang.getSach().getLoaiSach()).append("#");
-                sb.append(giohang.getSoLuong()).append("#");
+                sb.append(giohang.getSach().getSoLuongMua()).append("#");
                 sb.append(giohang.getThanhTien()).append("#");
                 sb.append(System.lineSeparator()); //Xuống dòng
                 fileWriter.write(sb.toString()); //Ghi chuỗi thông tin vào file
@@ -55,10 +52,11 @@ public class GioHang {
                 CT_GioHang giohang= new CT_GioHang();
                 giohang.setMaKhachHang(parts[0]);
                 Sach sach = new Sach();
+                giohang.setSach(sach);               
                 sach.setMaSach(parts[1]);
                 sach.setTenSach(parts[2]);
                 sach.setLoaiSach(parts[3]);
-                giohang.setSoLuong(Integer.parseInt(parts[4]));
+                sach.setSoLuongMua(Integer.parseInt(parts[4]));
                 giohang.setThanhTien(Double.parseDouble(parts[5]));
                 dsGioHang.add(giohang);
             }
