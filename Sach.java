@@ -27,10 +27,14 @@ public class Sach {
     private String loaiSach;
     private int soLuong;
     Scanner nhapttsach = new Scanner(System.in);
+    //constructor
     public Sach() {
         
     }
-
+    public Sach(String tenSach, int soLuong){
+        this.tenSach=tenSach;
+        this.soLuong=soLuong;
+    }
     public String getTenSach() {
         return tenSach;
     }
