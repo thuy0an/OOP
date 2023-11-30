@@ -7,6 +7,7 @@ package BookStore;
 
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -17,19 +18,21 @@ public class App {
 
     public static void startMenu()
     {
-        System.out.println("---------Chào mừng đến với Ứng dụng mua hàng BookStore---------");
-        System.out.println("1. Đăng nhập vào tài khoản");
-        System.out.println("2. Tạo tài khoản");
-        System.out.println("3. Dùng guest để truy cập vào app");
-        System.out.println("4. Thoát.");
+        System.out.println("\t+---------Chào mừng đến với Ứng dụng mua hàng BookStore-------+");
+        System.out.printf("\t| %-60s|\n","1. Đăng nhập vào tài khoản");
+        System.out.printf("\t| %-60s|\n","2. Tạo tài khoản");
+        System.out.printf("\t| %-60s|\n","3. Dùng guest để truy cập vào app");
+        System.out.printf("\t| %-60s|\n","0. Thoát.");
+        System.out.println("\t+-------------------------------------------------------------+");
     }
     
     public static void main(String[] args) {
+    TaiKhoanKhachHang demo= new TaiKhoanKhachHang();
         int choice=0;
         do {
             Scanner input= new Scanner(System.in);
             startMenu();
-            TaiKhoanKhachHang demo= new TaiKhoanKhachHang();
+            
             try {
                 System.out.print("Chọn thao tác: ");
                 choice=Integer.parseInt(input.nextLine());
@@ -50,7 +53,7 @@ public class App {
                     case 3:
                         System.out.println("Đăng nhập thành công");
                         break;
-                    case 4:
+                    case 0:
                         FileWriter userLogin= new FileWriter("userLogin.txt");
                             userLogin.write("");
                             userLogin.flush();
@@ -58,22 +61,22 @@ public class App {
                         
                         
                 }
-                if ( choice < 1 || choice > 4)
+                if ( choice < 0 || choice > 3)
                 System.out.println("\n--Vui lòng chọn đúng các thao tác đã hiển thị!!!--\n");
             } 
             catch(NumberFormatException ei)
             {
                 System.out.println("\n--Vui lòng chọn đúng các thao tác đã hiển thị!!!--\n");
             }
-            catch ( Exception e)
+            catch ( IOException e)
             {
-                System.out.println(e.getMessage());
+                System.out.println("Lỗi không tìm được file");
             }
             
-            if ( choice==4)
+            if ( choice==0)
                 System.out.println("Cảm ơn đã xử dụng dịch vụ ^^");
             
-        }while (choice !=4);
+        }while (choice !=0);
     }
     
 }

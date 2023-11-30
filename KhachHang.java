@@ -137,15 +137,25 @@ public class KhachHang {
         this.setSdt(ktraSdt(input.nextLine()));
         System.out.print("Nhập email: ");
         this.setEmail(input.nextLine());
-        System.out.print("Nhập số lượng địa chỉ (tối đa 3): ");
-        int soluong=Integer.parseInt(input.nextLine().trim());
-        for( int i=1; i <=soluong; i++)
+        int flag=0;
+        while(flag==0)
         {
-            DiaChi dchi= new DiaChi();
-            dchi.setInfo();
-            this.setDiachi(dchi);
+            System.out.print("Nhập số lượng địa chỉ (tối đa 3): ");
+            int soluong=Integer.parseInt(input.nextLine().trim());
+            if (soluong >=1 && soluong <=3)
+            {
+                for( int i=1; i <=soluong; i++)
+                {
+                    DiaChi dchi= new DiaChi();
+                    dchi.setInfo();
+                    this.setDiachi(dchi);
+                }
+                flag=1;
+            }
+                
+            else 
+                System.out.println("Vui lòng nhập đúng!!!");
         }
-        // đang fix nhập nhìu địa chỉ
         taoMaKH();  
     }
     
