@@ -1,21 +1,19 @@
 
-package bookStore;
+package BookStore;
 
 public class CT_GioHang {
 
     private Sach sach;
-    private int soLuong;
     private Double thanhTien;
-    private String maKhachhang;
-
-    public CT_GioHang(Sach sach, int soLuong, Double thanhTien, String maKhachhang) {
-        this.sach = sach;
-        this.soLuong = soLuong;
-        this.thanhTien = thanhTien;
-        this.maKhachhang = maKhachhang;
-    }
-
+    private String maKhachHang;
+    
     public CT_GioHang() {
+    }
+    
+    public CT_GioHang(Sach sach, Double thanhTien, String maKhachHang) {
+        this.sach = sach;
+        this.maKhachHang = maKhachHang;
+        this.thanhTien = thanhTien;
     }
     
     public Sach getSach() {
@@ -26,14 +24,7 @@ public class CT_GioHang {
         this.sach = sach;
     }
 
-    public int getSoLuong() {
-        return soLuong;
-    }
 
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
-    }
-    
     public String getMaKhachHang() {
         return maKhachHang;
     }
@@ -47,7 +38,7 @@ public class CT_GioHang {
     }
     
     public void setThanhTien(Double thanhTien) {
-        this.thanhTien = this.getSoLuong()* this.getSach().getDonGia();
+        this.thanhTien = this.getSach().getSoLuongMua()* this.getSach().getDonGia();
     }
     
 //    public void ktraSoLuongTonKho() {
@@ -62,11 +53,12 @@ public class CT_GioHang {
        sb.append("Ten sach: ").append(this.getSach().getTenSach()).append("\n");
        sb.append("Ma sach: ").append(this.getSach().getMaSach()).append("\n");
        sb.append("Loai sach: ").append(this.getSach().getLoaiSach()).append("\n");
-       sb.append("So luong: ").append(this.getSoLuong()).append("\n");
+       sb.append("So luong: ").append(this.getSach().getSoLuongMua()).append("\n");
        sb.append("Thanh tien: ").append(this.getSach().getDonGia()).append("\n");
        return sb.toString();
-   }
+    }
     
+   
 
     
 }
