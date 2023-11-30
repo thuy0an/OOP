@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class NhanVien {
@@ -59,12 +60,27 @@ public abstract class NhanVien {
 	public void setLoai(int loai) {
 		this.loai = loai;
 	}
+
+	public void xemDonHang() {
+	}
+
+	public void xemDonHang(int luachon) {
+	}
+
+	public void ghiDonVaoFile(ArrayList<DonHang> dsDonHang) {
+
+	}
+
+	public void xacNhanDonHang() {
+	}
+
 	public String toString() {
 		System.out.printf("Ma nhan vien: %s", this.ten);
 		System.out.printf("Ten nhan vien: %s\n", this.ten);
-		System.out.println("Ngay vao lam: "+this.ngayVao.toString());
+		System.out.println("Ngay vao lam: " + this.ngayVao.toString());
 	}
-	public void tinhLuong() {}
-	
+
+	public void tinhLuong() {
+	}
 
 }
