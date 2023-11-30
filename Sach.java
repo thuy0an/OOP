@@ -20,20 +20,20 @@ public class Sach {
     private int soTrang;
     private String theLoai;
     private String NXB;
-    private double donGia;
+    private double gia;
     private String moTa;
     //private String danhGia;
     //private int soSao;
     private String loaiSach;
     private int soLuong;
+    private int soLuongMua;
     Scanner nhapttsach = new Scanner(System.in);
-    //constructor
     public Sach() {
         
     }
-    public Sach(String tenSach, int soLuong){
+    public Sach(String tenSach, int soLuongMua){
         this.tenSach=tenSach;
-        this.soLuong=soLuong;
+        this.soLuong=soLuongMua;
     }
     public String getTenSach() {
         return tenSach;
@@ -83,12 +83,12 @@ public class Sach {
         this.moTa = moTa;
     }
 
-    public double getDonGia() {
-        return donGia;
+    public double getgia() {
+        return gia;
     }
 
     public void setDonGia(double donGia) {
-        this.donGia = donGia;
+        this.gia = donGia;
     }
 
     public String getTheLoai() {
@@ -130,6 +130,12 @@ public class Sach {
         this.soLuong = soLuong;
     }
     
+    private int getsoLuongMua(){
+        return soLuongMua;
+    }
+    private void setsoLuongMua(int soLuongMua){
+        this.soLuongMua=soLuongMua;
+    }
     public void nhapThongTinSachChoNhanVien() {
 //        System.out.println("Nhap ten sach: ");
 //        this.tenSach = nhapttsach.nextLine();
@@ -159,7 +165,7 @@ public class Sach {
 
 //        System.out.println("Nhap don gia: ");
 //        this.donGia = Double.parseDouble(nhapttsach.nextLine());
-        nhapVaCheckDonGia();
+        nhapVaCheckGia();
         
         System.out.println("Nhap mo ta sach: ");
         this.moTa = nhapttsach.nextLine();
@@ -376,22 +382,22 @@ public class Sach {
         }while(!validCate);
     }
     
-    public void nhapVaCheckDonGia(){
+    public void nhapVaCheckGia(){
         boolean validGia = false;
         do{
             try{
-                System.out.println("Nhap don gia: ");
+                System.out.println("Nhap gia: ");
                 String input = nhapttsach.nextLine().trim();
-                this.donGia = Double.parseDouble(input);
+                this.gia = Double.parseDouble(input);
                 
-                if(this.donGia<=0){
-                    System.out.println("Don gia phai lon hon 0,moi ban nhap lai.....");
+                if(this.gia<=0){
+                    System.out.println("Gia phai lon hon 0,moi ban nhap lai.....");
                 }
                 else{
                     validGia = true;
                 }
             } catch(NumberFormatException e){
-                System.out.println("Don gia khong hop le, moi ban nhap lai.....");
+                System.out.println("Gia khong hop le, moi ban nhap lai.....");
             }
         }while(!validGia);
     }
@@ -427,7 +433,7 @@ public class Sach {
         sb.append("So trang: ").append(this.soTrang).append(" trang\n");
         sb.append("Nha xuat ban: ").append(this.NXB).append("\n");
         sb.append("The loai: ").append(this.theLoai).append("\n");
-        sb.append("Don gia: ").append(this.donGia).append("\n");
+        sb.append("Gia: ").append(this.gia).append("\n");
         sb.append("Mo ta sach: ").append(this.moTa).append("\n");
         sb.append("So luong: ").append(this.soLuong).append("\n");
         //Thêm thông tin khác tại đây nếu cần
