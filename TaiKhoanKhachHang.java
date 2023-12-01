@@ -25,7 +25,8 @@ public class TaiKhoanKhachHang {
     private String username;
     private String userpassword;
     private KhachHang khachhang;
-    private ArrayList<GioHang> dsgioHang = new ArrayList<>();
+    private GioHang giohang;
+    public String fileGioHang;
     
     public TaiKhoanKhachHang() {
     }
@@ -57,19 +58,60 @@ public class TaiKhoanKhachHang {
         return khachhang;
     }
 
-    public ArrayList<GioHang> getDsgioHang() {
-        return dsgioHang;
-    }
-
+    
     public void setKhachhang(KhachHang khachhang) {
         this.khachhang = khachhang;
     }
 
-    public void setDsgioHang(ArrayList<GioHang> dsgioHang) {
-        this.dsgioHang = dsgioHang;
+    public GioHang getGiohang() {
+        return giohang;
     }
+
+    public void setGiohang(GioHang giohang) {
+        this.giohang = giohang;
+    }
+
+    public String getFileGioHang() {
+        return fileGioHang;
+    }
+
+    public void setFileGioHang(String fileGioHang) {
+        this.fileGioHang = fileGioHang;
+    }
+
+
     
+
     
+    private void duaDuLieuVaoArrayList()
+    {
+        File file= new File(this.getFileGioHang());
+        try ( Scanner scan= new Scanner(file))
+        {
+            GioHang temp= new GioHang();
+            CT_GioHang tmp= new CT_GioHang();
+            while ( scan.hasNextLine())
+            {
+                String dong=scan.nextLine();
+                String dulieu[]=dong.split("#");
+                if ( dulieu[0].equalsIgnoreCase(this.getKhachhang().getMaKH()))
+                {
+                    tmp.setMaKhachhang(dulieu[0]);
+                    tmp.setMaSach(dulieu[1]);
+                    tmp.setTenSach(dulieu[2]);
+                    tmp.setLoaiSach(dulieu[3]);
+                    tmp.setSoLuong(Integer.parseInt(dulieu[4]));
+                    tmp.setThanhTien(Double.parseDouble(dulieu[5]));
+                    temp.setGioHang(tmp);
+                }
+            }
+            this.setGiohang(temp);
+            
+        } catch (FileNotFoundException ex) {
+            
+        }
+        
+    }
     
     public  void setInfo()
     {
@@ -96,6 +138,24 @@ public class TaiKhoanKhachHang {
         }
         System.out.println("Đã tạo tài khoản thành công!");
         
+    }
+    
+    
+    private void checkFileGioHang(){
+        String fileName="GioHang";
+        fileName=fileName.concat(this.getKhachhang().getMaKH()).concat(".txt");
+        File file= new File(fileName);
+        if (file.exists())
+            this.setFileGioHang(fileName);
+        else 
+            try 
+            {
+                file.createNewFile();
+                this.setFileGioHang(fileName);
+            } 
+            catch (IOException ex) {
+                System.out.println("Lỗi IOexception!!!");
+            }
     }
     
     public  int kiemTraDangNhap()
@@ -128,9 +188,11 @@ public class TaiKhoanKhachHang {
                 if ( flag ==1)
                 {
                     System.out.println("Đăng nhập thành công !");
-                    this.setUsername(tenDangNhap.trim());
+                    this.setUsername(tenDangNhap.trim()); // đưa userName và password vào 2 biến private khi đăng nhập
                     this.setUserpassword(matKhau.trim());
-                    this.khachhang = new KhachHang(dulieu[2],dulieu[3],dulieu[4],dulieu[5],dulieu[6]);
+                    this.setKhachhang(new KhachHang(dulieu[2],dulieu[3],dulieu[4],dulieu[5],dulieu[6])); // đưa thông tin khách hàng vào biến private
+                    checkFileGioHang();
+                    duaDuLieuVaoArrayList();
                     FileWriter fileWrt= new FileWriter("userLogin.txt",true);
                     StringBuilder StrBld= new StringBuilder();
                     StrBld.append(this.getUsername()).append("#").append(this.getUserpassword());
@@ -169,34 +231,20 @@ public class TaiKhoanKhachHang {
     private boolean checkSanPhamTrongGio(String maKhachHang,String maSanPham, int soLuong)
     {
         boolean flag=false;
-        try {
-            
-            File fileSach= new File("GioHang.txt");
-            StringBuilder sanPham= new StringBuilder();
-            Scanner scan= new Scanner(fileSach);
-            while ( scan.hasNextLine())
+
+            // chạy for tìm thằng nào của mã đó rùi lấy để tăng số lượng
+            for(CT_GioHang giohang : this.getGiohang().getGioHang())
             {
-                String dong=scan.nextLine();
-                String dulieu[]=dong.split("#");
-                if ( maKhachHang.equalsIgnoreCase(dulieu[0]) && maSanPham.equalsIgnoreCase(dulieu[1]))
+                if ( giohang.getMaKhachhang().equalsIgnoreCase(maKhachHang) && giohang.getMaSach().equalsIgnoreCase(maSanPham))
                 {
-                    dulieu[4]=String.valueOf(Integer.parseInt(dulieu[4])+soLuong);
-                    System.out.println("Doc duoc du lieu");
-                    flag=true;
+                        double giasach=giohang.getThanhTien()/giohang.getSoLuong();
+                        giohang.setSoLuong(giohang.getSoLuong()+soLuong);
+                        giohang.setThanhTien(giasach*giohang.getSoLuong());
+                        flag=true;
                 }
-                sanPham.append(String.join("#", dulieu));
-                sanPham.append(System.lineSeparator());
-            }
-            if (flag)
-            {
-                try (PrintWriter gioHang = new PrintWriter("GioHang.txt")) {
-                    gioHang.println(sanPham.toString());
-                }
+            
             }
 
-        } catch (FileNotFoundException ex) {
-            System.out.println("Không tìm được file");
-        }
         return flag;
     }
     
@@ -218,23 +266,21 @@ public class TaiKhoanKhachHang {
                     kiemTraSach=1;
                     System.out.print("Chọn số lượng muốn thêm vào giỏ: ");
                     soLuongSanPham=Integer.parseInt(input.nextLine());
-                    if ( checkSanPhamTrongGio(this.khachhang.getMaKH(), maSanPham, soLuongSanPham)==true)
+                    if ( checkSanPhamTrongGio(this.getKhachhang().getMaKH(), maSanPham, soLuongSanPham)==true)
                     {
+                        this.getGiohang().ghiGioHangVaoFile(this.getKhachhang().getMaKH());
                         System.out.println("Bạn đã thêm sách thành công với sách đã có ^^");
                     }
                     else 
                     {
-                        FileWriter fileWrt= new FileWriter("GioHang.txt",true);
-                        StringBuilder StrBuilder= new StringBuilder();
-                        StrBuilder.append(this.khachhang.getMaKH());
-                        StrBuilder.append("#").append(maSanPham);
-                        StrBuilder.append("#").append(thongTinSach[0]);
-                        StrBuilder.append("#").append(thongTinSach[8]);
-                        StrBuilder.append("#").append(soLuongSanPham);
-                        StrBuilder.append("#").append(Double.parseDouble(thongTinSach[6])*soLuongSanPham);
-                        StrBuilder.append(System.lineSeparator());
-                        fileWrt.write(StrBuilder.toString());
-                        fileWrt.flush();
+                        CT_GioHang sanpham= new CT_GioHang();
+                        sanpham.setMaKhachhang(this.getKhachhang().getMaKH());
+                        sanpham.setMaSach(maSanPham);
+                        sanpham.setTenSach(thongTinSach[0]);
+                        sanpham.setLoaiSach(thongTinSach[8]);
+                        sanpham.setSoLuong(soLuongSanPham);
+                        sanpham.setThanhTien(Double.parseDouble(thongTinSach[6])*soLuongSanPham);
+                        this.getGiohang().getGioHang().add(sanpham);
                         System.out.println("Bạn đã thêm sách thành công ^^");
                     }              
                 }   
@@ -243,16 +289,12 @@ public class TaiKhoanKhachHang {
                 System.out.println("Không có mã sách này trong kho !!!");
         } catch (FileNotFoundException ex) {
             System.out.println("Không tìm thấy file !!!");
-        } catch (IOException ex) {
-            System.out.println("Không tìm thấy file !!!");
         }
               
     }
     
     
     public void xoaSanPhamTrongGioHang(){
-        Scanner input= new Scanner(System.in);
-        File fileGioHang= new File("GioHang.txt");
         
     }
         
@@ -293,18 +335,18 @@ public class TaiKhoanKhachHang {
             switch(choice)
             {
                 case 1:
-                    if ( this.khachhang.toString().isEmpty())
+                    if ( this.getKhachhang().toString().isEmpty())
                     {
                         System.out.println("Không có thông tin. Bạn có muốn nhập thông tin không ?");
                         System.out.print("1. Có || 0. Không ");
                         int choiceCase1=Integer.parseInt(input.nextLine());
                         if(choiceCase1==1)
                         {
-                            this.khachhang.setInfo();
+                            this.getKhachhang().setInfo();
                             
-                            System.out.println(this.khachhang.toString());
+                            System.out.println(this.getKhachhang().toString());
                         }
-                    }else System.out.println(this.khachhang.toString());
+                    }else System.out.println(this.getKhachhang().toString());
                    break;
                 case 2:
                     TuSach.hienThiSachDangKinhDoanh();
@@ -314,9 +356,10 @@ public class TaiKhoanKhachHang {
                     break;
                 case 4:
                     themVaoGiohang();
+                    this.getGiohang().ghiGioHangVaoFile(this.getKhachhang().getMaKH());
                     break;
                 case 5:
-                    GioHang.xemGioHang();
+                    this.getGiohang().xemGioHang(this.getKhachhang().getMaKH());
                     break;
                 case 6:
                     xoaSanPhamTrongGioHang();

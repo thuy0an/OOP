@@ -127,6 +127,10 @@ public class KhachHang {
     {
         this.diaChi.add(dchi);
     }
+
+   
+    
+    
     
     public void setInfo(){
         Scanner input= new Scanner(System.in);
