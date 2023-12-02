@@ -29,10 +29,8 @@ public class GioHang {
     
     
     
-    public void ghiGioHangVaoFile(String maKhachHang) {
-        String fileGioHang="GioHang";
-        fileGioHang=fileGioHang.concat(maKhachHang).concat(".txt");
-        System.out.println("Ten file ben ghiGioHang: " + fileGioHang);
+    public void ghiGioHangVaoFile(String fileGioHang) {
+
         try (PrintWriter printWriter = new PrintWriter(fileGioHang)) {
             StringBuilder sb = new StringBuilder();
             for (CT_GioHang giohang : this.getGioHang()) {
@@ -53,35 +51,35 @@ public class GioHang {
     
     
     
-    public  void xemGioHang(String makhachhang) {
-        String fileGioHang="GioHang";
-        fileGioHang=fileGioHang.concat(makhachhang).concat(".txt");
+    public void xemGioHang(String fileGioHang) {
         File file= new File(fileGioHang);
         try (Scanner scanner = new Scanner(file))
         {
-            System.out.println("\t+---------------------------------------------------------------------------------------+");
-            System.out.println("\t|                                 GIO HANG CUA BAN                                      |");
-            System.out.println("\t|_______________________________________________________________________________________|");
-            System.out.printf("\t| %-40s| %-8s| %-10s| %-10s| %-10s| \n", "Ten Sach", "Ma Sach", "Loai Sach", "So Luong", "Thanh Tien");
-            System.out.println("\t+-----------------------------------------+---------+-----------+-----------+-----------+\n");
-
+            System.out.println("\t+-------------------------------------------------------------------------------------------------+");
+            System.out.println("\t|                                           GIO HANG CUA BAN                                      |");
+            System.out.println("\t|-------------------------------------------------------------------------------------------------|");
+            System.out.printf("\t| %-50s| %-8s| %-10s| %-10s| %-10s| \n", "Ten Sach", "Ma Sach", "Loai Sach", "So Luong", "Thanh Tien");
+            System.out.println("\t+---------------------------------------------------+---------+-----------+-----------+-----------+");
             while(scanner.hasNextLine()){ 
                 String line = scanner.nextLine();
                 String[] gioHang = line.split("#");
-                    String maKhachHang = gioHang[0];
-                    String maSach = gioHang[1];
-                    String tenSach = gioHang[2];
-                    String loaiSach = gioHang[3];
-                    String soLuong = gioHang[4];
-                    String thanhTien = gioHang[5];
-                    if (timGioHangTheoMaKhachHang(maKhachHang)) {
-                        System.out.printf("| %-40s| %-8s| %-10s| %-10s| %-10s|\n",tenSach, maSach, loaiSach, soLuong, thanhTien);
-                    }
+                String maSach = gioHang[1];
+                String tenSach = gioHang[2];
+                String loaiSach = gioHang[3];
+                String soLuong = gioHang[4];
+                String thanhTien = gioHang[5];
+                System.out.printf("\t| %-50s| %-8s| %-10s| %-10s| %-10s| %n",tenSach, maSach, loaiSach, soLuong, thanhTien,"|");
+                System.out.println("\t+---------------------------------------------------+---------+-----------+-----------+-----------+");
             }
         } catch (FileNotFoundException ex) {
             System.out.println("Không tìm thấy file");
         }
+        catch (Exception e) {
+            System.out.println("");
+        }
+        
     }
+    /*
     private boolean timGioHangTheoMaKhachHang(String maKhachHang) {
         File user= new File("user.txt");
         File userLogin= new File("userLogin.txt");
@@ -103,5 +101,6 @@ public class GioHang {
         }
         return false;
     }
+    */
 }    
  
