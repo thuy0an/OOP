@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -116,16 +118,8 @@ public class CT_DonHang {
     public void setDsSanPham(String dsSanPham) {
         this.dsSanPham = dsSanPham;
     }
-    
-    
-//    public Double tinhTongTien() {
-//        for (GioHang giohang : dsSanPham) {
-//        tongTien += giohang.getThanhTien();
-//        }
-//        return tongTien;
-//    }
-    
-    //Chưa có trường hợp khách mua sách điện tử phải bắt buộc thanh toán chuyển khoản
+      
+    //
     public String chonPTTT() {
         String ptThanhToan = new String();
         int chon=0;
@@ -252,16 +246,73 @@ public class CT_DonHang {
         this.getEmail();
         this.chonPTTT();
     }
-       
-    public String hienThiSanPham(String maKhachHang) {
-        String dsSanPham = null;
-        GioHang giohang = new GioHang();
-        dsSanPham = giohang.chonSachTuDanhSach(maKhachHang);        
-        return dsSanPham;
+    
+    public static ArrayList<CT_GioHang> docGioHangTuFile(String tenfile) {
+        ArrayList<CT_GioHang> gioHangList = new ArrayList<>();
+        File file= new File(tenfile);
+        try (Scanner scanner = new Scanner(file))
+        {
+            while(scanner.hasNextLine()){ 
+                String line = scanner.nextLine();
+                String[] gioHang = line.split("#");
+                if (gioHang.length == 6) {
+                    String maKH = gioHang[0];
+                    String maSach = gioHang[1];
+                    String tenSach = gioHang[2];
+                    String loaiSach = gioHang[3];
+                    String soLuong = gioHang[4];
+                    String thanhTien = gioHang[5];
+                    CT_GioHang giohang = new CT_GioHang(gioHang[0], gioHang[1], gioHang[2], gioHang[3], gioHang[4], gioHang[5]);
+                    gioHangList.add(giohang);  
+                    }
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("Không tìm thấy file");
+        }
+        return gioHangList;
     }
+    
+    public ArrayList<CT_GioHang> chonSachTuDanhSach(String tenfile) {
+        //String dsSach = null;
+        //CT_GioHang gioHang = new CT_GioHang();
+        //đọc file giỏ hàng
+        ArrayList<CT_GioHang> giohang = CT_DonHang.docGioHangTuFile(tenfile);
+        ArrayList<CT_GioHang> giohang_dachon = new ArrayList<>();
+        GioHang gioHang = new GioHang();
+        if (giohang.isEmpty()) {
+            System.out.println("Giỏ hàng đang trống! Vui lòng thêm sách vào giỏ hàng! ");
+            return null;
+        }
+        Scanner scan = new Scanner(System.in);
+        int soluong = -1;
+        do {
+            System.out.println("Nhập số lượng sản phẩm muốn mua trong giỏ hàng: ");
+            soluong = Integer.parseInt(scan.nextLine().trim());
+            int index = -1;
+            System.out.println("Nhập STT sách muốn đặt: " ); //cách bởi dấu ";"
+            String dulieu = scan.nextLine();
+            String duLieu[] = dulieu.split(" ;");
+            for (int i = 1; i <= soluong; i++) {
+            do {
+                try {
+                    index = Integer.parseInt(duLieu[i]) -1;
+                    if (index < 0 || index >= giohang.size()) {
+                        System.out.println("Sản phẩm thứ " + i + " không hợp lệ! Vui lòng chọn lại!");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Vui lòng chọn sách muốn đặt!");
+                }
+            } while (index < 0 || index >= giohang.size());
+            giohang_dachon.add(giohang.get(index));
+            giohang.remove(giohang.get(index));
+            gioHang.ghiGioHangVaoFile(giohang_dachon.get(index).getMaKhachhang());
+            }
+        } while (soluong < 0 || soluong >= giohang.size());
+        return giohang_dachon;
+    }
+    
             
-    public void datHang() {
-
+    public void datHang(String tenfile) {
             if (null!= this.getDsSanPham()) {
                 this.setInfo();
                 System.out.println("--BẠN CÓ XÁC NHẬN ĐẶT HÀNG?--");
@@ -274,9 +325,9 @@ public class CT_DonHang {
                     switch (chon) {
                         case 1:
                             this.setTrangThai(0);
-                            this.setMaDonHang(this.taoMaDH());
-                            this.getDsSanPham();
-                            this.setTongTien(this.tinhTongTien()); 
+                            this.setMaDonHang(taoMaDH());
+                            this.hienThiSanPham(tenfile);
+                            this.setTongTien(this.tinhTongTien(tenfile)); 
                             LocalDateTime myDateObj = LocalDateTime.now();   
                             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                             this.setNgayDH(myDateObj.format(myFormatObj));
@@ -287,8 +338,8 @@ public class CT_DonHang {
                                     sb.append(this.getEmail()).append("#");
                                     sb.append(this.chonDiaChi()).append("#");
                                     sb.append(this.getNgayDH()).append("#");
-                                    
-                                    sb.append(this.tinhTongTien()).append("#");
+                                    sb.append(this.hienThiSanPham(tenfile)).append("#");
+                                    sb.append(this.tinhTongTien(tenfile)).append("#");
                                     sb.append(this.chonPTTT()).append("#");
                                     sb.append(this.getTrangThai()).append("#");
                                     sb.append(System.lineSeparator()); //Xuống dòng
@@ -310,9 +361,23 @@ public class CT_DonHang {
                 } while (chon != 3);
             }
     }
-
-    private Double tinhTongTien() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public String hienThiSanPham(String tenfile) {
+        String dsSanPham = null;
+        ArrayList<CT_GioHang> giohang = this.chonSachTuDanhSach(tenfile);
+        for (CT_GioHang giohang1 : giohang) {
+            dsSanPham = giohang1.getTenSach() + " x" + giohang1.getMaSach() + " x" + giohang1.getSoLuong() + " ;";
+        }
+        return dsSanPham;
+    }
+    
+    private Double tinhTongTien(String tenfile) {
+        Double tongTien = null;
+        ArrayList<CT_GioHang> giohang = this.chonSachTuDanhSach(tenfile);
+        for (CT_GioHang giohang1 : giohang) {
+            tongTien += giohang1.getThanhTien();
+        }
+        return tongTien;
     }
     
     @Override
@@ -333,11 +398,14 @@ public class CT_DonHang {
        return sb.toString();
         
     }
-    /* public static void main(String[] args) {
-       
-        CT_DonHang donhang = new CT_DonHang();
-        donhang.setInfo();
-        System.out.println(donhang.toString());
-    }*/
+    
+
+//     public static void main(String[] args) {
+//       
+//        CT_DonHang donhang = new CT_DonHang();
+//        donhang.datHang();
+//        System.out.println(donhang.toString());
+//    }
+
 }
 
