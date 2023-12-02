@@ -1,119 +1,125 @@
 
 package BookStore;
-
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.PrintWriter;
+
 
 public class GioHang {
-    private String maKhachhang;
-    private String maSach;
-    private String tenSach;
-    private String loaiSach;
-    private int soLuong;
-    private Double thanhTien;
+    private ArrayList<CT_GioHang> dsSanPham= new ArrayList<>();
 
-    public GioHang(String maKhachhang, String maSach, String tenSach, String loaiSach, int soLuong, Double thanhTien) {
-        this.maKhachhang = maKhachhang;
-        this.maSach = maSach;
-        this.tenSach = tenSach;
-        this.loaiSach = loaiSach;
-        this.soLuong = soLuong;
-        this.thanhTien = thanhTien;
-    }
-    
     public GioHang() {
+        
     }
 
-    public String getMaKhachhang() {
-        return maKhachhang;
+    public ArrayList<CT_GioHang> getGioHang() {
+        return dsSanPham;
     }
 
-    public String getMaSach() {
-        return maSach;
-    }
-
-    public String getTenSach() {
-        return tenSach;
-    }
-
-    public String getLoaiSach() {
-        return loaiSach;
+    public void setGioHang(CT_GioHang GioHang) {
+        this.dsSanPham.add(GioHang);
     }
     
-    public int getSoLuong() {
-        return soLuong;
+    public void ghiGioHangVaoFile(String maKhachHang) {
+        String fileGioHang="GioHang";
+        fileGioHang=fileGioHang.concat(maKhachHang).concat(".txt");
+        System.out.println("Ten file ben ghiGioHang: " + fileGioHang);
+        try (PrintWriter printWriter = new PrintWriter(fileGioHang)) {
+            StringBuilder sb = new StringBuilder();
+            for (CT_GioHang giohang : this.getGioHang()) {
+                sb.append(giohang.getMaKhachhang()).append("#");
+                sb.append(giohang.getMaSach()).append("#");
+                sb.append(giohang.getTenSach()).append("#");
+                sb.append(giohang.getLoaiSach()).append("#");
+                sb.append(giohang.getSoLuong()).append("#");
+                sb.append(giohang.getThanhTien());
+                sb.append(System.lineSeparator()); //Xuống dòng
+            }
+            printWriter.println(sb.toString());
+        } catch (IOException e) {
+            System.out.println("Khong hop le" + e.getMessage());
+        }
     }
 
-    public void setTenSach(String tenSach) {
-        this.tenSach = tenSach;
-    }
-
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
-    }
     
-    public String getMaKhachHang() {
-        return maKhachhang;
-    }
-
-    public void setMaKhachHang(String maKhachHang) {
-        this.maKhachhang = maKhachHang;
-    }
-    
-    public Double getThanhTien() {
-        return thanhTien;
-    }
-    
-    public void setThanhTien(Double thanhTien) {
-        this.thanhTien = thanhTien;
-    }
-    
-//    public void ktraSoLuongTonKho() {
-//        
-//   }
-
-    
-    @Override
-    public String toString() {
-       StringBuilder sb = new StringBuilder();
-       sb.append("\n");
-       sb.append("Ten sach: ").append(this.getTenSach()).append("\n");
-       sb.append("Ma sach: ").append(this.getMaSach()).append("\n");
-       sb.append("Loai sach: ").append(this.getLoaiSach()).append("\n");
-       sb.append("So luong: ").append(this.getSoLuong()).append("\n");
-       sb.append("Thanh tien: ").append(this.getThanhTien()).append("\n");
-       return sb.toString();
-   }
-    
-    public static void xemGioHang() {
-        File file= new File("GioHang.txt");
+    public void xemGioHang(String makhachhang) {
+        String fileGioHang="GioHang";
+        fileGioHang=fileGioHang.concat(makhachhang).concat(".txt");
+        File file= new File(fileGioHang);
         try (Scanner scanner = new Scanner(file))
         {
             System.out.println("\t+---------------------------------------------------------------------------------------+");
-            System.out.println("\t|                                 GIO HANG CUA BAN                                      |");
+            System.out.println("\t|                                 GIỎ HÀNG CỦA TÔI                                     |");
             System.out.println("\t|_______________________________________________________________________________________|");
-            System.out.printf("\t| %-40s| %-8s| %-10s| %-10s| %-10s| \n", "Ten Sach", "Ma Sach", "Loai Sach", "So Luong", "Thanh Tien");
+            System.out.printf("\t| %-5s| %-40s| %-8s| %-10s| %-10s| %-10s| \n", "STT", "Ten Sach", "Ma Sach", "Loai Sach", "So Luong", "Thanh Tien");
             System.out.println("\t+-----------------------------------------+---------+-----------+-----------+-----------+\n");
-
+            
+            int index = 0;
             while(scanner.hasNextLine()){ 
                 String line = scanner.nextLine();
                 String[] gioHang = line.split("#");
+                if (gioHang.length == 6) {
                     String maKhachHang = gioHang[0];
                     String maSach = gioHang[1];
                     String tenSach = gioHang[2];
                     String loaiSach = gioHang[3];
                     String soLuong = gioHang[4];
                     String thanhTien = gioHang[5];
+                    CT_GioHang giohang = new CT_GioHang(gioHang[0], gioHang[1], gioHang[2], gioHang[3], gioHang[4], gioHang[5]);
+                    dsSanPham.add(giohang);
+                    index++;
                     if (timGioHangTheoMaKhachHang(maKhachHang)) {
-                        System.out.printf("| %-40s| %-8s| %-10s| %-10s| %-10s|\n",tenSach, maSach, loaiSach, soLuong, thanhTien);
+                        System.out.printf("| %-5s| %-40s| %-8s| %-10s| %-10s| %-10s|\n", index, tenSach, maSach, loaiSach, soLuong, thanhTien);
                     }
+                }
             }
         } catch (FileNotFoundException ex) {
             System.out.println("Không tìm thấy file");
         }
     }
-    public static boolean timGioHangTheoMaKhachHang(String maKhachHang) {
+    
+    public String chonSachTuDanhSach(String maKhachHang) {
+        String dsSach = null;
+        if (dsSanPham.isEmpty()) {
+            System.out.println("Giỏ hàng đang trống! Vui lòng thêm sách vào giỏ hàng! ");
+        return null;
+        }
+        Scanner scan = new Scanner(System.in);
+        xemGioHang(maKhachHang);
+        
+        //
+        int soluong = -1;
+        do {
+            System.out.println("Nhập số lượng sản phẩm muốn mua trong giỏ hàng: ");
+            soluong = Integer.parseInt(scan.nextLine().trim());
+            int index = -1;
+            System.out.println("Nhập STT sách muốn đặt: " ); //cách bởi dấu ";"
+            String dulieu = scan.nextLine();
+            String duLieu[] = dulieu.split(" ;");
+            for (int i = 1; i <= soluong; i++) {
+            CT_GioHang gioHang_tam = new CT_GioHang();
+            do {
+                    try {
+                        index = Integer.parseInt(duLieu[i]) -1;
+                        if (index < 0 || index >= dsSanPham.size()) {
+                            System.out.println("Sản phẩm thứ " + i + " không hợp lệ! Vui lòng chọn lại!");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Vui lòng chọn sách muốn đặt!");
+                    }
+            } while (index < 0 || index >= dsSanPham.size());
+            gioHang_tam = dsSanPham.get(index);
+            dsSach = gioHang_tam.getTenSach() + " x" + gioHang_tam.getMaSach() + " x" + gioHang_tam.getSoLuong() + " ;";
+            }
+        } while (soluong < 0 || soluong >= dsSanPham.size());
+        return dsSach;
+    }
+    
+    
+    private boolean timGioHangTheoMaKhachHang(String maKhachHang) {
         File user= new File("user.txt");
         File userLogin= new File("userLogin.txt");
         try {
@@ -134,6 +140,5 @@ public class GioHang {
         }
         return false;
     }
-
-    
-}
+}    
+ 
