@@ -295,7 +295,23 @@ public class TaiKhoanKhachHang {
     
     
     public void xoaSanPhamTrongGioHang(){
-        
+        Scanner input= new Scanner(System.in);
+        System.out.print("Chọn mã sản phẩm muốn xỏa khỏi giỏ:" );
+        String ma=input.nextLine();
+        boolean flag=false;
+        for(int i=0; i < this.getGiohang().getGioHang().size(); i++)
+        {
+            CT_GioHang sanpham=this.getGiohang().getGioHang().get(i);
+            if (sanpham.getMaSach().equalsIgnoreCase(ma))
+            {
+                this.getGiohang().getGioHang().remove(i);
+                flag=true;
+            }
+        }
+        if ( flag)
+            System.out.println("Đã xóa sản phẩm khỏi giỏ");
+        else 
+            System.out.println("Không có sản phẩm trong giỏ để xóa");
     }
         
         
@@ -311,12 +327,6 @@ public class TaiKhoanKhachHang {
     public void huyDonHang(){
         
     }
-    
-    public void lichSuDonHang(){
-        
-    }
-    
-    
     
     public  void chucNangNguoiDung(){
         Scanner input= new Scanner(System.in);
@@ -356,13 +366,14 @@ public class TaiKhoanKhachHang {
                     break;
                 case 4:
                     themVaoGiohang();
-                    this.getGiohang().ghiGioHangVaoFile(this.getKhachhang().getMaKH());
+                    this.getGiohang().ghiGioHangVaoFile(this.getFileGioHang());
                     break;
                 case 5:
-                    this.getGiohang().xemGioHang(this.getKhachhang().getMaKH());
+                    this.getGiohang().xemGioHang(this.getFileGioHang());
                     break;
                 case 6:
                     xoaSanPhamTrongGioHang();
+                    this.getGiohang().ghiGioHangVaoFile(this.getFileGioHang());
                     break;
                 case 7:
                     CT_DonHang demo= new CT_DonHang();
@@ -370,13 +381,35 @@ public class TaiKhoanKhachHang {
                     break;
                 case 8:
                     break;
-                 
-                     
 
             }
         }while (choice!=0);
     }
     
+    public void chucNangChoKhach()
+    {
+        Scanner input= new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("\n***Hãy đăng nhập hoặc tạo tài khoản để dùng được nhiều chức năng hơn***\n");
+            System.out.println("\t+-----------------Chức năng dạng khách--------------+");
+            System.out.printf("\t| %-50s|\n","1.Xem danh sách sản phẩm bán");
+            System.out.printf("\t| %-50s|\n","2.Tìm kiếm sản phẩm");
+            System.out.printf("\t| %-50s|\n","0.Thoát");
+            System.out.println("\t+---------------------------------------------------+");
+            System.out.print("Chọn thao tác: ");
+            choice=Integer.parseInt(input.nextLine());
+            switch(choice)
+            {
+                case 1:
+                    TuSach.hienThiSachDangKinhDoanh();
+                    break;
+                case 2:
+                    TuSach.timSach();
+                    break;
+            }
+        }while (choice!=0);
+    }
         
     public void giaodienKhachHang()
     {
@@ -404,7 +437,7 @@ public class TaiKhoanKhachHang {
                     case 0:
                         break;
                 }
-            }
+            }        
             catch(NumberFormatException ei)
             {
                 System.out.println("\n--Vui lòng chọn đúng các thao tác đã hiển thị!!!--\n");

@@ -15,7 +15,6 @@ import java.util.Scanner;
  * @author Admin
  */
 public class App {
-
     public static void startMenu()
     {
         System.out.println("\t+---------Chào mừng đến với Ứng dụng mua hàng BookStore-------+");
@@ -27,13 +26,14 @@ public class App {
     }
     
     public static void main(String[] args) {
-    TaiKhoanKhachHang demo= new TaiKhoanKhachHang();
+    
         int choice=0;
-        do {
+        do {  
+            TaiKhoanKhachHang demo= new TaiKhoanKhachHang();
+            startMenu();    
             Scanner input= new Scanner(System.in);
-            startMenu();
-            
             try {
+
                 System.out.print("Chọn thao tác: ");
                 choice=Integer.parseInt(input.nextLine());
                 switch(choice)
@@ -41,28 +41,24 @@ public class App {
                     case 1:
                         int check=demo.kiemTraDangNhap();
                         if ( check==1)
-                        {
                             demo.giaodienKhachHang();
-
-                        }
                         break;
                         
                     case 2:
                         demo.setInfo();
                         break;
                     case 3:
-                        System.out.println("Đăng nhập thành công");
+                        demo.chucNangChoKhach();
                         break;
                     case 0:
                         FileWriter userLogin= new FileWriter("userLogin.txt");
                             userLogin.write("");
                             userLogin.flush();
-                            break;
-                        
-                        
+                            break;    
                 }
                 if ( choice < 0 || choice > 3)
                 System.out.println("\n--Vui lòng chọn đúng các thao tác đã hiển thị!!!--\n");
+
             } 
             catch(NumberFormatException ei)
             {
