@@ -19,21 +19,19 @@ public class GioHang {
         
     }
 
-    /*public ArrayList<CT_GioHang> getGioHang() {
+    public ArrayList<CT_GioHang> getDsSanPham() {
         return dsSanPham;
     }
 
-    public void setGioHang(CT_GioHang GioHang) {
+    public void setDsSanPham(CT_GioHang GioHang) {
         this.dsSanPham.add(GioHang);
-    }*/
+    }
 
     public void setDsSanPham(ArrayList<CT_GioHang> dsSanPham) {
         this.dsSanPham = dsSanPham;
     }
-
-    public ArrayList<CT_GioHang> getDsSanPham() {
-        return dsSanPham;
-    }
+    
+    
     
     
     public void ghiGioHangVaoFile(String fileGioHang) {
@@ -74,7 +72,7 @@ public class GioHang {
                 String maSach = gioHang[1];
                 String tenSach = gioHang[2];
                 String loaiSach = gioHang[3];
-                String giaSach = gioHang[4];
+                String giaSach=gioHang[4];
                 String soLuong = gioHang[5];
                 String thanhTien = gioHang[6];
                 System.out.printf("\t| %-50s| %-8s| %-10s| %-10s | %-10s| %-10s| %n",tenSach, maSach, loaiSach,giaSach,soLuong, thanhTien,"|");
