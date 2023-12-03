@@ -39,6 +39,7 @@ public class GioHang {
                 sb.append(giohang.getMaSach()).append("#");
                 sb.append(giohang.getTenSach()).append("#");
                 sb.append(giohang.getLoaiSach()).append("#");
+                sb.append(giohang.getGiaSach()).append("#");
                 sb.append(giohang.getSoLuong()).append("#");
                 sb.append(giohang.getThanhTien());
                 sb.append(System.lineSeparator()); //Xuống dòng
@@ -58,7 +59,7 @@ public class GioHang {
             System.out.println("\t+-------------------------------------------------------------------------------------------------+");
             System.out.println("\t|                                           GIO HANG CUA BAN                                      |");
             System.out.println("\t|-------------------------------------------------------------------------------------------------|");
-            System.out.printf("\t| %-50s| %-8s| %-10s| %-10s| %-10s| \n", "Ten Sach", "Ma Sach", "Loai Sach", "So Luong", "Thanh Tien");
+            System.out.printf("\t| %-50s| %-8s| %-10s| %-10s |%-10s| %-10s| \n", "Ten Sach", "Ma Sach", "Loai Sach","Gia sach" ,"So Luong", "Thanh Tien");
             System.out.println("\t+---------------------------------------------------+---------+-----------+-----------+-----------+");
             while(scanner.hasNextLine()){ 
                 String line = scanner.nextLine();
@@ -66,9 +67,10 @@ public class GioHang {
                 String maSach = gioHang[1];
                 String tenSach = gioHang[2];
                 String loaiSach = gioHang[3];
-                String soLuong = gioHang[4];
-                String thanhTien = gioHang[5];
-                System.out.printf("\t| %-50s| %-8s| %-10s| %-10s| %-10s| %n",tenSach, maSach, loaiSach, soLuong, thanhTien,"|");
+                String giaSach=gioHang[4];
+                String soLuong = gioHang[5];
+                String thanhTien = gioHang[6];
+                System.out.printf("\t| %-50s| %-8s| %-10s| %-10s | %-10s| %-10s| %n",tenSach, maSach, loaiSach,giaSach,soLuong, thanhTien,"|");
                 System.out.println("\t+---------------------------------------------------+---------+-----------+-----------+-----------+");
             }
         } catch (FileNotFoundException ex) {

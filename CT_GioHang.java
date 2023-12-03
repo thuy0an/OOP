@@ -6,14 +6,16 @@ public class CT_GioHang {
     private String maSach;
     private String tenSach;
     private String loaiSach;
+    private Double giaSach;
     private int soLuong;
     private Double thanhTien;
 
-    public CT_GioHang(String maKhachhang, String maSach, String tenSach, String loaiSach, int soLuong, Double thanhTien) {
+    public CT_GioHang(String maKhachhang, String maSach, String tenSach, String loaiSach,Double giaSach, int soLuong, Double thanhTien) {
         this.maKhachhang = maKhachhang;
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.loaiSach = loaiSach;
+        this.giaSach=giaSach;
         this.soLuong = soLuong;
         this.thanhTien = thanhTien;
     }
@@ -37,6 +39,15 @@ public class CT_GioHang {
     public String getLoaiSach() {
         return loaiSach;
     }
+
+    public Double getGiaSach() {
+        return giaSach;
+    }
+
+    public void setGiaSach(Double giaSach) {
+        this.giaSach = giaSach;
+    }
+    
     
     public int getSoLuong() {
         return soLuong;
@@ -77,6 +88,7 @@ public class CT_GioHang {
        sb.append("Ten sach: ").append(this.getTenSach()).append("\n");
        sb.append("Ma sach: ").append(this.getMaSach()).append("\n");
        sb.append("Loai sach: ").append(this.getLoaiSach()).append("\n");
+       sb.append("Gia sach: ").append(this.getGiaSach()).append("\n");
        sb.append("So luong: ").append(this.getSoLuong()).append("\n");
        sb.append("Thanh tien: ").append(this.getThanhTien()).append("\n");
        return sb.toString();
