@@ -7,70 +7,55 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DonHang {
-    private ArrayList<CT_DonHang> dsDonHang = new ArrayList<>();
+    private CT_DonHang chitietDonHang;
 
     public DonHang() {
     }
 
-    public ArrayList<CT_DonHang> getDsDonHang() {
-        return dsDonHang;
+    public CT_DonHang getChitietDonHang() {
+        return chitietDonHang;
     }
 
-    public void setDsDonHang(ArrayList<CT_DonHang> dsDonHang) {
-        this.dsDonHang = dsDonHang;
+    public void setChitietDonHang(CT_DonHang chitietDonHang) {
+        this.chitietDonHang = chitietDonHang;
     }
 
-    public void timKiemDonHangTheoMaDon() {
-    }
-    
-    //Tìm kiếm đơn hàng theo MaKH, thống kê số lượng 
-    public void timKiemDonHangTheoMaKhach() {
-    }
 
-    
-    public void datHang() {
-        for (CT_DonHang donhang : dsDonHang) {
-            if (null!= donhang.getDsSanPham()) {
-                donhang.setInfo();
-                System.out.println("--BẠN CÓ XÁC NHẬN ĐẶT HÀNG?--");
-                System.out.println("1. Đồng ý đặt hàng");
-                System.out.println("2. Xem thêm sản phẩm");
-                int chon = 0;
-                do {
-                    Scanner scan = new Scanner(System.in);
-                    chon = Integer.parseInt(scan.nextLine());
-                    switch (chon) {
-                        case 1:
-                            donhang.setTrangThai(1);
-                            donhang.setMaDonHang(donhang.taoMaDH());
-                            donhang.getDsSanPham();
-                            donhang.setTongTien(donhang.tinhTongTien()); 
-                            LocalDateTime myDateObj = LocalDateTime.now();   
-                            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                            donhang.setNgayDH(myDateObj.format(myFormatObj));
-                            try (FileWriter fileWriter = new FileWriter("DonHang.txt", true)) {
-                                    StringBuilder sb = new StringBuilder();
-                                    sb.append(donhang.getKhachHang().getMaKH()).append("#");
-                                    sb.append(donhang.getMaDonHang()).append("#");
-                                    sb.append(donhang.getKhachHang().getEmail()).append("#");
-                                    sb.append(donhang.chonDiaChi()).append("#");
-                                    sb.append(donhang.getNgayDH()).append("#");
-                                    ArrayList<Sach> dsSanPham = donhang.getDsSanPham();
-                                    for (Sach sach : dsSanPham) {
-                                        sb.append(sach.getTenSach()).append(" x").append(sach.getSoLuongMua()).append(";");
-                                    }
-                                    sb.append("#");
-                                    sb.append(donhang.tinhTongTien()).append("#");
-                                    sb.append(donhang.getTrangThai()).append("#");
-                                    sb.append(System.lineSeparator()); //Xuống dòng
-                                    fileWriter.write(sb.toString()); //Ghi chuỗi thông tin vào file
-                                    fileWriter.flush(); 
-                                    System.out.println("ĐẶT HÀNG THÀNH CÔNG!");
-                                    //phương thức cập nhật số lượng sách tồn kho
+
+public void datHang(String tenfile) {
+        chitietDonHang.chonSachTuDanhSach(tenfile);
+        System.out.println("--BẠN CÓ XÁC NHẬN ĐẶT HÀNG?--");
+        System.out.println("1. Đồng ý đặt hàng");
+        System.out.println("2. Xem thêm sản phẩm");
+        int chon = 0;
+        do {
+            Scanner scan = new Scanner(System.in);
+            chon = Integer.parseInt(scan.nextLine());
+            switch (chon){
+                case 1:
+                    chitietDonHang.setInfo();
+                    chitietDonHang.setTrangThai(0);
+                    LocalDateTime myDateObj = LocalDateTime.now();   
+                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    chitietDonHang.setNgayDH(myDateObj.format(myFormatObj));
+                    try (FileWriter fileWriter = new FileWriter("DonHang.txt", true)) {
+                        StringBuilder sb = new StringBuilder();
+                        sb.append(chitietDonHang.getMaKH()).append("#");
+                        sb.append(chitietDonHang.getMaDonHang()).append("#");
+                        sb.append(chitietDonHang.getEmail()).append("#");
+                        sb.append(chitietDonHang.chonDiaChi()).append("#");
+                        sb.append(chitietDonHang.getNgayDH()).append("#");
+                        sb.append(chitietDonHang.getDsSanPham()).append("#");
+                        sb.append(chitietDonHang.getTongTien()).append("#");
+                        sb.append(chitietDonHang.getTrangThai()).append("#");
+                        sb.append(System.lineSeparator()); //Xuống dòng
+                        fileWriter.write(sb.toString()); //Ghi chuỗi thông tin vào file
+                        fileWriter.flush(); 
+                        System.out.println("ĐẶT HÀNG THÀNH CÔNG!");
+                        //phương thức cập nhật số lượng sách tồn kho
                             }
                                 catch (IOException e) {
                                     System.out.println("\n ĐẶT HÀNG KHÔNG THÀNH CÔNG! \n");
@@ -78,46 +63,85 @@ public class DonHang {
                             }
                             break;
                         case 2:
-                             //ve trang chu    
+                            break; 
                     }
                     if (chon < 1 || chon > 2)
                             System.out.println("\n Vui lòng xác nhận đặt hàng! \n");
                 } while (chon != 3);
+    }
+
+    
+/*    
+    public void ghiDsDonHangVaoFile() {
+        String fileName = "DonHang.txt";
+        File file = new File(fileName);
+        try (FileWriter fileWriter = new FileWriter(file, true)) {
+            for (CT_DonHang donhang : this.getChitietDonHang())
+                {
+                StringBuilder sb = new StringBuilder();
+                sb.append(donhang.getMaKH()).append("#");
+                sb.append(donhang.getMaDonHang()).append("#");
+                sb.append(donhang.getEmail()).append("#");
+                sb.append(donhang.getDiaChi()).append("#");
+                sb.append(donhang.getNgayDH()).append("#");
+                sb.append(donhang.getDsSanPham()).append("#");
+                sb.append(donhang.getTongTien()).append("#");
+                sb.append(donhang.getTrangThai()).append("#");
+                sb.append(System.lineSeparator()); //Xuống dòng
+                fileWriter.write(sb.toString()); //Ghi chuỗi thông tin vào file
+                fileWriter.flush(); 
+                }  
+            } 
+        catch (IOException e) {
+            System.err.println("Có lỗi khi ghi vào file: " + e.getMessage());
+        }   
+    }
+*/
+    
+
+    public static void xemDonHang()
+    {
+        File fileDonHang= new File("DonHang.txt");
+        try (Scanner scan= new Scanner(fileDonHang);){
+            System.out.println("\t+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+            System.out.println("\t|                                                                                                   ĐƠN HÀNG CỦA TÔI                                                         |");
+            System.out.println("\t|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+            System.out.printf("\t| %-10s| %-10s| %-20s| %-20s| %-10s| %-100s| %-10s | %-20s | %-5s |\n", "Ma Khach", "Ma don", "Email", "Dia chi", "Ngay dat","Thong tin san pham","Tong tien","PTTT","Trang thai don");
+            System.out.println("\t+-----------+-----------+---------------------+---------------------+-----------+-----------------------------------------------------------------------------------------------------+------------+---------+");
+            while ( scan.hasNextLine())
+            {
+                String line=scan.nextLine();
+                String donhang[]=line.split("#");
+                String maKH=donhang[0];
+                String maDon=donhang[1];
+                String email=donhang[2];
+                String diachi=donhang[3];
+                String ngaydat=donhang[4];
+                String sanpham=donhang[5];
+                String tongtien=donhang[6];
+                String pttt=donhang[7];
+                String trangthai="";
+                if( donhang[8].equalsIgnoreCase("0"))
+                    trangthai="Dang xu ly";
+                else if (donhang[8].equalsIgnoreCase("1"))
+                    trangthai="Da xac nhan";
+                else if (donhang[8].equalsIgnoreCase("2"))
+                    trangthai="Dang giao";
+                else if (donhang[8].equalsIgnoreCase("4"))
+                    trangthai="Da nhan hang";
+                else if (donhang[8].equalsIgnoreCase("5"))
+                    trangthai="Da huy";
+                System.out.printf("\t| %-10s| %-10s| %-20s| %-20s| %-10s| %-100s| %-10s | %-20s | %-5s |\n",maKH,maDon,email,diachi,ngaydat,sanpham,tongtien,pttt,trangthai);
             }
+        } catch (FileNotFoundException ex) {
+            System.out.println("Không tìm được file DonHang.txt");
         }
     }
+   
+    public static void main(String[] args) {
+        xemDonHang();
+    }
     
-//     public ArrayList<DonHang> docDonHangTuFile() {
-//		File file = new File("DonHang.txt");
-//		ArrayList<DonHang> dsDonHang = new ArrayList<>();
-//		try (Scanner scanner = new Scanner(file)) {
-//			while (scanner.hasNextLine()) {
-//				String line = scanner.nextLine();
-//				String[] donHangFile = line.split("#");
-//				String maDonHang = donHangFile[0];
-//				String maKhachHang = donHangFile[1];
-//				String diaChi = donHangFile[2];
-//				String email = donHangFile[3];
-//				String ngayDH = donHangFile[4];
-//				String ptThanhToan = donHangFile[5];
-//				String tongTien = donHangFile[6];
-//				String trangThai = donHangFile[7];
-//				String[] dsSanPhamString = donHangFile[8].split(";");
-//				ArrayList<Sach> dsSanPham = new ArrayList<>();
-//				for (String dulieuSach : dsSanPhamString) {
-//					String[] temp = dulieuSach.split("x");
-//					Sach sach = new Sach(temp[0], Integer.parseInt(temp[1]));
-//					dsSanPham.add(sach);
-//				}
-//			}
-//		} catch (FileNotFoundException e) {
-//			System.out.println("Khong tim duoc file: " + e.getMessage());
-//		} catch (Exception e) {
-//			System.out.println("Da co loi xay ra: " + e.getMessage());
-//		}
-//		return dsDonHang;
-//	}
-//    
     
     
 }
