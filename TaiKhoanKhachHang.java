@@ -26,6 +26,7 @@ public class TaiKhoanKhachHang {
     private String userpassword;
     private KhachHang khachhang;
     private GioHang giohang;
+    
     public String fileGioHang;
     
     public TaiKhoanKhachHang() {
@@ -80,9 +81,6 @@ public class TaiKhoanKhachHang {
     }
 
 
-    
-
-    
     private void duaDuLieuVaoArrayList()
     {
         File file= new File(this.getFileGioHang());
@@ -100,8 +98,9 @@ public class TaiKhoanKhachHang {
                     tmp.setMaSach(dulieu[1]);
                     tmp.setTenSach(dulieu[2]);
                     tmp.setLoaiSach(dulieu[3]);
-                    tmp.setSoLuong(Integer.parseInt(dulieu[4]));
-                    tmp.setThanhTien(Double.parseDouble(dulieu[5]));
+                    tmp.setGiaSach(Double.parseDouble(dulieu[4]));
+                    tmp.setSoLuong(Integer.parseInt(dulieu[5]));
+                    tmp.setThanhTien(Double.parseDouble(dulieu[6]));
                     temp.setGioHang(tmp);
                 }
             }
@@ -237,9 +236,8 @@ public class TaiKhoanKhachHang {
             {
                 if ( giohang.getMaKhachhang().equalsIgnoreCase(maKhachHang) && giohang.getMaSach().equalsIgnoreCase(maSanPham))
                 {
-                        double giasach=giohang.getThanhTien()/giohang.getSoLuong();
                         giohang.setSoLuong(giohang.getSoLuong()+soLuong);
-                        giohang.setThanhTien(giasach*giohang.getSoLuong());
+                        giohang.setThanhTien(giohang.getGiaSach()*giohang.getSoLuong());
                         flag=true;
                 }
             
@@ -278,8 +276,9 @@ public class TaiKhoanKhachHang {
                         sanpham.setMaSach(maSanPham);
                         sanpham.setTenSach(thongTinSach[0]);
                         sanpham.setLoaiSach(thongTinSach[8]);
+                        sanpham.setGiaSach(Double.parseDouble(thongTinSach[6]));
                         sanpham.setSoLuong(soLuongSanPham);
-                        sanpham.setThanhTien(Double.parseDouble(thongTinSach[6])*soLuongSanPham);
+                        sanpham.setThanhTien(sanpham.getGiaSach()*soLuongSanPham);
                         this.getGiohang().getGioHang().add(sanpham);
                         System.out.println("Bạn đã thêm sách thành công ^^");
                     }              
@@ -391,7 +390,7 @@ public class TaiKhoanKhachHang {
         Scanner input= new Scanner(System.in);
         int choice;
         do {
-            System.out.println("\n***Hãy đăng nhập hoặc tạo tài khoản để dùng được nhiều chức năng hơn***\n");
+            System.out.println("\n***Hãy đăng nhập hoặc tạo tài khoản để dùng được nhiều chức năng hơn*** \n");
             System.out.println("\t+-----------------Chức năng dạng khách--------------+");
             System.out.printf("\t| %-50s|\n","1.Xem danh sách sản phẩm bán");
             System.out.printf("\t| %-50s|\n","2.Tìm kiếm sản phẩm");
