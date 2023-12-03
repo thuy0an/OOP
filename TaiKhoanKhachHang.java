@@ -26,6 +26,7 @@ public class TaiKhoanKhachHang {
     private String userpassword;
     private KhachHang khachhang;
     private GioHang giohang;
+    private DonHang donhang= new DonHang();
     
     public String fileGioHang;
     
@@ -72,6 +73,15 @@ public class TaiKhoanKhachHang {
         this.giohang = giohang;
     }
 
+    public DonHang getDonhang() {
+        return donhang;
+    }
+
+    public void setDonhang(DonHang donhang) {
+        this.donhang = donhang;
+    }
+    
+
     public String getFileGioHang() {
         return fileGioHang;
     }
@@ -101,7 +111,7 @@ public class TaiKhoanKhachHang {
                     tmp.setGiaSach(Double.parseDouble(dulieu[4]));
                     tmp.setSoLuong(Integer.parseInt(dulieu[5]));
                     tmp.setThanhTien(Double.parseDouble(dulieu[6]));
-                    temp.setGioHang(tmp);
+                    temp.setDsSanPham(tmp);
                 }
             }
             this.setGiohang(temp);
@@ -232,7 +242,7 @@ public class TaiKhoanKhachHang {
         boolean flag=false;
 
             // chạy for tìm thằng nào của mã đó rùi lấy để tăng số lượng
-            for(CT_GioHang giohang : this.getGiohang().getGioHang())
+            for(CT_GioHang giohang : this.getGiohang().getDsSanPham())
             {
                 if ( giohang.getMaKhachhang().equalsIgnoreCase(maKhachHang) && giohang.getMaSach().equalsIgnoreCase(maSanPham))
                 {
@@ -279,7 +289,7 @@ public class TaiKhoanKhachHang {
                         sanpham.setGiaSach(Double.parseDouble(thongTinSach[6]));
                         sanpham.setSoLuong(soLuongSanPham);
                         sanpham.setThanhTien(sanpham.getGiaSach()*soLuongSanPham);
-                        this.getGiohang().getGioHang().add(sanpham);
+                        this.getGiohang().getDsSanPham().add(sanpham);
                         System.out.println("Bạn đã thêm sách thành công ^^");
                     }              
                 }   
@@ -298,12 +308,12 @@ public class TaiKhoanKhachHang {
         System.out.print("Chọn mã sản phẩm muốn xỏa khỏi giỏ:" );
         String ma=input.nextLine();
         boolean flag=false;
-        for(int i=0; i < this.getGiohang().getGioHang().size(); i++)
+        for(int i=0; i < this.getGiohang().getDsSanPham().size(); i++)
         {
-            CT_GioHang sanpham=this.getGiohang().getGioHang().get(i);
+            CT_GioHang sanpham=this.getGiohang().getDsSanPham().get(i);
             if (sanpham.getMaSach().equalsIgnoreCase(ma))
             {
-                this.getGiohang().getGioHang().remove(i);
+                this.getGiohang().getDsSanPham().remove(i);
                 flag=true;
             }
         }
@@ -331,7 +341,6 @@ public class TaiKhoanKhachHang {
         Scanner input= new Scanner(System.in);
         File file= new File("user.txt");
         int choice;
-        
         do {
             System.out.println("\t+---------------------------------------------Chức năng người dùng---------------------------------------------+");
             System.out.printf("\t| %-35s| %-35s| %-35s|\n","1.Xem thông tin cá nhân","2.Xem danh sách sản phẩm bán","3.Tìm kiếm sản phẩm");
@@ -375,10 +384,10 @@ public class TaiKhoanKhachHang {
                     this.getGiohang().ghiGioHangVaoFile(this.getFileGioHang());
                     break;
                 case 7:
-                    CT_DonHang demo= new CT_DonHang();
-                    demo.setInfo();
+                    this.getDonhang().datHang(this.getFileGioHang());
                     break;
                 case 8:
+                    this.getDonhang().xemDonHang();
                     break;
 
             }
