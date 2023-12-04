@@ -18,14 +18,14 @@ public class CT_DonHang {
     private String email;
     private String ngayDH;
     private String ptThanhToan;
-    private int trangThai; //1: chờ xử lý (đã đặt hàng); 2: đã xử lý , 3: đang giao; 4: đã nhận hàng; 5: đã huỷ đơn
+    private int trangThai; //1: đang xử lý; 2: đã xác nhận , 3: đang giao; 4: đã nhận hàng
     private Double tongTien=0.0;
     private String dsSanPham="";
     
     public CT_DonHang() {
     }
 
-    public CT_DonHang(String maDonHang, String maKH, String diaChi, String email, String ngayDH, String ptThanhToan, int trangThai, Double tongTien, String dsSanPham) {
+    public CT_DonHang(String maKH, String maDonHang, String email, String diaChi, String ngayDH, String dsSanPham,Double tongTien,String ptThanhToan, int trangThai) {
         this.maDonHang = maDonHang;
         this.maKH = maKH;
         this.diaChi = diaChi;
@@ -37,7 +37,7 @@ public class CT_DonHang {
         this.dsSanPham = dsSanPham;
     }
    
-    public String taoMaDH() {
+    private String taoMaDH() {
         Random rand = new Random();
         int soNgauNhien = rand.nextInt(1000000); 
         String maSoNgauNhien = String.format("%06d", soNgauNhien);
@@ -50,8 +50,9 @@ public class CT_DonHang {
         return maDonHang;
     }
 
-    public void setMaDonHang(String maDonHang) {
-        this.maDonHang = maDonHang;
+    public void setMaDonHang() {
+        
+        this.maDonHang = taoMaDH();
     }
 
     public String getDiaChi() {
@@ -119,7 +120,7 @@ public class CT_DonHang {
     }
       
     //
-    public String chonPTTT() {
+    public void chonPTTT() {
         Scanner scan=new Scanner(System.in);
         String ptThanhtoan = "";
         int chon=0;
@@ -147,13 +148,12 @@ public class CT_DonHang {
                     System.out.println(e.getMessage());
                 }
             } while (chon != 2);
-        return ptThanhtoan;
+        this.setPtThanhToan(ptThanhtoan);
     }
    
-    public String chonDiaChi() {
+    public void chonDiaChi() {
         Scanner scan=new Scanner(System.in);
         String diachiNguoidung="";
-        String emailNguoidung;
         File file= new File("user.txt");
         File fileLogin= new File("userLogin.txt");
         try 
@@ -200,16 +200,16 @@ public class CT_DonHang {
                     
         }while (chon != 1 && chon!= 2);
         
-        return dchi[chon];
+        this.setDiaChi(dchi[chon-1]);
     }
     
     public void setInfo() {
         System.out.println("-----THÔNG TIN ĐẶT HÀNG-----");
-        this.setDiaChi(this.chonDiaChi());
-        this.setPtThanhToan(this.chonPTTT());
+        chonDiaChi();
+        chonPTTT();
     }
     
-    public static ArrayList<CT_GioHang> docGioHangTuFile(String tenfile) {
+    public  ArrayList<CT_GioHang> docGioHangTuFile(String tenfile) {
         ArrayList<CT_GioHang> gioHangList = new ArrayList<>();
         File file= new File(tenfile);
         try (Scanner scanner = new Scanner(file))
@@ -217,15 +217,19 @@ public class CT_DonHang {
             while(scanner.hasNextLine()){ 
                 String line = scanner.nextLine();
                 String[] gioHang = line.split("#");
-                    String maKH = gioHang[0];
-                    String maSach = gioHang[1];
+                if ( gioHang.length ==7)
+                {
+                    String maKh = gioHang[0];
+                    String masach = gioHang[1];
                     String tenSach = gioHang[2];
                     String loaiSach = gioHang[3];
                     String giaSach=gioHang[4];
                     String soLuong = gioHang[5];
                     String thanhTien = gioHang[6];
-                    CT_GioHang giohang = new CT_GioHang(gioHang[0], gioHang[1], gioHang[2], gioHang[3], Double.parseDouble(gioHang[4]), Integer.parseInt(gioHang[5]),Double.parseDouble(gioHang[6]));
+                    CT_GioHang giohang = new CT_GioHang(maKh,masach,tenSach,loaiSach,Double.parseDouble(giaSach),Integer.parseInt(soLuong),Double.parseDouble(thanhTien));
                     gioHangList.add(giohang);  
+                }
+                    
             }
         } catch (FileNotFoundException ex) {
             System.out.println("Không tìm thấy file");
@@ -234,71 +238,72 @@ public class CT_DonHang {
     }
     
     public ArrayList<CT_GioHang> chonSachTuDanhSach(String tenfile) {
-        ArrayList<CT_GioHang> giohang = CT_DonHang.docGioHangTuFile(tenfile);
+        ArrayList<CT_GioHang> danhsach = docGioHangTuFile(tenfile);
+        GioHang gioHang= new GioHang();
+        gioHang.setDsSanPham(danhsach);
         ArrayList<CT_GioHang> giohang_dachon = new ArrayList<>();
-        
-        if (giohang.isEmpty()) {
+        int luachon;
+        String sanPham="";
+        Double tongtien=0.0;
+        do
+        {
+            Scanner scan = new Scanner(System.in);
+            boolean flag=false;
+            if (gioHang.getDsSanPham().isEmpty()) {
             System.out.println("Giỏ hàng đang trống! Vui lòng thêm sách vào giỏ hàng! ");
-            return null;
-        }
-        Scanner scan = new Scanner(System.in);
-        int soluong = -1, vitri=-1;
-        do {
-            
-            System.out.println("Nhập STT sách muốn đặt: " ); //cách bởi dấu ";"
-            while ( vitri <0 && vitri >giohang.size())
-            {                 
-                vitri = Integer.parseInt(scan.nextLine());
-                if (vitri <0 && vitri >giohang.size())
-                    System.out.println("Vui lòng chọn đúng sách có trong giỏ!!!");
+            //return null;
             }
-            String sanPham=giohang.get(vitri).getTenSach().concat(" x ").concat(String.valueOf(giohang.get(vitri).getSoLuong()));
-            this.setDsSanPham(sanPham);
-            this.setTongTien(this.getTongTien()+giohang.get(vitri).getThanhTien());
-            
-            // đoạn này có thể chọn số lượng của 1 sản phẩm trong giỏ để đặt hàng (rất khó xử lý)
-            //System.out.println("Nhập số lượng sản phẩm: ");
-            //while (soluong <0 && soluong >giohang.get(vitri).getSoLuong())
-            //{
-            //    soluong = Integer.parseInt(scan.nextLine().trim());
-            //    if( soluong >giohang.get(vitri).getSoLuong())
-            //    System.out.println("Vui lòng chọn đúng số lượng của sản phẩm trong giỏ!!!");
-            //}
-            
-            // Chọn sản phẩm đặt rùi xóa nó khỏi giỏ
-            giohang_dachon.add(giohang.get(vitri));
-            giohang.remove(giohang.get(vitri));
-            GioHang gio= new GioHang();
-            gio.setDsSanPham(giohang_dachon);
-            //String tenfileGioHang="GioHang";
-            //tenfileGioHang=tenfileGioHang.concat(gio.getDsSanPham().get(1).getMaKhachhang()).concat(".txt");
-            //gio.ghiGioHangVaoFile(tenfileGioHang);
-            
-            
-        } while (vitri==-1);
+            gioHang.xemGioHang(tenfile);
+            String maSachDuocChon;
+            System.out.println("Chọn mã sách muốn đặt: " ); //cách bởi dấu ";"           
+            maSachDuocChon = scan.nextLine();
+            for( int i=0; i < gioHang.getDsSanPham().size(); i++)
+            {
+                if ( maSachDuocChon.equalsIgnoreCase(gioHang.getDsSanPham().get(i).getMaSach()))
+                {
+                    sanPham+=gioHang.getDsSanPham().get(i).getTenSach().concat(" x ").concat(gioHang.getDsSanPham().get(i).getMaSach()).concat(" x ").concat(String.valueOf(gioHang.getDsSanPham().get(i).getSoLuong()));
+                    tongtien+=gioHang.getDsSanPham().get(i).getThanhTien();
+                    giohang_dachon.add(gioHang.getDsSanPham().get(i));
+                    gioHang.getDsSanPham().remove(gioHang.getDsSanPham().get(i));
+                    gioHang.ghiGioHangVaoFile(tenfile);
+                    flag=true;
+                }
+            }
+            if (!flag)
+                System.out.println("Vui lòng chọn đúng sách có trong giỏ!!!");
+            System.out.println("Bạn muốn tiếp tục chon sản phẩm để thanh toán ?");
+            System.out.println("1. Tiếp tục");
+            System.out.println("2. Dừng lại");
+            luachon=Integer.parseInt(scan.nextLine());
+        }while(luachon !=2);
+        this.setDsSanPham(sanPham);
+        this.setTongTien(tongtien);
+        System.out.println(giohang_dachon.toString());
         return giohang_dachon;
     }
     
-            
-
-    
     @Override
     public String toString() {
-       if (this.getTrangThai() == 0 || this.getDsSanPham()== null) return " ";
        StringBuilder sb = new StringBuilder();
        sb.append("\n");
-       sb.append("Mã khách hàng: ").append(this.getMaKH()).append("\n");
-       sb.append("Mã đơn: ").append(this.getMaDonHang()).append("\n");
-       sb.append("Email: ").append(this.getEmail()).append("\n");
-       sb.append("Địa chỉ: ").append(this.getDiaChi()).append("\n");
-       sb.append("Ngày đặt hàng: ").append(this.getNgayDH()).append("\n");
-       sb.append("Mô tả sản phẩm: \n");
+       sb.append("\tMã khách hàng: ").append(this.getMaKH()).append("\n");
+       sb.append("\tMã đơn: ").append(this.getMaDonHang()).append("\n");
+       sb.append("\tEmail: ").append(this.getEmail()).append("\n");
+       sb.append("\tĐịa chỉ: ").append(this.getDiaChi()).append("\n");
+       sb.append("\tNgay dat: ").append(this.getNgayDH()).append("\n");
+       sb.append("\tThong tin san pham: ").append(this.getDsSanPham()).append("\n");
+       sb.append("\tTổng tiền: ").append(this.getTongTien()).append("\n");
+       sb.append("\tPhương thức thanh toán: ").append(this.getPtThanhToan()).append("\n");
+       if ( this.getTrangThai()==1)
+           sb.append("\tTrang thai don: Dang xu ly").append("\n");
+       else if ( this.getTrangThai()==2)
+           sb.append("\tTrang thai don: Da xac nhan").append("\n");
+       if ( this.getTrangThai()==3)
+           sb.append("\tTrang thai don: Dang giao").append("\n");
+       if ( this.getTrangThai()==4)
+           sb.append("\tTrang thai don: Da nhan hang").append("\n");
        
-       sb.append("Tổng tiền: ").append(this.getTongTien()).append("\n");
-       sb.append("Phương thức thanh toán: ").append(this.getPtThanhToan()).append("\n");
-       sb.append("Trạng thái: ").append(this.getTrangThai()).append("\n");
        return sb.toString();
-        
     }
     
         
@@ -316,11 +321,5 @@ public class CT_DonHang {
 //        this.tongTien = this.tinhTongTien() - this.giamGia();
 //        return this.tongTien;
 //    }
-
-     public static void main(String[] args) {
-       
-        CT_DonHang donhang = new CT_DonHang();
-        donhang.setInfo();
-    }
 
 }
