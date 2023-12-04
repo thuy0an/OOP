@@ -25,7 +25,7 @@ public class CT_DonHang {
     public CT_DonHang() {
     }
 
-    public CT_DonHang(String maDonHang, String maKH, String diaChi, String email, String ngayDH, String ptThanhToan, int trangThai, Double tongTien, String dsSanPham) {
+    public CT_DonHang(String maKH, String maDonHang, String email, String diaChi, String ngayDH, String dsSanPham,Double tongTien,String ptThanhToan, int trangThai) {
         this.maDonHang = maDonHang;
         this.maKH = maKH;
         this.diaChi = diaChi;
@@ -184,7 +184,7 @@ public class CT_DonHang {
             try{
                 System.out.println(" Chọn địa chỉ nhận hàng: ");
                 for (int i = 0; i < dchi.length; i++)
-                    System.out.println((i) + ". " + dchi[i]);
+                    System.out.println((i+1) + ". " + dchi[i]);
                 chon = Integer.parseInt(scan.nextLine());
                 
                 if(chon < 1 || chon > dchi.length)
@@ -200,7 +200,7 @@ public class CT_DonHang {
                     
         }while (chon != 1 && chon!= 2);
         
-        this.setDiaChi(dchi[chon]);
+        this.setDiaChi(dchi[chon-1]);
     }
     
     public void setInfo() {
@@ -217,7 +217,6 @@ public class CT_DonHang {
             while(scanner.hasNextLine()){ 
                 String line = scanner.nextLine();
                 String[] gioHang = line.split("#");
-                //System.out.println("Chieu dai: " + gioHang.length);
                 if ( gioHang.length ==7)
                 {
                     String maKh = gioHang[0];
@@ -258,7 +257,7 @@ public class CT_DonHang {
             String maSachDuocChon;
             System.out.println("Chọn mã sách muốn đặt: " ); //cách bởi dấu ";"           
             maSachDuocChon = scan.nextLine();
-            for( int i=1; i < gioHang.getDsSanPham().size(); i++)
+            for( int i=0; i < gioHang.getDsSanPham().size(); i++)
             {
                 if ( maSachDuocChon.equalsIgnoreCase(gioHang.getDsSanPham().get(i).getMaSach()))
                 {
@@ -283,21 +282,28 @@ public class CT_DonHang {
         return giohang_dachon;
     }
     
-            
-
-    
     @Override
     public String toString() {
        StringBuilder sb = new StringBuilder();
        sb.append("\n");
-       sb.append("Mã khách hàng: ").append(this.getMaKH()).append("\n");
-       sb.append("Mã đơn: ").append(this.getMaDonHang()).append("\n");
-       sb.append("Email: ").append(this.getEmail()).append("\n");
-       sb.append("Địa chỉ: ").append(this.getDiaChi()).append("\n");
-       sb.append("Tổng tiền: ").append(this.getTongTien()).append("\n");
-       sb.append("Phương thức thanh toán: ").append(this.getPtThanhToan()).append("\n");
+       sb.append("\tMã khách hàng: ").append(this.getMaKH()).append("\n");
+       sb.append("\tMã đơn: ").append(this.getMaDonHang()).append("\n");
+       sb.append("\tEmail: ").append(this.getEmail()).append("\n");
+       sb.append("\tĐịa chỉ: ").append(this.getDiaChi()).append("\n");
+       sb.append("\tNgay dat: ").append(this.getNgayDH()).append("\n");
+       sb.append("\tThong tin san pham: ").append(this.getDsSanPham()).append("\n");
+       sb.append("\tTổng tiền: ").append(this.getTongTien()).append("\n");
+       sb.append("\tPhương thức thanh toán: ").append(this.getPtThanhToan()).append("\n");
+       if ( this.getTrangThai()==1)
+           sb.append("\tTrang thai don: Dang xu ly").append("\n");
+       else if ( this.getTrangThai()==2)
+           sb.append("\tTrang thai don: Da xac nhan").append("\n");
+       if ( this.getTrangThai()==3)
+           sb.append("\tTrang thai don: Dang giao").append("\n");
+       if ( this.getTrangThai()==4)
+           sb.append("\tTrang thai don: Da nhan hang").append("\n");
+       
        return sb.toString();
-        
     }
     
         
@@ -315,11 +321,5 @@ public class CT_DonHang {
 //        this.tongTien = this.tinhTongTien() - this.giamGia();
 //        return this.tongTien;
 //    }
-
-     public static void main(String[] args) {
-       
-        CT_DonHang donhang = new CT_DonHang();
-        donhang.chonSachTuDanhSach("GioHangDTA7656.txt");
-    }
 
 }
