@@ -322,16 +322,6 @@ public class TaiKhoanKhachHang {
         else 
             System.out.println("Không có sản phẩm trong giỏ để xóa");
     }
-        
-        
-    public void xemDonHang(){
-        
-    }
-    
-    public void DatDonHang(){
-        
-        
-    }
     
     public void huyDonHang(){
         
@@ -387,8 +377,10 @@ public class TaiKhoanKhachHang {
                     this.getDonhang().datHang(this.getFileGioHang());
                     break;
                 case 8:
-                    this.getDonhang().xemDonHang();
+                    this.getDonhang().xemDonHang(this.getKhachhang().getMaKH());
                     break;
+                case 9:
+                    this.getDonhang().huyDonhang(this.getKhachhang().getMaKH());
 
             }
         }while (choice!=0);
