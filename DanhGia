@@ -16,13 +16,13 @@ public class DanhGia {
     private String maKhachHang;
     public String maSach;
     private String maDonHang;
-    private String ngayDG;
+    public String ngayDG;
 
     Scanner input = new Scanner(System.in);
     public DanhGia() {
     }
 
-    public DanhGia(String binhLuan, Float sao, String maKhachHang, String maSach, String maDonHang, String ngayDG) {
+    public DanhGia(String maKhachHang, String maDonHang, String maSach, String ngayDG, Float sao, String binhLuan) {
         this.binhLuan = binhLuan;
         this.sao = sao;
         this.maKhachHang = maKhachHang;
@@ -121,9 +121,9 @@ public class DanhGia {
                 String diachi = donhang[3];
                 String ngaydat = donhang[4];
                 String sanpham = donhang[5];
-                String tongtien = donhang[6];
+                Double tongtien = Double.parseDouble(donhang[6]);
                 String pttt = donhang[7];
-                String trangthai = donhang[8];
+                Integer trangthai = Integer.parseInt(donhang[8]);
                 CT_DonHang donHang = new CT_DonHang(maKH, maDon, email, diachi, ngaydat, sanpham, tongtien, pttt, trangthai);
                 donHangList.add(donHang);  
             }
@@ -138,7 +138,7 @@ public class DanhGia {
         
         if (dsDonHang.isEmpty()) {
             System.out.println("Bạn không có đơn hàng nào cần đánh giá!!");
-        }
+        } else {
         
         Scanner scan = new Scanner(System.in);
         System.out.println("Nhập mã đơn hàng muốn đánh giá: " );
@@ -191,19 +191,49 @@ public class DanhGia {
                     break;
                 }
             } 
+        }
     } 
     
+    public static void xemDanhGiaTheoMaSach(String masach) {
+      File fileDonHang= new File("DanhGia.txt");
+        try (Scanner scan= new Scanner(fileDonHang)){
+            System.out.println("\t+------------------------------------------------------------------+");
+            System.out.println("\t|                          DANH GIA                                |");
+            System.out.println("\t|------------------------------------------------------------------|");
+            while ( scan.hasNextLine())
+            {
+                String line=scan.nextLine();
+                String danhGia[]=line.split("#");
+                if (masach.equalsIgnoreCase(danhGia[2]))
+                {
+                    String maKH = danhGia[0];
+                    String maDon = danhGia[1];
+                    String maSach = danhGia[2];
+                    String ngayDG = danhGia[3];
+                    Float soSao = Float.parseFloat(danhGia[4]);
+                    String binhLuan = danhGia[5];
+                    DanhGia danhgia= new DanhGia(maKH, maDon, maSach, ngayDG, soSao, binhLuan);
+                    System.out.println(danhgia.toString());
+                }  
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("Không tìm được file DonHang.txt");
+        }
+    }
     
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n");
         sb.append("Mã khách hàng: ").append(this.getMaKhachHang()).append(";");
-        sb.append("Mã sách: ").append(this.getMaSach()).append("\n");
         sb.append("Ngày đánh giá: ").append(this.getNgayDG()).append("\n");
         sb.append("Sao: ").append(this.getSao()).append("\n");
         sb.append("Bình luận: ").append(this.getBinhLuan()).append("\n");
         return sb.toString();
     }
     
+    public static void main(String[] args) {
+        DanhGia danhgia = new DanhGia();
+        danhgia.danhGia("DonHang.txt");
+    }
 }
