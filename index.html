@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="X-UA-Compatible" content="IE=7" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://kit.fontawesome.com/384243f50c.js" crossorigin="anonymous"></script>
+    <title>Welcome to BookStore</title>
+  </head>
+  <body>
+    <div class="header-container">
+      <!-- Begin Contact & Option -->
+      <header class="user-header header">
+        <section class="header-conectivity header-group_container">
+          <ul class="header-contact">
+            <li class="header-contact_items">Trở thành Nhân Viên BookStore</li>
+            <li><span>| Kết nối</span></li>
+            <li class="header-contact_items">
+              <i class="fa-brands fa-facebook"></i>
+            </li>
+            <li class="header-contact_items">
+              <i class="fa-brands fa-tiktok"></i>
+            </li>
+          </ul>
+          <!--  -->
+          <ul class="header-option">
+            <li class="header-option_items">
+              <i class="fa-regular fa-bell"></i> Thông báo
+            </li>
+            <li class="header-option_items">
+              <i class="fa-sharp fa-regular fa-circle-question"></i> Hỗ trợ
+            </li>
+            <li class="header-option_items">
+              <button class="header-account accountBtn">
+                <i class="fa-regular fa-user "></i> Tài khoản
+              </button>
+            </li>
+            <!-- Login with Js -->
+            <li class="header-option_items header-user">
+              <i class="fa-solid fa-circle-user"></i>
+              <span class="user-name">NameUser</span>
+              <ul class="user-list">
+                <li class="user-items">
+                  <button class="user-items-button userLogout">Đăng Xuất</button>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <!-- Begin Logo & Search -->
+        <section class="header-utility header-group_container">
+          <button class="header-utility_icon header-utility_logo">
+            <i class="fa-solid fa-store"></i>BookStore
+          </button>
+          <div class="header-search">
+            <div class="header-utility_search">
+              <input type="text" name="" class="header-search_input" placeholder="Tìm kiếm sách..."/>
+              <button class="header-search_search header-utility_icon">
+                <i class="header__search-icon-btn fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+            <div class="live-search">
+              <ul class="myUL"></ul>
+            </div>
+          </div>
+
+        <div class="mobileUser">
+          <ul>
+            <li class="header-option_items">
+              <button class="header-account accountBtn">
+                <i class="fa-regular fa-user "></i> Tài khoản
+              </button>
+            </li>
+            <li class="header-option_items header-user">
+              <i class="fa-solid fa-circle-user"></i>
+              <span class="user-name">NameUser</span>
+              <ul class="user-list">
+                <li class="user-items">
+                  <button class="user-items-button userLogout">Đăng Xuất</button>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          </div>
+          
+          <div class="header-cart">
+            <span class="cart-quantity" ></span>
+            <div class="header-cart-wrap">
+              <button class="header-utility_icon header-utility_cart"><i class="fa-solid fa-cart-shopping"></i></button>
+            </div>
+            <div class="header-cart-container" id="showcart">
+              <div class="header-cart-list">
+
+              </div>
+
+              <div class="header-cart-action">
+                <button class="removeAllCart">Xóa Tất Cả</button>
+              </div>
+            </div>
+          </div>
+          <div class="header-order">
+            <button class="header-utility_order"><i class="fa-solid fa-truck"></i></button>
+          </div>
+
+
+        </section>
+      </header>
+    </div>
+    
+     <!--Login-->    
+   <div id="myModalLogin" class="modal">
+    <div class="modal__overlay"> </div>
+    <div class="modal__body">
+      <form class="auth-form loginForm">
+        <span class="closeForm"><i class="fa-solid fa-x"></i></span>
+          <div class="auth-form__container">
+           
+              <div class="auth-form__header">
+                <h3 class="auth-form__heading">Đăng Nhập</h3>
+                <button class="auth-form__switch-btn register-open_btn">Đăng Ký</button>
+              </div>
+
+            <div class="auth-form__form">
+                <div class="auth-form__group">
+                  <label for="input-username_login">Tài Khoản</label>
+                    <input type="text" class="auth-form__input input-username_login" placeholder="Tên Đăng Nhập">
+                </div>
+                <div class="auth-form__group">
+                  <label for="input-password_login">Mật Khẩu</label>
+                    <input type="password" class="auth-form__input input-password_login" placeholder="Mật Khẩu">
+                </div>
+            </div>
+            <div><span class="form-message"></span></div>
+            <div class="auth-form__aside">
+                  <button class="auth-form__help-link help-forgot">Quên Mật Khẩu</button>
+                  <button class="auth-form__help-link help-needhelp">Cần Trợ Giúp?</button>
+            </div>
+            <div class="auth-form__control">
+               <button type="submit" class="btn btn--primary">ĐĂNG NHẬP</button>
+            </div>
+        </div>
+        <div class="auth-form__social">
+              <button class="auth-form__social--facebook btn btn--size-s btn--with-icon ">
+                <i class="auth-form__social-icon fa-brands fa-square-facebook"></i>
+                <span class="auth-form__social-tittle">Đăng Nhập Với Facebook</span>
+              </button>
+              
+              <button class="auth-form__social--google btn btn--size-s btn--with-icon">
+                <i class="fa-brands fa-google"></i>
+                <span class="auth-form__social-tittle">Đăng Nhập Với Google</span>
+              </button>
+           </div>
+      </form>
+    </div>
+</div>
+
+<!--Register-->
+
+<div id="myModalRegister"  class="modal">
+  <div class="modal__overlay"></div>
+    <div class="modal__body">
+      <form class="auth-form signupForm">
+          <div class="auth-form__container">
+            <span class="closeForm"><i class="fa-solid fa-x"></i></span>
+            <div class="auth-form__header">
+              <h3 class="auth-form__heading">Đăng Ký</h3>
+              <button class="auth-form__switch-btn login-open_btn">Đăng nhập</button>
+            </div>
+            <div class="auth-form__form">
+              <div class="auth-form__group">
+                <label for="fullname">Tài Khoản</label>
+                <input type="text" class="auth-form__input input-username_signup" id="username" placeholder="Tên đăng nhập..."/>
+                <span class="form-message"></span>
+              </div>
+              <div class="auth-form__group">
+                <label for="email">Email</label>
+                  <input type="text" class="auth-form__input input-email_signup" id="email" placeholder="Email..."/>
+                  <span class="form-message"></span>
+              </div>
+              <div class="auth-form__group">
+                <label for="password">Mật Khẩu</label>
+                <input type="password" class="auth-form__input input-password_signup" id="password" placeholder="Mật Khẩu..."/>
+                <span class="form-message"></span>
+              </div>
+              <div class="auth-form__group">
+                <label for="fillpassword">Nhập Lại Mật Khẩu</label>
+                <input type="password" class="auth-form__input" id="fillpassword" placeholder="Nhập Lại Mật Khẩu"/>
+                <span class="form-message"></span>
+            </div> 
+            <div class="auth-form__aside">
+              <p class="auth-form__policy-text">
+                Bằng việc đăng kí, bạn đã đồng ý với BookStore về
+                <a href="" class="auth-form__text-link ">Điều Khoản Dịch vụ</a> &
+                <a href="" class="auth-form__text-link">Chính Sách bảo mật</a>
+              </p>
+            </div>
+            <div class="auth-form__control">
+              <button type="submit" class="btn btn--primary">ĐĂNG KÝ</button>
+            </div>
+          </div>
+          <div class="auth-form__social">
+            <button href="#" class="auth-form__social--facebook btn btn--size-s btn--with-icon">
+            <i class="auth-form__social-icon fa-brands fa-square-facebook"></i>
+            <span class="auth-form__social-tittle">
+              Đăng Ký Với Facebook</span>
+            </button>
+            <button href="#" class="auth-form__social--google btn btn--size-s btn--with-icon">
+              <i class="fa-brands fa-google"></i>
+              <span class="auth-form__social-tittle">Đăng Ký Với Google</span>
+            </button>
+          </div>
+          </div>
+      </form>
+    </div>
+</div>
+
+
+  <div class="adminControl">
+    <div class="admin-navigation_container">
+      <button class="btn-admin btn-navigation_manage">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+      <button class="btn-admin btn-navigation_product">
+        <i class="fa-solid fa-book"></i>
+      </button>
+      <button class="btn-admin btn-navigation_order">
+        <i class="fa-solid fa-truck-fast"></i>
+      </button>
+      <button class="btn-admin btn-navigation_statistic">
+        <i class="fa-solid fa-chart-line"></i>
+      </button>
+      <button class="btn-admin btn-navigation_user">
+        <i class="fa-solid fa-users-gear"></i>
+      </button>
+    </div>
+    <div class="layout hidden">&nbsp;</div>
+  </div>
+
+
+  <main>
+    <!-- Begin Nav -->
+
+  <nav class="nav-container">
+      <div class="mobile-menu">
+        <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+        <div class="mobile-item">
+          <button class="header-utility_icon header-utility_cart"><i class="fa-solid fa-cart-shopping"></i></button>
+          <button class="header-utility_order"><i class="fa-solid fa-truck"></i></button>
+        </div>
+      </div>
+      <div><button class="nav-button main-page">Trang chủ</button></div>
+      <div><button class="nav-button introduce-page">Giới thiệu</button></div>
+      <div class="dropdown">
+        <button class="nav-button">Sản phẩm</button>
+        <div class="dropdown-content">
+          <button class="BookList">English</button>
+          <button class="BookList">Finance</button>
+          <button class="BookList">Japanese</button>
+          <button class="BookList">Chinese</button>
+          <button class="BookList">Manga</button>
+          <button class="BookList">Psychology</button>
+          <button class="sortBook" id="Asc">Giá Tăng Dần</button>
+          <button class="sortBook" id="Des">Giá Giảm Dần</button>
+        </div>
+      </div>
+      <div><button class="nav-button service-page">Dịch vụ</button></div>
+      <div><button class="nav-button contact-page">Liên hệ</button></div>
+  </nav>
+
+
+  <div class="main-content">
+    <article class="slider">
+      <button class="slider-button slider-button_previous"><i class="fa-solid fa-less-than"></i>  </button>
+      <section class="slider-track_container">
+          <ul class="slider-track">
+                <li class="slider-item current-slide"><img class="slider-image" src="Img/ImgForWeb/slider_1.png" alt="slider image" width="300px" height="300px"></li>
+                <li class="slider-item"><img class="slider-image" src="Img/ImgForWeb/slider_2.jpg" alt="slider image" width="300px" height="300px"></li>
+                <li class="slider-item"><img class="slider-image" src="Img/ImgForWeb/slider_3.jpg" alt="slider image" width="300px" height="300px"></li>
+                <li class="slider-item"><img class="slider-image" src="Img/ImgForWeb/slider_4.jpg" alt="slider image" width="300px" height="300px"></li>
+                <li class="slider-item"><img class="slider-image" src="Img/ImgForWeb/slider_5.jpg" alt="slider image" width="300px" height="300px"></li>
+          </ul>
+      </section>
+      <button class="slider-button slider-button_next"><i class="fa-solid fa-greater-than"></i></button>
+      <div class="slider-nav">
+        <button class="slider-indicator current-indicator" id="indicator-1"></button>
+        <button class="slider-indicator" id="indicator-2"></button>
+        <button class="slider-indicator " id="indicator-3"></button>
+        <button class="slider-indicator" id="indicator-4"></button>
+        <button class="slider-indicator" id="indicator-5"></button>
+      </div>
+    </article>
+      <!--Begin Slider -->
+   
+      <div class="container-book">
+        <div class="book-section_container"></div>
+        <div class="product-btn_container"></div>
+      </div>
+
+
+      
+  </div> 
+
+
+  <div id="bookLayout"  class="modal">
+    <div class="modal__overlay"></div>
+    <div class="modal__body">
+                <div class="product-content"></div>
+    </div>
+  </div>
+
+
+  <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-description">
+          <h3>BOOKSTORE &#128214;</h3>
+          <p>
+            Chào mừng bạn đến với Ngôi Nhà Của Đam Mê Đọc Sách! Tại đây, chúng tôi
+            tập trung vào việc mang lại cho độc giả trải nghiệm đọc sách đẳng cấp
+            với hàng loạt tác phẩm từ các tác giả nổi tiếng và tác giả tự xuất
+            bản. Chúng tôi cam kết cung cấp những cuốn sách đa dạng, từ các thể
+            loại văn học phổ biến đến sách hướng dẫn, giúp bạn mở rộng kiến thức
+            và khám phá thế giới thông qua từng trang sách.
+          </p>
+          <h4>BOOK &copy; SINCE 2023</h4>
+        </div>
+        <div class="footer-policy">
+          <h3>Sách là tri thức nhân loại</h3>
+          <p>
+            Truyền cảm hứng và khám phá vô tận qua những trang sách - Mở rộng tầm
+            nhìn của bạn, thỏa sức khám phá biển tri thức và lan tỏa niềm đam mê
+            đọc sách. Hãy bước vào cửa hàng sách của chúng tôi ngay hôm nay và
+            khám phá những cuốn sách độc đáo để làm dày thêm hành trang tri thức
+            của bạn.
+          </p>
+          <ul class="footer_ul">
+            <li><button class="policy-info">Chính sách đổi trả</button></li>
+            <li><button class="policy-info">Chính sách bảo mật</button></li>
+            <li><button class="policy-info">Chính sách vận chuyển</button></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h3>Thông tin về chúng tôi</h3>
+          <h4>Hotline</h4>
+          <h5><a href="tel:0357815455">0357815455 (miền Bắc)</a></h5>
+          <h5><a href="tel:0359187565">0359187565 (miền Nam)</a></h5>
+          <h4>Email</h4>
+          <h5><a href="mailto:bookstore1@gmail.com">bookstore1@gmail.com</a></h5>
+          <h5><a href="mailto:bookstore2@gmail.com">bookstore2@gmail.com</a></h5>
+          <h4>Địa chỉ</h4>
+          <h5>
+            <a href="https://tinyurl.com/m94eck54">Trường Đại Học Sài Gòn</a>
+          </h5>
+      </div>  
+      </div>
+  </footer> 
+  <button class="goToTop"><i class="fa-solid fa-arrow-up"></i></button>
+  
+  </main>  
+
+
+    <script src="main.js">
+      
+    </script>
+  </body>
+</html> 
+
+
