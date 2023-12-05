@@ -18,8 +18,6 @@ import java.util.Scanner;
  */
 public class TuSach {
     private int soSach;
-    private String danhGia;
-    private int soSao;
     private static int sachDaHienThi = 0;
     private ArrayList<Sach> books = new ArrayList<>();
 
@@ -41,22 +39,6 @@ public class TuSach {
 
     public void setBooks(ArrayList<Sach> books) {
         this.books = books;
-    }
-
-    public String getDanhGia() {
-        return danhGia;
-    }
-
-    public void setDanhGia(String danhGia) {
-        this.danhGia = danhGia;
-    }
-
-    public int getSoSao() {
-        return soSao;
-    }
-
-    public void setSoSao(int soSao) {
-        this.soSao = soSao;
     }
     
     public void themSach() {
@@ -91,8 +73,7 @@ public class TuSach {
                 System.out.println("Lua chon khong phu hop.....");
                 break;
             }
-            System.out.println("Ban co muon tiep tuc them sach?");
-            System.out.println("Y/N");
+            System.out.println("Ban co muon tiep tuc them sach? (Y/N)");
             tiepTuc=input.nextLine();
         }while(!tiepTuc.equalsIgnoreCase("N"));  
     }
@@ -203,7 +184,7 @@ public class TuSach {
         File file = new File(fileName);
         try(Scanner scanner = new Scanner(file)){
             System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-            System.out.println("|                                                                    BOOK  DATABASE                                                                                                                                                                                 |");
+            System.out.println("|                                                                    THONG TIN SACH                                                                                                                                                                                 |");
             System.out.println("|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
 //            System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
             System.out.printf("| %-50s| %-10s| %-30s| %-9s| %-15s| %-15s| %-10s| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Size","Loai Bia","FSize","Dung Luong","So Luong", "|");
@@ -239,7 +220,7 @@ public class TuSach {
                     dungLuong =sachDuocDoc[12];
                     soLuong="////";
                 }
-                if(tenSach.toLowerCase().equalsIgnoreCase(tenSachCanTim)){  //phần này để xét điều kiện để chọn các sách phù hợp yêu cầu để hiển thị
+                if(tenSach.toLowerCase().contains(tenSachCanTim)){  //phần này để xét điều kiện để chọn các sách phù hợp yêu cầu để hiển thị
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -267,7 +248,7 @@ public class TuSach {
         File file = new File(fileName);
         try(Scanner scanner = new Scanner(file)){
             System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-            System.out.println("|                                                                    BOOK  DATABASE                                                                                                                                                                                 |");
+            System.out.println("|                                                                    THONG TIN SACH                                                                                                                                                                                 |");
             System.out.println("|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
 //            System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
             System.out.printf("| %-50s| %-10s| %-30s| %-9s| %-15s| %-15s| %-10s| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Size","Loai Bia","FSize","Dung Luong","So Luong", "|");
@@ -304,7 +285,7 @@ public class TuSach {
                     soLuong="////";
                 }
                 
-                if(maSach.toLowerCase().equalsIgnoreCase(maSachCanTim)){
+                if(maSach.toLowerCase().contains(maSachCanTim)){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -317,20 +298,19 @@ public class TuSach {
         if(!found)
             System.out.println("Khong tim thay sach.....");
     }
-    public void timSachTheoTG(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Nhap ten tac gia ma ban muon tim: ");
-        String tgCanTim = input.nextLine();
-        while(!tgCanTim.matches("^[a-zA-Z0-9\\s]+$")||tgCanTim.isBlank()){
+    public Sach timSachTheoID(String id){
+        String maSachCanTim = id;
+        Sach foundSach=null;
+        while(!maSachCanTim.matches("^[a-zA-Z0-9\\s]+$")||maSachCanTim.isBlank()){
             System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
-            tgCanTim=input.nextLine();
+            maSachCanTim=id;
         }
         boolean found = false;
         String fileName = "book.txt";
         File file = new File(fileName);
-        try(Scanner scanner = new Scanner(file)){               
+        try(Scanner scanner = new Scanner(file)){
             System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-            System.out.println("|                                                                    BOOK  DATABASE                                                                                                                                                                                 |");
+            System.out.println("|                                                                    THONG TIN SACH                                                                                                                                                                                 |");
             System.out.println("|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
 //            System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
             System.out.printf("| %-50s| %-10s| %-30s| %-9s| %-15s| %-15s| %-10s| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Size","Loai Bia","FSize","Dung Luong","So Luong", "|");
@@ -367,7 +347,66 @@ public class TuSach {
                     soLuong="////";
                 }
                 
-                if(tacGia.toLowerCase().equalsIgnoreCase(tgCanTim)){
+                if(maSach.toLowerCase().contains(maSachCanTim)){
+                    foundSach=new Sach();
+                }
+            }
+        }catch(IOException e){
+            System.out.println("Khong doc duoc file.....\n" + e.getMessage());
+        }
+        return foundSach;
+    }
+    public void timSachTheoTG(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Nhap ten tac gia ma ban muon tim: ");
+        String tgCanTim = input.nextLine();
+        while(!tgCanTim.matches("^[a-zA-Z\\s]+$")||tgCanTim.isBlank()){
+            System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
+            tgCanTim=input.nextLine();
+        }
+        boolean found = false;
+        String fileName = "book.txt";
+        File file = new File(fileName);
+        try(Scanner scanner = new Scanner(file)){               
+            System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+            System.out.println("|                                                                    THONG TIN SACH                                                                                                                                                                                 |");
+            System.out.println("|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+//            System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
+            System.out.printf("| %-50s| %-10s| %-30s| %-9s| %-15s| %-15s| %-10s| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Size","Loai Bia","FSize","Dung Luong","So Luong", "|");
+            System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
+            while(scanner.hasNextLine()){
+                String line = scanner.nextLine();
+                String[] sachDuocDoc = line.split("#");
+                String tenSach = sachDuocDoc[0];
+                String maSach = sachDuocDoc[1];
+                String tacGia = sachDuocDoc[2];
+                int soTrang = Integer.parseInt(sachDuocDoc[3]);
+                String theloai = sachDuocDoc[4];
+                String nXB = sachDuocDoc[5];
+                double Gia = Double.parseDouble(sachDuocDoc[6]);
+                String moTa = sachDuocDoc[7];
+                String loaiSach = sachDuocDoc[8];
+                String kichThuoc="";
+                String loaiBia="";
+                String kichCoDungLuong="";
+                String dungLuong="";
+                String soLuong="";
+                if ( loaiSach.equals("Giay")){
+                    kichThuoc = sachDuocDoc[9];
+                    loaiBia = sachDuocDoc[10];
+                    kichCoDungLuong="////";
+                    dungLuong="////";
+                    soLuong=sachDuocDoc[13];
+                }
+                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                    kichThuoc="////";
+                    loaiBia="////";
+                    kichCoDungLuong = sachDuocDoc[11];
+                    dungLuong =sachDuocDoc[12];
+                    soLuong="////";
+                }
+                
+                if(tacGia.toLowerCase().contains(tgCanTim)){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -384,7 +423,7 @@ public class TuSach {
         Scanner input = new Scanner(System.in);
         System.out.println("Nhap NXB ma ban muon tim: ");
         String nxbCanTim = input.nextLine();
-        while(!nxbCanTim.matches("^[a-zA-Z0-9\\s]+$")||nxbCanTim.isBlank()){
+        while(!nxbCanTim.matches("^[a-zA-Z\\s]+$")||nxbCanTim.isBlank()){
             System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
             nxbCanTim=input.nextLine();
         }
@@ -393,7 +432,7 @@ public class TuSach {
         File file = new File(fileName);
         try(Scanner scanner = new Scanner(file)){
             System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-            System.out.println("|                                                                    BOOK  DATABASE                                                                                                                                                                                 |");
+            System.out.println("|                                                                    THONG TIN SACH                                                                                                                                                                                 |");
             System.out.println("|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
 //            System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
             System.out.printf("| %-50s| %-10s| %-30s| %-9s| %-15s| %-15s| %-10s| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Size","Loai Bia","FSize","Dung Luong","So Luong", "|");
@@ -430,7 +469,7 @@ public class TuSach {
                     soLuong="////";
                 }
                 
-                if(nXB.toLowerCase().equalsIgnoreCase(nxbCanTim)){
+                if(nXB.toLowerCase().contains(nxbCanTim)){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -455,7 +494,7 @@ public class TuSach {
         System.out.println("\nCac sach tu " + min + " - " + max +": \n" );
         try(Scanner scanner = new Scanner(file)){              
             System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-            System.out.println("|                                                                    BOOK  DATABASE                                                                                                                                                                                 |");
+            System.out.println("|                                                                    THONG TIN SACH                                                                                                                                                                                 |");
             System.out.println("|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
 //            System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
             System.out.printf("| %-50s| %-10s| %-30s| %-9s| %-15s| %-15s| %-10s| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Size","Loai Bia","FSize","Dung Luong","So Luong", "|");
@@ -507,7 +546,7 @@ public class TuSach {
         Scanner input = new Scanner(System.in);
         System.out.println("Nhap the loai ban muon tim kiem: ");
         String theLoaiCanTim = input.nextLine();
-        while(!theLoaiCanTim.matches("^[a-zA-Z0-9\\s]+$")||theLoaiCanTim.isBlank()){
+        while(!theLoaiCanTim.matches("^[a-zA-Z\\s]+$")||theLoaiCanTim.isBlank()){
             System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
             theLoaiCanTim=input.nextLine();
         }
@@ -516,7 +555,7 @@ public class TuSach {
         File file = new File(fileName);
         try(Scanner scanner = new Scanner(file)){
             System.out.println("\n\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-            System.out.println("|                                                                    BOOK  DATABASE                                                                                                                                                                                 |");
+            System.out.println("|                                                                    THONG TIN SACH                                                                                                                                                                                 |");
             System.out.println("|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
 //            System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
             System.out.printf("| %-50s| %-10s| %-30s| %-9s| %-15s| %-15s| %-10s| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Size","Loai Bia","FSize","Dung Luong","So Luong", "|");
@@ -553,7 +592,7 @@ public class TuSach {
                     soLuong="////";
                 }
                 
-                if(theloai.toLowerCase().equalsIgnoreCase(theLoaiCanTim)){
+                if(theloai.toLowerCase().contains(theLoaiCanTim)){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -569,17 +608,15 @@ public class TuSach {
         String code;
         Scanner input = new Scanner(System.in);
         
-        System.out.println("\n\n");
-        System.out.println("\t\t+-------------------- Query Options ---------------------------+");
-        System.out.println("\t\t|                                                              |");
-        System.out.println("\t\t|               1.  Tim sach theo Ten                          |");
-        System.out.println("\t\t|               2.  Tim sach theo Ma Sach                      |");
-        System.out.println("\t\t|               3.  Tim sach theo Tac Gia                      |");
-        System.out.println("\t\t|               4.  Tim sach theo NXB                          |");
-        System.out.println("\t\t|               5.  Tim sach theo Gia                          |");
-        System.out.println("\t\t|               6.  Tim sach theo The Loai                     |");
-        System.out.println("\t\t|                                                              |");
-        System.out.println("\t\t+--------------------------------------------------------------+");
+        System.out.println("\n");
+        System.out.println("\t+---------- Query Options ----------+");
+        System.out.println("\t|     1. Tim sach theo Ten          |");
+        System.out.println("\t|     2. Tim sach theo Ma Sach      |");
+        System.out.println("\t|     3. Tim sach theo Tac Gia      |");
+        System.out.println("\t|     4. Tim sach theo NXB          |");
+        System.out.println("\t|     5. Tim sach theo Gia          |");
+        System.out.println("\t|     6. Tim sach theo The Loai     |");
+        System.out.println("\t+-----------------------------------+");
         System.out.print("\n Moi ban nhap:  ");
         code = input.nextLine();
         while(!code.equals("1")&&!code.equals("2")&&!code.equals("3")&&!code.equals("4")&&!code.equals("5")&&!code.equals("6")){
@@ -612,10 +649,13 @@ public class TuSach {
                 timSachTheoTheLoai();
                 break;
         }
-        System.out.println("Ban co muon tiep tuc tim kiem?");
-        System.out.println("Y/N");
+        System.out.println("Ban co muon tiep tuc tim kiem? (Y/N)");
         String opt=input.nextLine();
-        if(opt.toLowerCase().equalsIgnoreCase("Y"))
+        while(!opt.toLowerCase().equalsIgnoreCase("N")&&!opt.toLowerCase().equalsIgnoreCase("Y")&&!opt.toLowerCase().equalsIgnoreCase("No")&&!opt.toLowerCase().equalsIgnoreCase("Yes")){
+                        System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
+                        opt = input.nextLine();
+                    }
+        if(opt.toLowerCase().equalsIgnoreCase("Y")||opt.toLowerCase().equalsIgnoreCase("Yes"))
             timSach();
     }
 
@@ -673,12 +713,11 @@ public class TuSach {
 
 
                 if(sachDaHienThi%10==0){
-                    System.out.println("Ban co muon tiep tuc hien thi?");
-                    System.out.println("Y/N");
+                    System.out.println("Ban co muon tiep tuc hien thi? (Y/N)");
                     Scanner input = new Scanner(System.in);
                     String opt = input.nextLine();
                     
-                    while(!opt.toLowerCase().equalsIgnoreCase("N")&&!opt.toLowerCase().equalsIgnoreCase("Y")){
+                    while(!opt.toLowerCase().equalsIgnoreCase("N")&&!opt.toLowerCase().equalsIgnoreCase("Y")&&!opt.toLowerCase().equalsIgnoreCase("No")&&!opt.toLowerCase().equalsIgnoreCase("Yes")){
                         System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
                         opt = input.nextLine();
                     }
@@ -700,25 +739,7 @@ public class TuSach {
     public void chinhSuaThongTinSach(){
         
     }
-    public void danhGia(){
-        Scanner nhapttsach = new Scanner(System.in);
-        System.out.println("Moi ban danh gia: ");
-        this.danhGia = nhapttsach.nextLine();
-
-        System.out.println("Moi ban cho sao: ");
-        this.soSao = Integer.parseInt(nhapttsach.nextLine());
-        while (this.soSao < 0 || this.soSao > 5) {
-            System.out.println("Moi ban nhap lai so sao (0-5): ");
-            this.soSao = Integer.parseInt(nhapttsach.nextLine());
-        }
-    }
-    public String danhGiaTuKhachHang(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Danh gia sach: ").append(this.danhGia).append("\n");
-        sb.append("So sao: ").append(this.soSao).append("/5").append("\n");
-        
-        return sb.toString();
-    }
+    
     
     public static void main(String [] args){
         TuSach tuSach = new TuSach();
