@@ -6,15 +6,36 @@
 package BookStore;
 
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Admin
  */
 public class App {
+    public static void taoFile()
+    {
+        try {
+            File fileDonHang= new File("DonHang.txt");
+            if ( !fileDonHang.exists())
+                fileDonHang.createNewFile();
+            File fileUser= new File("user.txt");
+            if ( !fileUser.exists())
+                fileUser.createNewFile();
+            File fileUserLogin= new File("userLogin.txt");
+            if (!fileUserLogin.exists())
+                fileUserLogin.createNewFile();
+        } 
+        catch (IOException ex) {
+            System.out.println("Lỗi IO");
+        }
+        
+    }
     public static void startMenu()
     {
         System.out.println("\t+---------Chào mừng đến với Ứng dụng mua hàng BookStore-------+");
@@ -27,6 +48,7 @@ public class App {
     
     public static void main(String[] args) {
     
+        taoFile();
         int choice=0;
         do {  
             TaiKhoanKhachHang demo= new TaiKhoanKhachHang();
