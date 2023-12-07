@@ -37,7 +37,6 @@ public class DanhGia {
         this.binhLuan = binhLuan;
     }
     
-    // trả về rating trung bình sau khi tính toán của 1 sách
     public Float getSao() {
         return sao;
     }
