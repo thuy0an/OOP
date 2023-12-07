@@ -11,23 +11,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DanhGia {
-    public String binhLuan;
-    public Float sao;
     private String maKhachHang;
     public String maSach;
-    private String maDonHang;
+    public String binhLuan;
+    public Float sao;
     public String ngayDG;
 
     Scanner input = new Scanner(System.in);
     public DanhGia() {
     }
 
-    public DanhGia(String maKhachHang, String maDonHang, String maSach, String ngayDG, Float sao, String binhLuan) {
+    public DanhGia(String maKhachHang, String maSach, String ngayDG, Float sao, String binhLuan) {
         this.binhLuan = binhLuan;
         this.sao = sao;
         this.maKhachHang = maKhachHang;
         this.maSach = maSach;
-        this.maDonHang = maDonHang;
         this.ngayDG = ngayDG;
     }
     
@@ -64,14 +62,6 @@ public class DanhGia {
         this.maSach = maSach;
     }
 
-    public String getMaDonHang() {
-        return maDonHang;
-    }
-
-    public void setMaDonHang(String maDonHang) {
-        this.maDonHang = maDonHang;
-    }
-
     public String getNgayDG() {
         return ngayDG;
     }
@@ -81,8 +71,7 @@ public class DanhGia {
     }
     
     public void setInfo() {
-        
-        System.out.println("-----Đánh Giá-----");
+        System.out.println("-------Đánh Giá-------");
         System.out.println("Nhập bình luận: ");
         this.setBinhLuan(input.nextLine());
         this.kiemTraNhapSoSao();
@@ -137,14 +126,12 @@ public class DanhGia {
         ArrayList<CT_DonHang> dsDonHang = DanhGia.docDonHangTuFile(tenfile);
         
         if (dsDonHang.isEmpty()) {
-            System.out.println("Bạn không có đơn hàng nào cần đánh giá!!");
+            System.out.println("Bạn không có sản phẩm nào cần đánh giá!!");
         } else {
         
         Scanner scan = new Scanner(System.in);
-        System.out.println("Nhập mã đơn hàng muốn đánh giá: " );
-        String maDon = scan.nextLine();
         for (CT_DonHang donhang : dsDonHang) {
-            if (maDon.equalsIgnoreCase(donhang.getMaDonHang()) && donhang.getTrangThai()== 4) {
+            if (this.getMaKhachHang().equalsIgnoreCase(donhang.getMaKH()) && donhang.getTrangThai()== 4) {
                 System.out.println("Nhập mã sách muốn đánh giá: ");
                 String maSach = scan.nextLine();
                 String dulieu[] = donhang.getDsSanPham().split(" ;");
@@ -158,7 +145,7 @@ public class DanhGia {
                         switch (chon) {
                             case 1: 
                              LocalDateTime myDateObj = LocalDateTime.now();   
-                             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                              this.setNgayDG(myDateObj.format(myFormatObj));   
                              String fileName = "DanhGia.txt";
                              File file = new File(fileName);
@@ -166,7 +153,6 @@ public class DanhGia {
                                 {
                                 StringBuilder sb = new StringBuilder();
                                 sb.append(this.getMaKhachHang()).append("#");
-                                sb.append(this.getMaDonHang()).append("#");
                                 sb.append(this.getMaSach()).append("#");
                                 sb.append(this.getNgayDG()).append("#");
                                 sb.append(this.getSao()).append("#");
@@ -187,7 +173,7 @@ public class DanhGia {
                         }
                     }
                 } else {
-                    System.out.println("Mã đơn hàng không phù hợp! Vui lòng nhập lại!");
+                    System.out.println("Bạn không có sản phẩm nào cần đánh giá!!");
                     break;
                 }
             } 
@@ -198,7 +184,7 @@ public class DanhGia {
       File fileDonHang= new File("DanhGia.txt");
         try (Scanner scan= new Scanner(fileDonHang)){
             System.out.println("\t+------------------------------------------------------------------+");
-            System.out.println("\t|                          DANH GIA                                |");
+            System.out.println("\t|                          ĐÁNH GIÁ                                |");
             System.out.println("\t|------------------------------------------------------------------|");
             while ( scan.hasNextLine())
             {
@@ -207,12 +193,11 @@ public class DanhGia {
                 if (masach.equalsIgnoreCase(danhGia[2]))
                 {
                     String maKH = danhGia[0];
-                    String maDon = danhGia[1];
-                    String maSach = danhGia[2];
-                    String ngayDG = danhGia[3];
-                    Float soSao = Float.parseFloat(danhGia[4]);
-                    String binhLuan = danhGia[5];
-                    DanhGia danhgia= new DanhGia(maKH, maDon, maSach, ngayDG, soSao, binhLuan);
+                    String maSach = danhGia[1];
+                    String ngayDG = danhGia[2];
+                    Float soSao = Float.parseFloat(danhGia[3]);
+                    String binhLuan = danhGia[4];
+                    DanhGia danhgia= new DanhGia(maKH, maSach, ngayDG, soSao, binhLuan);
                     System.out.println(danhgia.toString());
                 }  
             }
