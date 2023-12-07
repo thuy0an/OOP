@@ -16,16 +16,25 @@ public class Ngaythangnam {
     private int thang;
     private int nam;
 
+    public Ngaythangnam()
+    {
+        
+    }
+    
     public Ngaythangnam(int ngay, int thang, int nam) {
         this.ngay = ngay;
         this.thang = thang;
         this.nam = nam;
     }
 
-    public Ngaythangnam()
+    public Ngaythangnam(String ngaythangnam)
     {
-        
+        String dulieu[] = ngaythangnam.split("/");
+        this.ngay = Integer.parseInt(dulieu[0]);
+        this.thang = Integer.parseInt(dulieu[1]);
+        this.nam = Integer.parseInt(dulieu[2]));
     }
+    
     public int getNgay() {
         return ngay;
     }
