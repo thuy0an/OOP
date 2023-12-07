@@ -325,48 +325,206 @@ public class NhanVienQuanLy extends NhanVien {
 		if (matches[3]) {
 			thongKeTatCaSach();
 		} else if (ngaybatdau == "e" && ngayketthuc != "e") {
-			for(CT_DonHang donhang:dsDonHang) {
-				Ngaythangnam tgDH=new Ngaythangnam(donhang.getNgayDH());
-				Ngaythangnam tgSoSanh=new Ngaythangnam(ngayketthuc);
-				if(tgSoSanh.getNam()>tgDH.getNam()) {
-					if(thongKeTheoTG.containsKey(donhang.getNgayDH())) {
-						double[] dulieu=thongKeTheoTG.get(donhang.getNgayDH());
-						dulieu[0]+=1;
-						dulieu[1]+=donhang.getTongTien();
-					}else {
-						double[] dulieu=new double[2];
-						dulieu[0]=1;
-						dulieu[1]=donhang.getTongTien();
+			for (CT_DonHang donhang : dsDonHang) {
+				Ngaythangnam tgDH = new Ngaythangnam(donhang.getNgayDH());
+				Ngaythangnam tgSoSanh = new Ngaythangnam(ngayketthuc);
+				if (tgSoSanh.getNam() > tgDH.getNam()) {
+					if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+						double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+						dulieu[0] += 1;
+						dulieu[1] += donhang.getTongTien();
+					} else {
+						double[] dulieu = new double[2];
+						dulieu[0] = 1;
+						dulieu[1] = donhang.getTongTien();
 					}
-				}else if(tgSoSanh.getNam()==tgDH.getNam()) {
-					if(tgSoSanh.getThang()>tgDH.getThang()) {
-						if(thongKeTheoTG.containsKey(donhang.getNgayDH())) {
-							double[] dulieu=thongKeTheoTG.get(donhang.getNgayDH());
-							dulieu[0]+=1;
-							dulieu[1]+=donhang.getTongTien();
-						}else {
-							double[] dulieu=new double[2];
-							dulieu[0]=1;
-							dulieu[1]=donhang.getTongTien();
+				} else if (tgSoSanh.getNam() == tgDH.getNam()) {
+					if (tgSoSanh.getThang() > tgDH.getThang()) {
+						if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+							double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+							dulieu[0] += 1;
+							dulieu[1] += donhang.getTongTien();
+						} else {
+							double[] dulieu = new double[2];
+							dulieu[0] = 1;
+							dulieu[1] = donhang.getTongTien();
 						}
-					}else if(tgSoSanh.getThang()==tgDH.getThang()) {
-						if(tgSoSanh.getNgay()>=tgDH.getNgay()) {
-							if(thongKeTheoTG.containsKey(donhang.getNgayDH())) {
-								double[] dulieu=thongKeTheoTG.get(donhang.getNgayDH());
-								dulieu[0]+=1;
-								dulieu[1]+=donhang.getTongTien();
-							}else {
-								double[] dulieu=new double[2];
-								dulieu[0]=1;
-								dulieu[1]=donhang.getTongTien();
+					} else if (tgSoSanh.getThang() == tgDH.getThang()) {
+						if (tgSoSanh.getNgay() >= tgDH.getNgay()) {
+							if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+								double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+								dulieu[0] += 1;
+								dulieu[1] += donhang.getTongTien();
+							} else {
+								double[] dulieu = new double[2];
+								dulieu[0] = 1;
+								dulieu[1] = donhang.getTongTien();
 							}
 						}
 					}
 				}
 			}
-		}
-		else if(ngaybatdau!="e" &&ngaykethuc=="e") {
-			
+		} else if (ngaybatdau != "e" && ngayketthuc == "e") {
+			for (CT_DonHang donhang : dsDonHang) {
+				Ngaythangnam tgDH = new Ngaythangnam(donhang.getNgayDH());
+				Ngaythangnam tgSoSanh = new Ngaythangnam(ngaybatdau);
+				if (tgSoSanh.getNam() < tgDH.getNam()) {
+					if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+						double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+						dulieu[0] += 1;
+						dulieu[1] += donhang.getTongTien();
+					} else {
+						double[] dulieu = new double[2];
+						dulieu[0] = 1;
+						dulieu[1] = donhang.getTongTien();
+					}
+				} else if (tgSoSanh.getNam() == tgDH.getNam()) {
+					if (tgSoSanh.getThang() < tgDH.getThang()) {
+						if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+							double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+							dulieu[0] += 1;
+							dulieu[1] += donhang.getTongTien();
+						} else {
+							double[] dulieu = new double[2];
+							dulieu[0] = 1;
+							dulieu[1] = donhang.getTongTien();
+						}
+					} else if (tgSoSanh.getThang() == tgDH.getThang()) {
+						if (tgSoSanh.getNgay() <= tgDH.getNgay()) {
+							if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+								double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+								dulieu[0] += 1;
+								dulieu[1] += donhang.getTongTien();
+							} else {
+								double[] dulieu = new double[2];
+								dulieu[0] = 1;
+								dulieu[1] = donhang.getTongTien();
+							}
+						}
+					}
+				}
+			}
+			System.out.println("Ngay DH||So luong don hang|| Doanh Thu");
+			for (Map.Entry<String, double[]> set : thongKeTheoTG.entrySet()) {
+				String ngayDH = set.getKey();
+				double[] dulieu = set.getValue();
+				System.out.println(ngayDH + "\t" + dulieu[0] + "\t" + dulieu[1] + "\n");
+			}
+			System.out.println("Tong doanh thu: " + tongDoanhThu);
+		} else if (ngaybatdau != "e" && ngayketthuc != "e") {
+			for (CT_DonHang donhang : dsDonHang) {
+				Ngaythangnam tgDH = new Ngaythangnam(donhang.getNgayDH());
+				Ngaythangnam tgSoSanhDau = new Ngaythangnam(ngaybatdau);
+				Ngaythangnam tgSoSanhCuoi = new Ngaythangnam(ngayketthuc);
+//			if (tgSoSanh.getNam() < tgDH.getNam()) {
+
+				if (tgSoSanhDau.getNam() < tgDH.getNam() && tgSoSanhCuoi.getNam() > tgDH.getNam()) {
+
+				} else if (tgSoSanhDau.getNam() == tgDH.getNam() && tgSoSanhCuoi.getNam() > tgDH.getNam()) {
+					if (tgSoSanhDau.getThang() < tgDH.getThang()) {
+						if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+							double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+							dulieu[0] += 1;
+							dulieu[1] += donhang.getTongTien();
+						} else {
+							double[] dulieu = new double[2];
+							dulieu[0] = 1;
+							dulieu[1] = donhang.getTongTien();
+						}
+					}else if(tgSoSanhDau.getThang()==tgDH.getThang()){
+						if(tgSoSanhDau.getNgay()<=tgDH.getNgay()) {
+							if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+								double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+								dulieu[0] += 1;
+								dulieu[1] += donhang.getTongTien();
+							} else {
+								double[] dulieu = new double[2];
+								dulieu[0] = 1;
+								dulieu[1] = donhang.getTongTien();
+							}
+						}
+					}
+				}else if(tgSoSanhDau.getNam() < tgDH.getNam() && tgSoSanhCuoi.getNam() == tgDH.getNam()) {
+					if(tgSoSanhCuoi.getThang()>tgDH.getThang()) {
+						if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+							double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+							dulieu[0] += 1;
+							dulieu[1] += donhang.getTongTien();
+						} else {
+							double[] dulieu = new double[2];
+							dulieu[0] = 1;
+							dulieu[1] = donhang.getTongTien();
+						}
+					}else if(tgSoSanhCuoi.getThang()==tgDH.getThang()) {
+						if(tgSoSanhCuoi.getNgay()>=tgDH.getNgay()) {
+							if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+								double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+								dulieu[0] += 1;
+								dulieu[1] += donhang.getTongTien();
+							} else {
+								double[] dulieu = new double[2];
+								dulieu[0] = 1;
+								dulieu[1] = donhang.getTongTien();
+							}
+						}
+					}
+				}else if(tgSoSanhDau.getNam() ==tgDH.getNam() && tgSoSanhCuoi.getNam() == tgDH.getNam()) {
+					if(tgSoSanhDau.getThang()<tgDH.getThang()&&tgSoSanhCuoi.getThang()>tgDH.getThang()) {
+						if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+							double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+							dulieu[0] += 1;
+							dulieu[1] += donhang.getTongTien();
+						} else {
+							double[] dulieu = new double[2];
+							dulieu[0] = 1;
+							dulieu[1] = donhang.getTongTien();
+						}
+					}else if(tgSoSanhDau.getThang()==tgDH.getThang()&&tgSoSanhCuoi.getThang()>tgDH.getThang()) {
+						if(tgSoSanhDau.getNgay()<=tgDH.getNgay()) {
+							if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+								double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+								dulieu[0] += 1;
+								dulieu[1] += donhang.getTongTien();
+							} else {
+								double[] dulieu = new double[2];
+								dulieu[0] = 1;
+								dulieu[1] = donhang.getTongTien();
+							}
+						}
+					}else if(tgSoSanhDau.getThang()<tgDH.getThang()&&tgSoSanhCuoi.getThang()==tgDH.getThang()) {
+						if(tgSoSanhCuoi.getNgay()>=tgDH.getNgay()) {
+							if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+								double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+								dulieu[0] += 1;
+								dulieu[1] += donhang.getTongTien();
+							} else {
+								double[] dulieu = new double[2];
+								dulieu[0] = 1;
+								dulieu[1] = donhang.getTongTien();
+							}
+						}
+					}else if(tgSoSanhDau.getThang() ==tgDH.getThang() && tgSoSanhCuoi.getThang() == tgDH.getThang()) {
+						if(tgSoSanhDau.getNgay()<=tgDH.getNgay()&&tgSoSanhCuoi.getNgay()>=tgDH.getNgay()) {
+							if (thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+								double[] dulieu = thongKeTheoTG.get(donhang.getNgayDH());
+								dulieu[0] += 1;
+								dulieu[1] += donhang.getTongTien();
+							} else {
+								double[] dulieu = new double[2];
+								dulieu[0] = 1;
+								dulieu[1] = donhang.getTongTien();
+							}
+						}
+					}
+				}		
+			}
+			System.out.println("Ngay DH||So luong don hang|| Doanh Thu");
+			for (Map.Entry<String, double[]> set : thongKeTheoTG.entrySet()) {
+				String ngayDH = set.getKey();
+				double[] dulieu = set.getValue();
+				System.out.println(ngayDH + "\t" + dulieu[0] + "\t" + dulieu[1] + "\n");
+			}
+			System.out.println("Tong doanh thu: " + tongDoanhThu);
 		}
 	}
 
