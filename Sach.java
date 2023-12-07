@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
 
-package com.mycompany.bookstore_management;
 
 import java.io.IOException;
 import static java.lang.Character.isDigit;
@@ -30,6 +26,19 @@ public class Sach {
     Scanner nhapttsach = new Scanner(System.in);
     public Sach() {
         
+    }
+    public Sach(Sach sach) {
+    	this.tenSach=sach.getTenSach();
+    	this.maSach=sach.getMaSach();
+    	this.tacGia=sach.getTacGia();
+    	this.soTrang=sach.getSoTrang();
+    	this.theLoai=sach.getTheLoai();
+    	this.NXB=sach.getNXB();
+    	this.gia=sach.getgia();
+    	this.moTa=sach.getMoTa();
+    	this.loaiSach=sach.getLoaiSach();
+    	this.soLuong=sach.getSoLuong();
+    	this.soLuongMua=sach.getsoLuongMua();
     }
     public Sach(String tenSach, int soLuongMua){
         this.tenSach=tenSach;

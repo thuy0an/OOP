@@ -1,5 +1,4 @@
 
-package BookStore;
 
 public class CT_GioHang {
     private String maKhachhang;

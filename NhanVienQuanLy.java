@@ -3,7 +3,11 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class NhanVienQuanLy extends NhanVien {
 	public NhanVienQuanLy() {
@@ -12,6 +16,7 @@ public class NhanVienQuanLy extends NhanVien {
 
 	public void quanLySach() {
 		TuSach tuSach = new TuSach();
+		Scanner input = new Scanner(System.in);
 		int luachon;
 		do {
 			System.out.println("Menu quan ly sach:");
@@ -27,7 +32,7 @@ public class NhanVienQuanLy extends NhanVien {
 			case 0:
 				break;
 			case 1:
-				tuSach.hienThongTinSach();
+				//
 				break;
 			case 2:
 				tuSach.hienThiSachDangKinhDoanh();
@@ -81,74 +86,52 @@ public class NhanVienQuanLy extends NhanVien {
 
 	@Override
 	public void xemDonHang(int luachon) {
-		File file = new File("donhang.txt");
-		try (Scanner scanner = new Scanner(file)) {
-
-			while (scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				String[] donHangFile = line.split("#");
-				String maDonHang = donHangFile[0];
-				String maKhachHang = donHangFile[1];
-				String diaChi = donHangFile[2];
-				String email = donHangFile[3];
-				String ngayDH = donHangFile[4];
-				String ptThanhToan = donHangFile[5];
-				String tongTien = donHangFile[6];
-				String trangThai = "";
-				if (donHangFile[7] == "0")
-					trangThai = "Chua xu ly";
-				else if (donHangFile[7] == "1")
-					trangThai = "Da xac nhan";
-				else if (donHangFile[7] == "2")
-					trangThai = "Da tu choi";
-
-				String dsSanPham = donHangFile[8];
-				switch (luachon) {
-				case 1:
-					System.out.println("Tat ca don hang");
-					System.out.println(
-							"Ma don hang || Ma khach hang || Dia chi || Email || Ngay dat hang || PT thanh toan || Tong tien || Trang thai || DS san pham ");
-					System.out.printf("%-6s || %-6s || %-50s || %-20s || %-10s || %-15s || %-7s || %-15s || %s",
-							maDonHang, maKhachHang, diaChi, email, ngayDH, ptThanhToan, tongTien, trangThai, dsSanPham);
-					break;
-				case 2:
-					if (donHangFile[7] == "0") {
-						System.out.println("Tat ca don hang chua xac nhan");
-						System.out.println(
-								"Ma don hang || Ma khach hang || Dia chi || Email || Ngay dat hang || PT thanh toan || Tong tien || Trang thai || DS san pham ");
-						System.out.printf("%-6s || %-6s || %-50s || %-20s || %-10s || %-15s || %-7s || %-15s || %s");
-
-					}
-					break;
-
-				case 3:
-					if (donHangFile[7] == "1") {
-						System.out.println("Tat ca don hang da xac nhan");
-						System.out.println(
-								"Ma don hang || Ma khach hang || Dia chi || Email || Ngay dat hang || PT thanh toan || Tong tien || Trang thai || DS san pham ");
-						System.out.printf("%-6s || %-6s || %-50s || %-20s || %-10s || %-15s || %-7s || %-15s || %s");
-
-					}
-					break;
-				case 4:
-					if (donHangFile[7] == "2") {
-						System.out.println("Tat ca don hang da tu choi");
-						System.out.println(
-								"Ma don hang || Ma khach hang || Dia chi || Email || Ngay dat hang || PT thanh toan || Tong tien || Trang thai || DS san pham ");
-						System.out.printf("%-6s || %-6s || %-50s || %-20s || %-10s || %-15s || %-7s || %-15s || %s");
-
-					}
-					break;
-				default:
-					break;
-				}
-
+		ArrayList<CT_DonHang> dsDonHang = docDonHangTuFile();
+		switch (luachon) {
+		case 1:
+			System.out.println("Tat ca don hang");
+			System.out.println(
+					"Ma don hang || Ma khach hang || Dia chi || Email || Ngay dat hang || PT thanh toan || Tong tien || Trang thai || DS san pham ");
+			for (CT_DonHang donhang : dsDonHang) {
+				System.out.printf("%-6s || %-6s || %-50s || %-20s || %-10s || %-15s || %-7s || %-15s || %s",
+						donhang.getMaDonHang(), donhang.getMaKH(), donhang.getDiaChi(), donhang.getEmail(),
+						donhang.getNgayDH(), donhang.getPtThanhToan(), donhang.getTongTien(), donhang.getTrangThai(),
+						donhang.getDsSanPham());
 			}
-		} catch (FileNotFoundException e) {
-			System.out.println("Khong tim duoc file: " + e.getMessage());
-		} catch (Exception e) {
-			System.out.println("Da co loi xay ra: " + e.getMessage());
+			break;
+		case 2:
+
+			System.out.println("Tat ca don hang chua xac nhan");
+			System.out.println(
+					"Ma don hang || Ma khach hang || Dia chi || Email || Ngay dat hang || PT thanh toan || Tong tien || Trang thai || DS san pham ");
+			for (CT_DonHang donhang : dsDonHang) {
+				if (donhang.getTrangThai() == 1)
+					System.out.printf("%-6s || %-6s || %-50s || %-20s || %-10s || %-15s || %-7s || %-15s || %s",
+							donhang.getMaDonHang(), donhang.getMaKH(), donhang.getDiaChi(), donhang.getEmail(),
+							donhang.getNgayDH(), donhang.getPtThanhToan(), donhang.getTongTien(),
+							donhang.getTrangThai(), donhang.getDsSanPham());
+			}
+
+			break;
+
+		case 3:
+			System.out.println("Tat ca don hang da xac nhan");
+			System.out.println(
+					"Ma don hang || Ma khach hang || Dia chi || Email || Ngay dat hang || PT thanh toan || Tong tien || Trang thai || DS san pham ");
+			for (CT_DonHang donhang : dsDonHang) {
+				if (donhang.getTrangThai() != 1)
+					System.out.printf("%-6s || %-6s || %-50s || %-20s || %-10s || %-15s || %-7s || %-15s || %s",
+							donhang.getMaDonHang(), donhang.getMaKH(), donhang.getDiaChi(), donhang.getEmail(),
+							donhang.getNgayDH(), donhang.getPtThanhToan(), donhang.getTongTien(),
+							donhang.getTrangThai(), donhang.getDsSanPham());
+			}
+
+			break;
+
+		default:
+			break;
 		}
+
 	}
 
 	@Override
@@ -158,27 +141,30 @@ public class NhanVienQuanLy extends NhanVien {
 		String maDon = "";
 		Scanner input = new Scanner(System.in);
 		do {
-			ArrayList<DonHang> dsDonHang = docDonHangTuFile();
+			ArrayList<CT_DonHang> dsDonHang = docDonHangTuFile();
 			xemDonHang(2);
 			System.out.println("Nhap e de thoat chuc nang xac nhan don hang");
 			System.out.println("Nhap ma so don hang de xac nhan");
 			System.out.print("Moi ban nhap:");
 			luachon = input.nextLine();
 			if (luachon != "e") {
-				System.out.println("Nhap 0 de tu choi don hang");
-				System.out.println("Nhap 1 de xac nhan don hang");
-				System.out.print("Moi nhap lua chon");
-				int trangthai = Integer.parseInt(input.nextLine());
+				int trangthai;
+				do {
+					System.out.println("Nhap 0 de tu choi don hang");
+					System.out.println("Nhap 1 de xac nhan don hang");
+					System.out.print("Moi nhap lua chon");
+					trangthai = Integer.parseInt(input.nextLine());
+				} while (trangthai != 0 && trangthai != 1);
 				maDon = luachon;
-				for (DonHang donhang : dsDonHang) {
+				for (CT_DonHang donhang : dsDonHang) {
 					if (donhang.getMaDonHang() == maDon) {
-						if (donhang.getTrangThai() == 0) {
+						if (donhang.getTrangThai() == 1) {
 							donhang.setTrangThai(trangthai);
 							ghiDonVaoFile(dsDonHang);
 							System.out.println("Xac nhan don hang thanh cong! ");
 						} else
 							System.out.println("Don hang da duoc xac nhan, khong the thay doi trang thai");
-
+						// 1: đang xử lý; 2: đã xác nhận , 3: đang giao; 4: đã nhận hàng
 					} else
 						System.out.println("Khong tim thay don hang ");
 				}
@@ -189,67 +175,228 @@ public class NhanVienQuanLy extends NhanVien {
 
 	}
 
-	public ArrayList<DonHang> docDonHangTuFile() {
-		File file = new File("donhang.txt");
-		ArrayList<DonHang> dsDonHang = new ArrayList<>();
-		try (Scanner scanner = new Scanner(file)) {
-			while (scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				String[] donHangFile = line.split("#");
-				String maDonHang = donHangFile[0];
-				String maKhachHang = donHangFile[1];
-				String diaChi = donHangFile[2];
-				String email = donHangFile[3];
-				String ngayDH = donHangFile[4];
-				String ptThanhToan = donHangFile[5];
-				String tongTien = donHangFile[6];
-				String trangThai = donHangFile[7];
-				String[] dsSanPhamString = donHangFile[8].split(";");
-				ArrayList<Sach> dsSanPham = new ArrayList<>();
-				for (String dulieuSach : dsSanPhamString) {
-					String[] temp = dulieuSach.split("x");
-					Sach sach = new Sach(temp[0], Integer.parseInt(temp[1]));
-					dsSanPham.add(sach);
-				}
+	public void thongKeTheoLoai() {
+		Scanner input = new Scanner(System.in);
+		double tongDoanhThu = 0;
+		ArrayList<CT_DonHang> dsDonHang = docDonHangTuFile();
+		Map<String, double[]> thongKeTheLoai = new HashMap<>();
+		ArrayList<String> dsSach = new ArrayList<>();
+		for (CT_DonHang donhang : dsDonHang) {
+			String[] dulieuSach = donhang.getDsSanPham().split(";");
+			for (String dsSanPham : dulieuSach) {
+				dsSach.add(dsSanPham);
 			}
-		} catch (FileNotFoundException e) {
-			System.out.println("Khong tim duoc file: " + e.getMessage());
-		} catch (Exception e) {
-			System.out.println("Da co loi xay ra: " + e.getMessage());
 		}
-		return dsDonHang;
+		for (String dulieuSach : dsSach) {
+			TuSach tusach = new TuSach();
+			String[] thongtin = dulieuSach.split(";");
+			int soLuong = Integer.parseInt(thongtin[2]);
+			String maSach = thongtin[1];
+			Sach sach = new Sach(tusach.timSachTheoID(maSach));
+			tongDoanhThu += soLuong * sach.getgia();
+			if (thongKeTheLoai.containsKey(sach.getLoaiSach())) {
+				double[] dulieu = thongKeTheLoai.get(sach.getLoaiSach());
+				dulieu[0] += soLuong;
+				dulieu[1] += soLuong * sach.getgia();
+				thongKeTheLoai.put(sach.getLoaiSach(), dulieu);
+			} else {
+				double[] dulieu = new double[2];
+				dulieu[0] = soLuong;
+				dulieu[1] = soLuong * sach.getgia();
+				thongKeTheLoai.put(sach.getLoaiSach(), dulieu);
+			}
+		}
+		System.out.println("Loai Sach ||So luong ban ra || Doanh Thu");
+		for (Map.Entry<String, double[]> set : thongKeTheLoai.entrySet()) {
+			String loaiSach = set.getKey();
+			double[] dulieu = set.getValue();
+			System.out.println(loaiSach + "\t" + dulieu[0] + "\t" + dulieu[1] + "\n");
+		}
+		System.out.println("Tong doanh thu: " + tongDoanhThu);
 	}
 
-	@Override
-	public void ghiDonVaoFile(ArrayList<DonHang> dsDonHang) {
-		String fileName = "Donhang.txt";
-		File file = new File(fileName);
-
-		try (FileWriter fileWriter = new FileWriter(file, true)) {
-			for (DonHang donhang : dsDonHang) {
-				StringBuilder sb = new StringBuilder();
-				sb.append(donhang.getMaDonHang()).append("#");
-				sb.append(donhang.getMaKhachHang()).append("#");
-				sb.append(donhang.getDiaChi()).append("#");
-				sb.append(donhang.getEmail()).append("#");
-				sb.append(donhang.getNgayDH()).append("#");
-				sb.append(donhang.getPTThanhToan()).append("#");
-				sb.append(donhang.getTongTien()).append("#");
-				sb.append(donhang.getTrangThai()).append("#");
-				ArrayList<Sach> dsSanPham = donhang.getDsSanPham();
-				for (Sach sach : dsSanPham) {
-					sb.append(sach.getTenSach()).append(" x");
-					sb.append(sach.getSoLuongMua()).append(";");
-				}
-				sb.append("#").append(System.lineSeparator());
-
-				fileWriter.write(sb.toString());
+	public void thongKeTheoTheLoai() {
+		Scanner input = new Scanner(System.in);
+		double tongDoanhThu = 0;
+		ArrayList<CT_DonHang> dsDonHang = docDonHangTuFile();
+		Map<String, double[]> thongKeTheLoai = new HashMap<>();
+		ArrayList<String> dsSach = new ArrayList<>();
+		for (CT_DonHang donhang : dsDonHang) {
+			String[] dulieuSach = donhang.getDsSanPham().split(";");
+			for (String dsSanPham : dulieuSach) {
+				dsSach.add(dsSanPham);
 			}
-			fileWriter.flush();
-			System.out.println("Viet sach vao file thanh cong.....");
-		} catch (IOException e) {
-			System.out.println("Khong hop le" + e.getMessage());
 		}
+		for (String dulieuSach : dsSach) {
+			TuSach tusach = new TuSach();
+			String[] thongtin = dulieuSach.split(";");
+			int soLuong = Integer.parseInt(thongtin[2]);
+			String maSach = thongtin[1];
+			Sach sach = new Sach(tusach.timSachTheoID(maSach));
+			tongDoanhThu += soLuong * sach.getgia();
+			if (thongKeTheLoai.containsKey(sach.getTheLoai())) {
+				double[] dulieu = thongKeTheLoai.get(sach.getTheLoai());
+				dulieu[0] += soLuong;
+				dulieu[1] += soLuong * sach.getgia();
+				thongKeTheLoai.put(sach.getTheLoai(), dulieu);
+			} else {
+				double[] dulieu = new double[2];
+				dulieu[0] = soLuong;
+				dulieu[1] = soLuong * sach.getgia();
+				thongKeTheLoai.put(sach.getTheLoai(), dulieu);
+			}
+		}
+		System.out.println("The Loai||So luong ban ra || Doanh Thu");
+		for (Map.Entry<String, double[]> set : thongKeTheLoai.entrySet()) {
+			String theLoai = set.getKey();
+			double[] dulieu = set.getValue();
+			System.out.println(theLoai + "\t" + dulieu[0] + "\t" + dulieu[1] + "\n");
+		}
+		System.out.println("Tong doanh thu: " + tongDoanhThu);
+	}
+
+	public void thongKeTatCaSach() {
+		Scanner input = new Scanner(System.in);
+		double tongDoanhThu = 0;
+		ArrayList<CT_DonHang> dsDonHang = docDonHangTuFile();
+		Map<String, double[]> thongKeTheLoai = new HashMap<>();
+		ArrayList<String> dsSach = new ArrayList<>();
+		for (CT_DonHang donhang : dsDonHang) {
+			String[] dulieuSach = donhang.getDsSanPham().split(";");
+			for (String dsSanPham : dulieuSach) {
+				dsSach.add(dsSanPham);
+			}
+		}
+		for (String dulieuSach : dsSach) {
+			TuSach tusach = new TuSach();
+			String[] thongtin = dulieuSach.split(";");
+			int soLuong = Integer.parseInt(thongtin[2]);
+			String maSach = thongtin[1];
+			Sach sach = new Sach(tusach.timSachTheoID(maSach));
+			tongDoanhThu += soLuong * sach.getgia();
+			if (thongKeTheLoai.containsKey(sach.getMaSach())) {
+				double[] dulieu = thongKeTheLoai.get(sach.getMaSach());
+				dulieu[0] += soLuong;
+				dulieu[1] += soLuong * sach.getgia();
+				thongKeTheLoai.put(sach.getMaSach(), dulieu);
+			} else {
+				double[] dulieu = new double[2];
+				dulieu[0] = soLuong;
+				dulieu[1] = soLuong * sach.getgia();
+				thongKeTheLoai.put(sach.getMaSach(), dulieu);
+			}
+		}
+		System.out.println("Ma sach||So luong ban ra || Doanh Thu");
+		for (Map.Entry<String, double[]> set : thongKeTheLoai.entrySet()) {
+			String maSach = set.getKey();
+			double[] dulieu = set.getValue();
+			System.out.println(maSach + "\t" + dulieu[0] + "\t" + dulieu[1] + "\n");
+		}
+		System.out.println("Tong doanh thu: " + tongDoanhThu);
+	}
+
+	public void thongKeTheoKhoangTG() {
+		Scanner input = new Scanner(System.in);
+		double tongDoanhThu = 0;
+		ArrayList<CT_DonHang> dsDonHang = docDonHangTuFile();
+		Map<String, double[]> thongKeTheoTG = new HashMap<>();
+		ArrayList<String> dsSach = new ArrayList<>();
+		boolean[] matches = new boolean[3];
+		matches[0] = matches[1] = true;
+		matches[3] = false;
+		String ngaybatdau;
+		String ngayketthuc;
+		String regex = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
+		Pattern pattern = Pattern.compile(regex);
+		do {
+			if (matches[0] == false || matches[1] == false)
+				System.out.println("Vui long nhap dung dinh dang dd/mm/yyyy!");
+			System.out.println("Nhap khoang thoi gian bat dau thong ke (nhap e de bo qua thoi gian bat dau): ");
+			ngaybatdau = input.nextLine();
+			System.out.println("Nhap khoang thoi gian ket thuc thong ke (nhap e de bo qua thoi gian ket thuc: ");
+			ngayketthuc = input.nextLine();
+			if (ngaybatdau != "e" && ngayketthuc != "e") {
+				matches[0] = pattern.matcher(ngaybatdau).matches();
+				matches[1] = pattern.matcher(ngayketthuc).matches();
+			} else {
+				matches[3] = true;
+			}
+		} while (matches[0] == false || matches[1] == false);
+		if (matches[3]) {
+			thongKeTatCaSach();
+		} else if (ngaybatdau == "e" && ngayketthuc != "e") {
+			for(CT_DonHang donhang:dsDonHang) {
+				Ngaythangnam tgDH=new Ngaythangnam(donhang.getNgayDH());
+				Ngaythangnam tgSoSanh=new Ngaythangnam(ngayketthuc);
+				if(tgSoSanh.getNam()>tgDH.getNam()) {
+					if(thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+						double[] dulieu=thongKeTheoTG.get(donhang.getNgayDH());
+						dulieu[0]+=1;
+						dulieu[1]+=donhang.getTongTien();
+					}else {
+						double[] dulieu=new double[2];
+						dulieu[0]=1;
+						dulieu[1]=donhang.getTongTien();
+					}
+				}else if(tgSoSanh.getNam()==tgDH.getNam()) {
+					if(tgSoSanh.getThang()>tgDH.getThang()) {
+						if(thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+							double[] dulieu=thongKeTheoTG.get(donhang.getNgayDH());
+							dulieu[0]+=1;
+							dulieu[1]+=donhang.getTongTien();
+						}else {
+							double[] dulieu=new double[2];
+							dulieu[0]=1;
+							dulieu[1]=donhang.getTongTien();
+						}
+					}else if(tgSoSanh.getThang()==tgDH.getThang()) {
+						if(tgSoSanh.getNgay()>=tgDH.getNgay()) {
+							if(thongKeTheoTG.containsKey(donhang.getNgayDH())) {
+								double[] dulieu=thongKeTheoTG.get(donhang.getNgayDH());
+								dulieu[0]+=1;
+								dulieu[1]+=donhang.getTongTien();
+							}else {
+								double[] dulieu=new double[2];
+								dulieu[0]=1;
+								dulieu[1]=donhang.getTongTien();
+							}
+						}
+					}
+				}
+			}
+		}
+		else if(ngaybatdau!="e" &&ngaykethuc=="e") {
+			
+		}
+	}
+
+	public void luaChonThongKe() {
+		int luachon;
+		Scanner input = new Scanner(System.in);
+		do {
+			System.out.println("Nhap 1 de thong ke doanh thu theo the loai sach");
+			System.out.println("Nhap 2 de thong ke doanh thu theo loai sach");
+			System.out.println("Nhap 3 de thong ke doanh thu tat ca sach");
+			System.out.println("Nhap 4 de thong ke doanh thu theo khoang thoi gian");
+			System.out.println("Nhap 0 de thoat menu");
+			System.out.print("Xin moi nhap lua chon thong ke:");
+			luachon = Integer.parseInt(input.nextLine());
+			switch (luachon) {
+			case 1:
+				thongKeTheoTheLoai();
+				break;
+			case 2:
+				thongKeTheoLoai();
+				break;
+			case 3:
+				thongKeTatCaSach();
+				break;
+			case 4:
+				thongKeTheoKhoangTG();
+				break;
+			}
+		} while (luachon != 0);
+
 	}
 
 	public void quanLy() {

@@ -1,9 +1,3 @@
-package com.mycompany.bookstore_management;
-
-
-import com.mycompany.bookstore_management.Sach;
-import java.util.Arrays;
-import java.util.Scanner;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -14,6 +8,7 @@ import java.util.Scanner;
  *
  * @author ACER
  */
+import java.util.Scanner;
 public class SachMem extends Sach{
     private String loai;
     private String kichCoDungLuong;
