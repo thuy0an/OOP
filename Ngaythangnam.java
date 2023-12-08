@@ -72,6 +72,6 @@ public class Ngaythangnam {
     }
     @Override
     public String toString() {
-        return ngay + "/" + thang + "/" + nam;
+        return this.ngay + "/" + this.thang + "/" + this.nam;
     }
 }
