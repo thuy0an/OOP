@@ -739,7 +739,7 @@ public class TuSach {
     public void chinhSuaThongTinSach(){
        
     }
-    public void taoFileTuDong(){
+    public static void taoFileTuDong(){
         File file = new File("book.txt");
         if(!file.exists()){
             try(FileWriter write = new FileWriter(file,true)){
