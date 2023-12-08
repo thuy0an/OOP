@@ -31,9 +31,18 @@ public class Sach {
     public Sach() {
         
     }
-    public Sach(String tenSach, int soLuongMua){
-        this.tenSach=tenSach;
-        this.soLuong=soLuongMua;
+    public Sach(String tenSach,String maSach,String tacGia,int soTrang,String theLoai,String NXB,double gia,String moTa,String loaiSach,int soLuong) {
+    	this.tenSach=tenSach;
+    	this.maSach=maSach;
+    	this.tacGia=tacGia;
+    	this.soTrang=soTrang;
+    	this.theLoai=theLoai;
+    	this.NXB=NXB;
+    	this.gia=gia;
+    	this.moTa=moTa;
+    	this.loaiSach=loaiSach;
+    	this.soLuong=soLuong;
+
     }
     public String getTenSach() {
         return tenSach;
