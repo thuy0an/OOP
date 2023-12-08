@@ -68,11 +68,11 @@ public abstract class NhanVien {
 	public void xemDonHang() {
 	}
 
-	public void xemDonHang(int luachon) {
+	public void xemDonHang(int luachon)  {
 	}
 
 	public ArrayList<CT_DonHang> docDonHangTuFile() {
-		File file = new File("donhang.txt");
+		File file = new File("D:\\Lap trinh java\\BookStore\\donhang.txt");
 		ArrayList<CT_DonHang> dsDonHang = new ArrayList<>();
 		try (Scanner scanner = new Scanner(file)) {
 			while (scanner.hasNextLine()) {

@@ -27,4 +27,7 @@ public class Ngaythangnam {
 	public void setNam(int nam) {
 		this.nam = nam;
 	}
+	public String toString() {
+		return this.ngay+"/"+this.thang+"/"+this.nam;
+	}
 }
