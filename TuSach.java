@@ -302,53 +302,45 @@ public class TuSach {
         String maSachCanTim = id;
         Sach foundSach=null;
         while(!maSachCanTim.matches("^[a-zA-Z0-9\\s]+$")||maSachCanTim.isBlank()){
-            System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
-            maSachCanTim=id;
+            return foundSach;
         }
-        boolean found = false;
         String fileName = "book.txt";
         File file = new File(fileName);
         try(Scanner scanner = new Scanner(file)){
-            System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
-            System.out.println("|                                                                    THONG TIN SACH                                                                                                                                                                                 |");
-            System.out.println("|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
-//            System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
-            System.out.printf("| %-50s| %-10s| %-30s| %-9s| %-15s| %-15s| %-10s| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Size","Loai Bia","FSize","Dung Luong","So Luong", "|");
-            System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
-            while(scanner.hasNextLine()){
+           while(scanner.hasNextLine()){
                 String line = scanner.nextLine();
                 String[] sachDuocDoc = line.split("#");
                 String tenSach = sachDuocDoc[0];
                 String maSach = sachDuocDoc[1];
                 String tacGia = sachDuocDoc[2];
                 int soTrang = Integer.parseInt(sachDuocDoc[3]);
-                String theloai = sachDuocDoc[4];
-                String nXB = sachDuocDoc[5];
-                double Gia = Double.parseDouble(sachDuocDoc[6]);
+                String theLoai = sachDuocDoc[4];
+                String NXB = sachDuocDoc[5];
+                double gia = Double.parseDouble(sachDuocDoc[6]);
                 String moTa = sachDuocDoc[7];
                 String loaiSach = sachDuocDoc[8];
                 String kichThuoc="";
                 String loaiBia="";
                 String kichCoDungLuong="";
                 String dungLuong="";
-                String soLuong="";
+                int soLuong=0;
                 if ( loaiSach.equals("Giay")){
                     kichThuoc = sachDuocDoc[9];
                     loaiBia = sachDuocDoc[10];
                     kichCoDungLuong="////";
                     dungLuong="////";
-                    soLuong=sachDuocDoc[13];
+                    soLuong=Integer.parseInt(sachDuocDoc[13]);
                 }
-                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDF")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
                     kichThuoc="////";
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
                     dungLuong =sachDuocDoc[12];
-                    soLuong="////";
+                    soLuong=0;
                 }
-                
-                if(maSach.toLowerCase().contains(maSachCanTim)){
-                    foundSach=new Sach();
+//                (String tenSach,String maSach,String tacGia,int soTrang,String theLoai,String NXB,double gia,String moTa,String loaiSach,int soLuong)
+                if(maSach.equalsIgnoreCase(maSachCanTim)){
+                    foundSach=new Sach(tenSach,maSach,tacGia,soTrang,theLoai,NXB,gia,moTa,loaiSach,soLuong);
                 }
             }
         }catch(IOException e){
