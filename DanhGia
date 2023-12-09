@@ -17,7 +17,7 @@ public class DanhGia {
     public Float sao;
     public String ngayDG;
 
-    Scanner input = new Scanner(System.in);
+
     public DanhGia() {
     }
 
@@ -69,14 +69,9 @@ public class DanhGia {
         this.ngayDG = ngayDG;
     }
     
-    public void setInfo() {
-        System.out.println("-------Đánh Giá-------");
-        System.out.println("Nhập bình luận: ");
-        this.setBinhLuan(input.nextLine());
-        this.kiemTraNhapSoSao();
-    }
     
     private void kiemTraNhapSoSao() {
+        Scanner input = new Scanner(System.in);
         boolean flag = false;
         do {
             try {
@@ -122,102 +117,151 @@ public class DanhGia {
     }
     
     public void danhGia(String tenfile) {
+        boolean flag=false; // biến cờ kiểm tra người dùng đã đánh giá hay  chưa
+        boolean ktraTrangThai=false; // kiểm tra xem có đơn nào đã nhận chưa
+        boolean ktraMaDon=false; // kiểm tra xem mã đơn được nhập có đúng ko
+        int tieptuc=0;
         ArrayList<CT_DonHang> dsDonHang = DanhGia.docDonHangTuFile(tenfile);
-        
-        if (dsDonHang.isEmpty()) {
-            System.out.println("Bạn không có sản phẩm nào cần đánh giá!!");
-        } else {
-        
-        Scanner scan = new Scanner(System.in);
-        for (CT_DonHang donhang : dsDonHang) {
-            if (this.getMaKhachHang().equalsIgnoreCase(donhang.getMaKH()) && donhang.getTrangThai()== 4) {
-                System.out.println("Nhập mã sách muốn đánh giá: ");
-                String maSach = scan.nextLine();
-                String dulieu[] = donhang.getDsSanPham().split(" ;");
-                for (String dulieu1 : dulieu) {
-                    String sach[] = dulieu1.split(" x");
-                    if (maSach.equalsIgnoreCase(sach[1])) {
-                        this.setInfo();
-                        System.out.println("Bạn muốn lưu đánh giá??");
-                        System.out.println("1. Lưu đánh giá || 2. Bỏ lưu đánh giá");
+        if (dsDonHang.isEmpty())
+        {
+            System.out.println("Bạn không có sản phẩm để đánh giá!!");
+            return ;
+        }
+        do
+        {
+            Scanner scan = new Scanner(System.in);
+            for (CT_DonHang donHang: dsDonHang)
+                if ( this.getMaKhachHang().equalsIgnoreCase(donHang.getMaKH()) && donHang.getTrangThai()==4)
+                {
+                    System.out.println("\nMã đơn: "+ donHang.getMaDonHang());
+                    System.out.println("Danh sách sản phẩm: " + donHang.getDsSanPham());
+                    ktraTrangThai=true;
+                }
+            System.out.print("\n");
+            if( ktraTrangThai)
+            {
+                System.out.println("Nhập mã đơn hàng muốn đánh giá: " );
+                String maDon = scan.nextLine();
+                
+                for (CT_DonHang donhang : dsDonHang) {
+                    if ( maDon.equalsIgnoreCase(donhang.getMaDonHang())&& donhang.getTrangThai()==4) 
+                    {
+                        ktraMaDon=true;
+                        System.out.println("Nhập mã sách muốn đánh giá: ");
+                        String maSachDanhGia = scan.nextLine();
+                        String dulieu[] = donhang.getDsSanPham().split(";");
                         int chon = 0;
-                        switch (chon) {
-                            case 1: 
-                             LocalDateTime myDateObj = LocalDateTime.now();   
-                             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-                             this.setNgayDG(myDateObj.format(myFormatObj));   
-                             String fileName = "DanhGia.txt";
-                             File file = new File(fileName);
-                             try (FileWriter fileWriter = new FileWriter(file, true)) {
+                        for (String dulieu1 : dulieu) {
+                            String info[] = dulieu1.split(" x ");
+                            if (maSachDanhGia.equalsIgnoreCase(info[1])) 
+                            {
+                                flag=true;
+                                System.out.println("-------Đánh Giá-------");
+                                System.out.println("Nhập bình luận: ");
+                                this.setBinhLuan(scan.nextLine());
+                                this.kiemTraNhapSoSao();
+                                System.out.println("Bạn muốn lưu đánh giá??");
+                                System.out.println("1. Lưu đánh giá || 2. Bỏ lưu đánh giá");
+                                chon=Integer.parseInt(scan.nextLine());
+                                switch (chon) 
                                 {
-                                StringBuilder sb = new StringBuilder();
-                                sb.append(this.getMaKhachHang()).append("#");
-                                sb.append(this.getMaSach()).append("#");
-                                sb.append(this.getNgayDG()).append("#");
-                                sb.append(this.getSao()).append("#");
-                                sb.append(this.getBinhLuan()).append("#");
-                                sb.append(System.lineSeparator()); //Xuống dòng
-                                fileWriter.write(sb.toString()); //Ghi chuỗi thông tin vào file
-                                fileWriter.flush(); 
-                                }  
-                             } catch (IOException e) {
-                                    System.out.println("Có lỗi khi ghi vào file: " + e.getMessage());
+                                    case 1: 
+                                        LocalDateTime myDateObj = LocalDateTime.now();   
+                                        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                                        this.setNgayDG(myDateObj.format(myFormatObj));   
+                                        String fileName = "DanhGia.txt";
+                                        File file = new File(fileName);
+                                        try (FileWriter fileWriter = new FileWriter(file, true))
+                                        {
+                                            StringBuilder sb = new StringBuilder();
+                                            sb.append(this.getMaKhachHang()).append("#");
+                                            sb.append(info[1].trim()).append("#");
+                                            sb.append(this.getNgayDG()).append("#");
+                                            sb.append(this.getSao()).append("#");
+                                            sb.append(this.getBinhLuan());
+                                            sb.append(System.lineSeparator()); //Xuống dòng
+                                            fileWriter.write(sb.toString()); //Ghi chuỗi thông tin vào file
+                                            fileWriter.flush(); 
+                                        }  
+                                        catch (IOException e){
+                                            System.out.println("Có lỗi khi ghi vào file: " + e.getMessage());
+                                        }
+                                        break;
+                                    case 2:
+                                         break;
                                 }
-                            case 2:
+                            }
+                            else {
+                                System.out.println("Mã sách không đúng");
+                                tieptuc=2;
                                 break;
                             }
-                        } else {
-                            System.out.println("Không thể đánh giá! Vui lòng nhập lại");
-                            break;
                         }
                     }
-                } else {
-                    System.out.println("Bạn không có sản phẩm nào cần đánh giá!!");
+                }
+                
+                if (flag){
+                    System.out.println("Bạn có muốn tiếp tục đánh giá sách khác không ?");
+                    System.out.println("1.Tiếp tục đánh giá\t2.Ngừng lại");
+                    tieptuc=Integer.parseInt(scan.nextLine());
+                }
+                if(!ktraMaDon){
+                    System.out.println("Mã đơn hàng không hợp lệ");
                     break;
                 }
-            } 
-        }
+            }
+            else{
+                System.out.println("Bạn không có sản phẩm nào cần đánh giá!!\n");
+                break;
+            }
+        }while( tieptuc !=2);
+        if ( flag )
+            System.out.println("Cảm ơn bạn đã đánh giá ^^");
     } 
     
-    public static void xemDanhGiaTheoMaSach(String masach) {
-      File fileDonHang= new File("DanhGia.txt");
+    public void xemDanhGia() {
+        Scanner input= new Scanner(System.in);
+        boolean flag=false;
+        System.out.print("Chọn mã sách xem đánh giá: ");
+        String masach=input.nextLine();
+        File fileDonHang= new File("DanhGia.txt");
         try (Scanner scan= new Scanner(fileDonHang)){
-            System.out.println("\t+------------------------------------------------------------------+");
-            System.out.println("\t|                          ĐÁNH GIÁ                                |");
-            System.out.println("\t|------------------------------------------------------------------|");
+            System.out.println("\t+------------------------------------------------------------------------------+");
+            System.out.println("\t|                                      ĐÁNH GIÁ                                |");
+            System.out.println("\t+------------------------------------------------------------------------------+");
             while ( scan.hasNextLine())
             {
                 String line=scan.nextLine();
                 String danhGia[]=line.split("#");
-                if (masach.equalsIgnoreCase(danhGia[2]))
-                {
+                if (masach.equalsIgnoreCase(danhGia[1]))
+                { 
+                    flag=true;
                     String maKH = danhGia[0];
-                    String maSach = danhGia[1];
-                    String ngayDG = danhGia[2];
+                    String maSacha = danhGia[1];
+                    String ngayDGa = danhGia[2];
                     Float soSao = Float.parseFloat(danhGia[3]);
-                    String binhLuan = danhGia[4];
-                    DanhGia danhgia= new DanhGia(maKH, maSach, ngayDG, soSao, binhLuan);
+                    String binhLuana = danhGia[4];
+                    DanhGia danhgia= new DanhGia(maKH, maSacha, ngayDGa, soSao, binhLuana);
                     System.out.println(danhgia.toString());
                 }  
             }
         } catch (FileNotFoundException ex) {
             System.out.println("Không tìm được file DonHang.txt");
         }
+        if ( !flag)
+            System.out.println("Rất tiếc sách chưa có đánh giá :<");
     }
     
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n");
-        sb.append("Mã khách hàng: ").append(this.getMaKhachHang()).append(";");
-        sb.append("Ngày đánh giá: ").append(this.getNgayDG()).append("\n");
-        sb.append("Sao: ").append(this.getSao()).append("\n");
-        sb.append("Bình luận: ").append(this.getBinhLuan()).append("\n");
+        sb.append("\tKhách hàng: ").append(this.getMaKhachHang()).append("\t");
+        sb.append("\tNgày: ").append(this.getNgayDG()).append("\t");
+        sb.append("\tSao: ").append(this.getSao()).append("\n");
+        sb.append("\tBình luận: ").append(this.getBinhLuan()).append("\n");
         return sb.toString();
     }
     
-    public static void main(String[] args) {
-        DanhGia danhgia = new DanhGia();
-        danhgia.danhGia("DonHang.txt");
-    }
 }
+
+
