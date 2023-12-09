@@ -13,7 +13,10 @@ public class NhanVienQuanLy extends NhanVien {
 	public NhanVienQuanLy() {
 		super();
 	}
-
+	public NhanVienQuanLy(String ma, String ten, Ngaythangnam ngayVao, String viTri, String loai,double ngayCong) {
+		super(ma, ten, ngayVao, viTri, loai,ngayCong) ;
+			
+	}
 	public void quanLySach() {
 		TuSach tuSach = new TuSach();
 		Scanner input = new Scanner(System.in);

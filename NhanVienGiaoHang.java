@@ -5,7 +5,10 @@ public class NhanVienGiaoHang extends NhanVien {
 	public NhanVienGiaoHang() {
 		super();
 	}
-
+	public NhanVienGiaoHang(String ma, String ten, Ngaythangnam ngayVao, String viTri, String loai,double ngayCong) {
+		super(ma, ten, ngayVao, viTri, loai,ngayCong) ;
+			
+	}
 	public void xemDonHang(int luachon) {
 		ArrayList<CT_DonHang> dsDonHang;
 		switch (luachon) {

@@ -7,64 +7,60 @@ import java.util.Scanner;
 
 public abstract class NhanVien {
 	private String ten;
-	private int ma;
+	private String ma;
 	private Ngaythangnam ngayVao;
-	private int viTri;
-	private int loai;
-
+	private String viTri;
+	private String loai;
+	private double ngayCong;
 	public NhanVien() {
 		super();
 	}
-
-	public NhanVien(String ten, int ma, Ngaythangnam ngayVao, int viTri, int loai) {
+	public NhanVien(String ma, String ten, Ngaythangnam ngayVao, String viTri, String loai,double ngayCong) {
 		super();
 		this.ten = ten;
 		this.ma = ma;
 		this.ngayVao = ngayVao;
 		this.viTri = viTri;
 		this.loai = loai;
+		this.ngayCong=ngayCong;
 	}
 
 	public String getTen() {
 		return ten;
 	}
-
 	public void setTen(String ten) {
 		this.ten = ten;
 	}
-
-	public int getMa() {
+	public String getMa() {
 		return ma;
 	}
-
-	public void setMa(int ma) {
+	public void setMa(String ma) {
 		this.ma = ma;
 	}
-
 	public Ngaythangnam getNgayVao() {
 		return ngayVao;
 	}
-
 	public void setNgayVao(Ngaythangnam ngayVao) {
 		this.ngayVao = ngayVao;
 	}
-
-	public int getViTri() {
+	public String getViTri() {
 		return viTri;
 	}
-
-	public void setViTri(int viTri) {
+	public void setViTri(String viTri) {
 		this.viTri = viTri;
 	}
-
-	public int getLoai() {
+	public String getLoai() {
 		return loai;
 	}
-
-	public void setLoai(int loai) {
+	public void setLoai(String loai) {
 		this.loai = loai;
 	}
-
+	public double getNgayCong() {
+		return ngayCong;
+	}
+	public void setNgayCong(double ngayCong) {
+		this.ngayCong = ngayCong;
+	}
 	public void xemDonHang() {
 	}
 
@@ -139,6 +135,11 @@ public abstract class NhanVien {
 	}
 
 	public void tinhLuong() {
+		if(this.loai.equalsIgnoreCase("pt")) {
+			System.out.println("Tien luong thang: "+(40000*ngayCong));
+		}else{
+			System.out.println("Tien luong thang: "+(500000*ngayCong));
+		}
 	}
 
 }
