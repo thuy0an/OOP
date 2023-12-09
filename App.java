@@ -21,6 +21,11 @@ public class App {
     public static void taoFile()
     {
         try {
+            File filebook= new File("book.txt");
+            if ( !filebook.exists())
+            {
+                
+            }
             File fileDonHang= new File("DonHang.txt");
             if ( !fileDonHang.exists())
                 fileDonHang.createNewFile();
@@ -99,3 +104,66 @@ public class App {
     
 }
 
+/*   public void danhGia(String tenfile) {
+        ArrayList<CT_DonHang> dsDonHang = DanhGia.docDonHangTuFile(tenfile);
+        
+        if (dsDonHang.isEmpty()) {
+            System.out.println("Bạn không có đơn hàng nào cần đánh giá!!");
+        } else {
+        
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Nhập mã đơn hàng muốn đánh giá: " );
+        String maDon = scan.nextLine();
+        for (CT_DonHang donhang : dsDonHang) {
+            if (maDon.equalsIgnoreCase(donhang.getMaDonHang()) && donhang.getTrangThai()== 4) 
+{
+
+                System.out.println("Nhập mã sách muốn đánh giá: ");
+                String maSach = scan.nextLine();
+                String dulieu[] = donhang.getDsSanPham().split(" ;");
+                for (String dulieu1 : dulieu) {
+                    String sach[] = dulieu1.split(" x");
+                    if (maSach.equalsIgnoreCase(sach[1])) {
+                        this.setInfo();
+                        System.out.println("Bạn muốn lưu đánh giá??");
+                        System.out.println("1. Lưu đánh giá || 2. Bỏ lưu đánh giá");
+                        int chon = 0;
+                        switch (chon) {
+                            case 1: 
+                             LocalDateTime myDateObj = LocalDateTime.now();   
+                             DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                             this.setNgayDG(myDateObj.format(myFormatObj));   
+                             String fileName = "DanhGia.txt";
+                             File file = new File(fileName);
+                             try (FileWriter fileWriter = new FileWriter(file, true)) {
+                                {
+                                StringBuilder sb = new StringBuilder();
+                                sb.append(this.getMaKhachHang()).append("#");
+                                sb.append(this.getMaDonHang()).append("#");
+                                sb.append(this.getMaSach()).append("#");
+                                sb.append(this.getNgayDG()).append("#");
+                                sb.append(this.getSao()).append("#");
+                                sb.append(this.getBinhLuan()).append("#");
+                                sb.append(System.lineSeparator()); //Xuống dòng
+                                fileWriter.write(sb.toString()); //Ghi chuỗi thông tin vào file
+                                fileWriter.flush(); 
+                                }  
+                             } catch (IOException e) {
+                                    System.out.println("Có lỗi khi ghi vào file: " + e.getMessage());
+                                }
+                            case 2:
+                                break;
+                            }
+                        } else {
+                            System.out.println("Không thể đánh giá! Vui lòng nhập lại");
+                            break;
+                        }
+                    }
+                } else {
+                    System.out.println("Mã đơn hàng không phù hợp! Vui lòng nhập lại!");
+                    break;
+                }
+            } 
+        }
+    }
+*/

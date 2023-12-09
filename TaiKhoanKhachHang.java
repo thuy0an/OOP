@@ -27,8 +27,10 @@ public class TaiKhoanKhachHang {
     private KhachHang khachhang;
     private GioHang giohang;
     private DonHang donhang= new DonHang();
+    private DanhGia danhgia= new DanhGia();
     
     public String fileGioHang;
+    public TuSach tuSach= new TuSach();
     
     public TaiKhoanKhachHang() {
     }
@@ -90,6 +92,15 @@ public class TaiKhoanKhachHang {
         this.fileGioHang = fileGioHang;
     }
 
+    public TuSach getTuSach() {
+        return tuSach;
+    }
+
+    public DanhGia getDanhgia() {
+        return danhgia;
+    }
+
+    
 
     private void duaDuLieuVaoArrayList()
     {
@@ -202,6 +213,7 @@ public class TaiKhoanKhachHang {
                     this.setKhachhang(new KhachHang(dulieu[2],dulieu[3],dulieu[4],dulieu[5],dulieu[6])); // đưa thông tin khách hàng vào biến private
                     checkFileGioHang();
                     duaDuLieuVaoArrayList();
+                    this.getDanhgia().setMaKhachHang(dulieu[2]);
                     FileWriter fileWrt= new FileWriter("userLogin.txt",true);
                     StringBuilder StrBld= new StringBuilder();
                     StrBld.append(this.getUsername()).append("#").append(this.getUserpassword());
@@ -336,7 +348,7 @@ public class TaiKhoanKhachHang {
             System.out.printf("\t| %-35s| %-35s| %-35s|\n","1.Xem thông tin cá nhân","2.Xem danh sách sản phẩm bán","3.Tìm kiếm sản phẩm");
             System.out.printf("\t| %-35s| %-35s| %-35s|\n","4.Thêm sản phẩm trong giỏ","5.Xem giỏ hàng","6.Xóa sản phẩm trong giỏ hàng");
             System.out.printf("\t| %-35s| %-35s| %-35s|\n","7.Đặt đơn hàng","8.Xem đơn đã đặt","9.Hủy đơn hàng");
-            System.out.printf("\t| %-109s|\n", "0.Thoát khỏi chức năng người dùng  |");
+            System.out.printf("\t| %-35s| %-35s| %-35s|\n","10.Dánh giá sản phẩm","11.Xem đánh giá sách" ,"0.Thoát khỏi chức năng người dùng  |");
             System.out.println("\t+--------------------------------------------------------------------------------------------------------------+");
             System.out.print("Chọn thao tác: ");
             choice=Integer.parseInt(input.nextLine());
@@ -360,7 +372,7 @@ public class TaiKhoanKhachHang {
                     TuSach.hienThiSachDangKinhDoanh();
                     break;
                 case 3:
-                    TuSach.timSach();
+                    this.getTuSach().timSach();
                     break;
                 case 4:
                     themVaoGiohang();
@@ -381,7 +393,10 @@ public class TaiKhoanKhachHang {
                     break;
                 case 9:
                     this.getDonhang().huyDonhang(this.getKhachhang().getMaKH());
-
+                case 10:
+                    this.getDanhgia().danhGia("DonHang.txt");
+                case 11:
+                    this.getDanhgia().xemDanhGia();
             }
         }while (choice!=0);
     }
@@ -405,7 +420,7 @@ public class TaiKhoanKhachHang {
                     TuSach.hienThiSachDangKinhDoanh();
                     break;
                 case 2:
-                    TuSach.timSach();
+                    this.getTuSach().timSach();
                     break;
             }
         }while (choice!=0);
@@ -449,6 +464,5 @@ public class TaiKhoanKhachHang {
             
         }while (choice !=0);
     }
-    
     
 }
