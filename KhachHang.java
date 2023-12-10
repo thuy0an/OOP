@@ -179,8 +179,8 @@ public class KhachHang {
         thongtin.append("3.Số điện thoại: ").append(this.getSdt()).append("\n");
         thongtin.append("4.Email: ").append(this.getEmail()).append("\n");
         thongtin.append("5.Dịa chỉ:\n");
-        for( int i=0; i <this.diaChi.size();i++)
-            thongtin.append("Địa chỉ ").append(i+1).append(": ").append(this.diaChi.get(i)).append("\n");
+        for( int i=0; i <this.getDiaChi().size();i++)
+            thongtin.append("Địa chỉ ").append(i+1).append(": ").append(this.getDiaChi().get(i)).append("\n");
         return thongtin.toString();
     }
 }

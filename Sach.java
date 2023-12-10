@@ -24,8 +24,6 @@ public class Sach {
     private String moTa;
     private String loaiSach;
     private int soLuong;
-    private int soLuongMua;
-    Scanner nhapttsach = new Scanner(System.in);
     public Sach() {
         
     }
@@ -55,7 +53,6 @@ public class Sach {
     	this.moTa=sach.getMoTa();
     	this.loaiSach=sach.getLoaiSach();
     	this.soLuong=sach.getSoLuong();
-    	this.soLuongMua=sach.getsoLuongMua();
     }
 
     public String getTenSach() {
@@ -122,6 +119,9 @@ public class Sach {
         this.theLoai = theLoai;
     }
     
+    public String tenSach(){
+        return this.tenSach;
+    }
     public String getLoaiSach() {    
         return loaiSach;
     }
@@ -137,64 +137,39 @@ public class Sach {
         this.soLuong = soLuong;
     }
     
-    private int getsoLuongMua(){
-        return soLuongMua;
-    }
-    private void setsoLuongMua(int soLuongMua){
-        this.soLuongMua=soLuongMua;
-    }
     public void nhapThongTinSachChoNhanVien() {
-//        System.out.println("Nhap ten sach: ");
-//        this.tenSach = nhapttsach.nextLine();
-//        checkTenSach();
+        Scanner nhapttsach = new Scanner(System.in);
         nhapVaCheckTenSach();
         
-//        System.out.println("Nhap ma sach: ");
-//        this.maSach = nhapttsach.nextLine();
-//        checkMaSach();
         nhapVaCheckMaSach();
 
-//        System.out.println("Nhap ten tac gia: ");
-//        this.tacGia = nhapttsach.nextLine();
-//        checkTenTG(); //Đây là hàm non-static nhưng vì nó đang nằm trong cùng lớp Sach và truy cập các thành viên non-static của lớp như this.tacgia mà không cần đối tượng tham chiếu cụ thể. Khi gọi hàm nó tự hiểu 'this' tham chiêu đến đối tượng hiện tại của lớp Sach 
         nhapVaCheckTenTG();
         
-//        System.out.println("Nhap so trang: ");
-//        this.soTrang = Integer.parseInt(nhapttsach.nextLine());
         nhapVaCheckSoTrang();
         
         nhapVaCheckTheLoai();
         
-//        System.out.println("Nhap NXB: ");
-//        this.NXB = nhapttsach.nextLine();
-//        checkTenNXB();
         nhapVaCheckTenNXB();
 
-//        System.out.println("Nhap don gia: ");
-//        this.donGia = Double.parseDouble(nhapttsach.nextLine());
         nhapVaCheckGia();
         
         System.out.println("Nhap mo ta sach: ");
-        this.moTa = nhapttsach.nextLine();
-        
-//        System.out.println("Nhap so luong: ");
-//        this.soLuong = Integer.parseInt(nhapttsach.nextLine());
-        //nhapVaCheckSoLuong();
+        this.setMoTa(nhapttsach.nextLine());
         
     }
     
     //Hàm kiểm tra tính hợp lệ khi nhập tên sách
     public void nhapVaCheckTenSach(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validTen = false;
         do{
             try{
                 System.out.println("Nhap ten sach: ");
                 String input = nhapttsach.nextLine().trim();
-                this.tenSach = input;
-                
-                if(!this.tenSach.matches("^[a-zA-Z0-9\\s]+$")||this.tenSach.trim().isEmpty()){
+                this.setTenSach(input);
+                if(!this.getTenSach().matches("^[a-zA-Z0-9\\s]+$")||this.getTenSach().trim().isEmpty()){
                     System.out.println("Ten sach chi duoc chua chu, so va khoang trang. Moi ban nhap lai.....");
-                    this.tenSach = input;
+                    this.setTenSach(nhapttsach.nextLine().trim());
                 }
                 else{
                     validTen = true;
@@ -205,14 +180,15 @@ public class Sach {
         }while(!validTen);
     }
     public void checkTenSach(){
-        String tensach = this.tenSach;
+        Scanner nhapttsach = new Scanner(System.in);
+        String tensach = this.getTenSach();
         boolean validTenSach = false;
         
         do{
             if(!tensach.matches("^[a-zA-Z0-9\\s]+$")||tensach.trim().isEmpty()){
                 System.out.println("Ten sach khong hop le, moi ban nhap la.....");
-                this.tenSach = nhapttsach.nextLine();
-                tensach = this.tenSach;
+                this.setTenSach(nhapttsach.nextLine());
+                tensach = this.getTenSach();
             }
             else{
                 validTenSach = true;
@@ -221,16 +197,17 @@ public class Sach {
     }
     //Hàm kiểm tra tính hợp lệ khi nhập mã sách
     public void nhapVaCheckMaSach(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validMa = false;
         do{
             try{
                 System.out.println("Nhap ma sach: ");
                 String input = nhapttsach.nextLine().trim();
-                this.maSach = input;
+                this.setMaSach(input);
                 
-                if(!this.maSach.matches("^[a-zA-Z0-9\\s]+$")||this.maSach.trim().isEmpty()){
+                if(!this.getMaSach().matches("^[a-zA-Z0-9\\s]+$")||this.getMaSach().trim().isEmpty()){
                     System.out.println("Ma sach chi duoc chua chu, so va khoang trang. Moi ban nhap lai.....");
-                    this.maSach = input;
+                    this.setMaSach(nhapttsach.nextLine().trim());
                 }
                 else{
                     validMa = true;
@@ -252,14 +229,15 @@ public class Sach {
         }while(!validMa);
     }
     public void checkMaSach(){
-        String masach = this.maSach;
+        Scanner nhapttsach = new Scanner(System.in);
+        String masach = this.getMaSach();
         boolean validMa =false;
         
         do{
             if(!masach.matches("^[a-zA-Z0-9\\s]+$")||masach.trim().isEmpty()){
                 System.out.println("Ma sach khong hop le. moi ban nhap lai.....");
-                this.maSach = nhapttsach.nextLine();
-                masach = this.maSach;
+                this.setMaSach(nhapttsach.nextLine());
+                masach = this.getMaSach();
             }
             else{
                 validMa = true;
@@ -267,16 +245,17 @@ public class Sach {
         }while(!validMa);
     }
     public void nhapVaCheckTenTG(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validTG = false;
         do{
             try{
                 System.out.println("Nhap ten tac gia: ");
                 String input = nhapttsach.nextLine().trim();
-                this.tacGia = input;
+                this.setTacGia(nhapttsach.nextLine().trim());
                 
-                if(!this.tacGia.matches("^[a-zA-Z\\s]+$")||this.tacGia.trim().isEmpty()){
+                if(!this.getTacGia().matches("^[a-zA-Z\\s]+$")||this.getTacGia().trim().isEmpty()){
                     System.out.println("Ten tac gia khong hop le, moi ban nhap lai.....");
-                    this.tacGia = input;
+                    this.setTacGia(nhapttsach.nextLine().trim());
                 }
                 else{
                     validTG = true;
@@ -288,15 +267,14 @@ public class Sach {
     }
     //Hàm kiểm tra tính hợp lệ khi nhập tên tác giả
     public void checkTenTG(){
-        String author = this.tacGia;
+        Scanner nhapttsach = new Scanner(System.in);
+        String author = this.getTacGia();
         boolean validTG = false;
         do{
-            //author = this.tacGia.trim(); //Remove trailing whitespace, phương thức trim(): trả về một chuỗi mới mà không bao gồm các ký tự trắng ở cả hai đầu của chuỗi gốc.
-            
             if (!author.matches("^[a-zA-Z\\s]+$")|| author.trim().isEmpty()) {
                 System.out.println("Ten khong hop le, moi ban nhap lai: ");
-                this.tacGia = nhapttsach.nextLine();
-                author=this.tacGia;
+                this.setTacGia(nhapttsach.nextLine());
+                author=this.getTacGia();
             } else {
                 validTG = true;
             }
@@ -304,14 +282,15 @@ public class Sach {
     }
     //Hàm kiểm tra tính hợp lệ khi nhập số trang
     public void nhapVaCheckSoTrang() {
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validPageNum = false;
         do {
             try {
                 System.out.println("Nhap so trang: ");
                 String input = nhapttsach.nextLine().trim();
-                this.soTrang = Integer.parseInt(input);
+                this.setSoTrang(Integer.parseInt(input));
             
-                if (this.soTrang <= 0) {
+                if (this.getSoTrang() <= 0) {
                     System.out.println("So trang phai lon hon 0, moi ban nhap lai.....");
                 } else {
                     validPageNum = true;
@@ -322,16 +301,17 @@ public class Sach {
         } while (!validPageNum);
     }
     public void nhapVaCheckTenNXB(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validNXB = false;
         do{
             try{
                 System.out.println("Nhap ten NXB: ");
                 String input = nhapttsach.nextLine().trim();
-                this.NXB = input;
+                this.setNXB(input);
                 
-                if(!this.NXB.matches("^[a-zA-Z\\s]+$")||this.NXB.trim().isEmpty()){
+                if(!this.getNXB().matches("^[a-zA-Z\\s]+$")||this.getNXB().trim().isEmpty()){
                     System.out.println("Ten NXB khong hop le, moi ban nhap lai.....");
-                    this.NXB = input;
+                    this.setNXB(nhapttsach.nextLine().trim());
                 }
                 else{
                     validNXB = true;
@@ -343,30 +323,32 @@ public class Sach {
     }
     //Hàm kiểm tra tính hợp lệ khi nhập tên NXB
     public void checkTenNXB(){
-        String nxb = this.NXB;
+        Scanner nhapttsach = new Scanner(System.in);
+        String nxb = this.getNXB();
         boolean validNXB = false;
         do{
-            nxb = this.NXB.trim();
+            nxb = this.getNXB().trim();
             
             if (!nxb.matches("^[a-zA-Z\\s]+$") || nxb.trim().isEmpty()) {
                 System.out.println("Ten khong hop le, moi ban nhap lai: ");
-                this.NXB = nhapttsach.nextLine();
-                nxb=this.NXB;
+                this.setNXB(nhapttsach.nextLine());
+                nxb=this.getNXB();
             } else {
                 validNXB = true;
             }
         } while (!validNXB);
     }
     public void nhapVaCheckTheLoai(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validCate = false;
         do{
            try{
                System.out.println("Nhap the loai: ");
                String input = nhapttsach.nextLine().trim();
-               this.theLoai = input;
-               if(!this.theLoai.matches("^[a-zA-Z0-9\\s]+$")||this.theLoai.trim().isEmpty()){
+               this.setTheLoai(input);
+               if(!this.getTheLoai().matches("^[a-zA-Z0-9\\s]+$")||this.getTheLoai().trim().isEmpty()){
                    System.out.println("The loai khong hop le, moi ban nhap lai.....");
-                   this.theLoai = input;
+                   this.setTheLoai(nhapttsach.nextLine().trim());
                }
                else{
                    validCate = true;
@@ -377,15 +359,17 @@ public class Sach {
             
         }while(!validCate);
     }
+    
     public void nhapVaCheckGia(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validGia = false;
         do{
             try{
                 System.out.println("Nhap gia: ");
                 String input = nhapttsach.nextLine().trim();
-                this.gia = Double.parseDouble(input);
+                this.setDonGia(Double.parseDouble(input));
                 
-                if(this.gia<=0){
+                if(this.getgia()<=0){
                     System.out.println("Gia phai lon hon 0,moi ban nhap lai.....");
                 }
                 else{
@@ -396,15 +380,17 @@ public class Sach {
             }
         }while(!validGia);
     }
+    
     public void nhapVaCheckSoLuong(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validSoLuong = false;
         do{
             try{
                 System.out.println("Nhap so luong: ");
                 String input = nhapttsach.nextLine().trim();
-                this.soLuong = Integer.parseInt(input);
+                this.setSoLuong(Integer.parseInt(input));
                 
-                if(this.soLuong<=0){
+                if(this.getSoLuong()<=0){
                     System.out.println("So luong phai lon hon 0, moi ban nhap lai.....");
                 }
                 else{
@@ -417,31 +403,19 @@ public class Sach {
     }
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(); //Thay đổi nội dung của chuỗi mà k tạo ra một chuỗi mới each time
+        StringBuilder sb = new StringBuilder();
         sb.append("\n");
-        sb.append("Ten sach: ").append(this.tenSach).append("\n");
-        sb.append("Ma sach: ").append(this.maSach).append("\n");
-        sb.append("Ten tac gia: ").append(this.tacGia).append("\n");
-        sb.append("So trang: ").append(this.soTrang).append(" trang\n");
-        sb.append("Nha xuat ban: ").append(this.NXB).append("\n");
-        sb.append("The loai: ").append(this.theLoai).append("\n");
-        sb.append("Gia: ").append(this.gia).append("\n");
-        sb.append("Mo ta sach: ").append(this.moTa).append("\n");
-        sb.append("So luong: ").append(this.soLuong).append("\n");
-        //Thêm thông tin khác tại đây nếu cần
-        
+        sb.append("Ten sach: ").append(this.getTenSach()).append("\n");
+        sb.append("Ma sach: ").append(this.getMaSach()).append("\n");
+        sb.append("Ten tac gia: ").append(this.getTacGia()).append("\n");
+        sb.append("So trang: ").append(this.getSoTrang()).append(" trang\n");
+        sb.append("Nha xuat ban: ").append(this.getNXB()).append("\n");
+        sb.append("The loai: ").append(this.getTheLoai()).append("\n");
+        sb.append("Gia: ").append(this.getgia()).append("\n");
+        sb.append("Mo ta sach: ").append(this.getMoTa()).append("\n");
+        sb.append("So luong: ").append(this.getSoLuong()).append("\n");  
         return sb.toString();
     }
 
-    public String tenSach(){
-        return this.tenSach;
-    }
-    
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-       
-        Sach sach = new Sach();
-        sach.nhapThongTinSachChoNhanVien();
-        System.out.println(sach.toString());
-    }
+
 }

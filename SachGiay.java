@@ -57,11 +57,11 @@ import java.util.Scanner;
                 try{
                     System.out.println("Nhap so luong: ");
                     String input = nhapttSachGiay.nextLine().trim();
-                    this.hienCo = Integer.parseInt(input);
+                    this.setHienCo(Integer.parseInt(input));
                     
-                    if(this.hienCo<=0){
+                    if(this.getHienCo()<=0){
                         System.out.println("So luong phai lon 0, moi ban nhap lai.....");
-                        this.hienCo = Integer.parseInt(input); 
+                        this.setHienCo(Integer.parseInt(input));
                     }
                     else{
                         validHienCo = true;
@@ -73,19 +73,15 @@ import java.util.Scanner;
         }
         
         public void nhapThongTinSachGiay(){
-            // Call inherited methods to input common book information
-            super.nhapThongTinSachChoNhanVien(); // Utilize the input method from the Sach class
+            super.nhapThongTinSachChoNhanVien();
             Scanner nhapttSachGiay = new Scanner(System.in);
-            
-            // Input specific information for paper books
+
             System.out.println("Nhap kich thuoc sach: ");
-            this.kichThuoc = nhapttSachGiay.nextLine();
+            this.setKichThuoc(nhapttSachGiay.nextLine());
             
             System.out.println("Nhap loai bia: ");
-            this.loaiBia = nhapttSachGiay.nextLine();
+            this.setLoaiBia(nhapttSachGiay.nextLine());
             
-//            System.out.println("Nhap so luong: ");
-//            this.hienCo = Integer.parseInt(nhapttSachGiay.nextLine());
             nhapVaCheckHienCo();
         }
         
@@ -93,16 +89,11 @@ import java.util.Scanner;
         public String toString(){
             String superString = super.toString();
             StringBuilder sb = new StringBuilder(superString);
-            sb.append("Kich thuoc: ").append(this.kichThuoc).append("\n");
-            sb.append("Loai bia: ").append(this.loaiBia).append("\n");
-            sb.append("Hien co: ").append(this.hienCo).append("\n");
+            sb.append("Kich thuoc: ").append(this.getKichThuoc()).append("\n");
+            sb.append("Loai bia: ").append(this.getLoaiBia()).append("\n");
+            sb.append("Hien co: ").append(this.getHienCo()).append("\n");
             
             return sb.toString();
-        }
-        public static void main(String[] args){
-            SachGiay sachgiay = new SachGiay();
-            sachgiay.nhapThongTinSachGiay();
-            System.out.println("Thong tin sach giay: " + sachgiay.toString());
         }
 
     }

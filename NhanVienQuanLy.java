@@ -825,10 +825,10 @@ public class NhanVienQuanLy extends NhanVien {
                                     tinhLuong();
                                     break;
                             case 2:
-                                    quanLyDonHang();
+                                    quanLySach();
                                     break;
                             case 3:
-                                    quanLySach();
+                                    quanLyDonHang();
                                     break;
                             case 4:
                                     luaChonThongKe();

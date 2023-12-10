@@ -40,7 +40,7 @@ public class CT_DonHang {
     private String taoMaDH() {
         Random rand = new Random();
         int soNgauNhien = rand.nextInt(1000000); 
-        String maSoNgauNhien = String.format("%06d", soNgauNhien);
+        String maSoNgauNhien = String.format("%03d", soNgauNhien);
         
         String maDonHang = "DH" + this.getMaKH() + maSoNgauNhien;
         return maDonHang;
@@ -306,7 +306,6 @@ public class CT_DonHang {
        return sb.toString();
     }
     
-        
 //    public double giamGia() {
 //        if (this.tinhTongTien() >= 500000) {
 //            return (10/100)*this.tinhTongTien();

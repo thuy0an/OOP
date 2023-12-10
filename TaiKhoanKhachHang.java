@@ -269,6 +269,7 @@ public class TaiKhoanKhachHang {
     }
     
     public  void themVaoGiohang(){
+    boolean flag=true; // kiểm tra số lượng sản phẩm
     File fileSach=new File("book.txt");
         try {
             Scanner docFileSach= new Scanner(fileSach);
@@ -286,24 +287,41 @@ public class TaiKhoanKhachHang {
                     kiemTraSach=1;
                     System.out.print("Chọn số lượng muốn thêm vào giỏ: ");
                     soLuongSanPham=Integer.parseInt(input.nextLine());
-                    if ( checkSanPhamTrongGio(this.getKhachhang().getMaKH(), maSanPham, soLuongSanPham)==true)
+                    if ( thongTinSach[8].equalsIgnoreCase("Giay") && soLuongSanPham > Integer.parseInt(thongTinSach[13]))
                     {
-                        this.getGiohang().ghiGioHangVaoFile(this.getKhachhang().getMaKH());
-                        System.out.println("Bạn đã thêm sách thành công với sách đã có ^^");
+                        System.out.println("Số lượng sách này trong kho không đủ để bạn đặt hàng!!");
+                        flag=false;
                     }
-                    else 
-                    {
-                        CT_GioHang sanpham= new CT_GioHang();
-                        sanpham.setMaKhachhang(this.getKhachhang().getMaKH());
-                        sanpham.setMaSach(maSanPham);
-                        sanpham.setTenSach(thongTinSach[0]);
-                        sanpham.setLoaiSach(thongTinSach[8]);
-                        sanpham.setGiaSach(Double.parseDouble(thongTinSach[6]));
-                        sanpham.setSoLuong(soLuongSanPham);
-                        sanpham.setThanhTien(sanpham.getGiaSach()*soLuongSanPham);
-                        this.getGiohang().getDsSanPham().add(sanpham);
-                        System.out.println("Bạn đã thêm sách thành công ^^");
-                    }              
+                    for( CT_GioHang giohang: this.getGiohang().getDsSanPham())
+                        if (giohang.getMaSach().equalsIgnoreCase(maSanPham) && (giohang.getSoLuong()+soLuongSanPham) >Integer.parseInt(thongTinSach[13]))
+                        {
+                            flag=false;
+                            System.out.println("Số lượng sách này trong kho không đủ để bạn đặt hàng!!");
+                            break;
+                        }      
+                    
+                    if(flag){
+                        if ( checkSanPhamTrongGio(this.getKhachhang().getMaKH(), maSanPham, soLuongSanPham)==true)
+                        {
+                            this.getGiohang().ghiGioHangVaoFile(this.getKhachhang().getMaKH());
+                            System.out.println("Bạn đã thêm sách thành công với sách đã có ^^");
+                        }
+                        else 
+                        {
+                            CT_GioHang sanpham= new CT_GioHang();
+                            sanpham.setMaKhachhang(this.getKhachhang().getMaKH());
+                            sanpham.setMaSach(maSanPham);
+                            sanpham.setTenSach(thongTinSach[0]);
+                            sanpham.setLoaiSach(thongTinSach[8]);
+                            sanpham.setGiaSach(Double.parseDouble(thongTinSach[6]));
+                            sanpham.setSoLuong(soLuongSanPham);
+                            sanpham.setThanhTien(sanpham.getGiaSach()*soLuongSanPham);
+                            this.getGiohang().getDsSanPham().add(sanpham);
+                            System.out.println("Bạn đã thêm sách thành công ^^");
+                        }              
+                    }
+                    
+                    
                 }   
             }
             if (kiemTraSach != 1)
@@ -334,11 +352,7 @@ public class TaiKhoanKhachHang {
         else 
             System.out.println("Không có sản phẩm trong giỏ để xóa");
     }
-    
-    public void huyDonHang(){
-        
-    }
-    
+  
     public  void chucNangNguoiDung(){
         Scanner input= new Scanner(System.in);
         File file= new File("user.txt");
@@ -348,7 +362,7 @@ public class TaiKhoanKhachHang {
             System.out.printf("\t| %-35s| %-35s| %-35s|\n","1.Xem thông tin cá nhân","2.Xem danh sách sản phẩm bán","3.Tìm kiếm sản phẩm");
             System.out.printf("\t| %-35s| %-35s| %-35s|\n","4.Thêm sản phẩm trong giỏ","5.Xem giỏ hàng","6.Xóa sản phẩm trong giỏ hàng");
             System.out.printf("\t| %-35s| %-35s| %-35s|\n","7.Đặt đơn hàng","8.Xem đơn đã đặt","9.Hủy đơn hàng");
-            System.out.printf("\t| %-35s| %-35s| %-35s|\n","10.Dánh giá sản phẩm","11.Xem đánh giá sách" ,"0.Thoát khỏi chức năng người dùng  |");
+            System.out.printf("\t| %-35s| %-35s| %-35s|\n","10.Dánh giá sản phẩm","11.Xem đánh giá sách" ,"0.Thoát khỏi chức năng người dùng ");
             System.out.println("\t+--------------------------------------------------------------------------------------------------------------+");
             System.out.print("Chọn thao tác: ");
             choice=Integer.parseInt(input.nextLine());

@@ -243,6 +243,9 @@ public class DanhGia {
                     String binhLuana = danhGia[4];
                     DanhGia danhgia= new DanhGia(maKH, maSacha, ngayDGa, soSao, binhLuana);
                     System.out.println(danhgia.toString());
+                    try{
+                    Thread.sleep(200);
+                    }catch(InterruptedException e){}
                 }  
             }
         } catch (FileNotFoundException ex) {

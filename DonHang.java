@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DonHang {
-    private CT_DonHang chitietDonHang;
+    private CT_DonHang chitietDonHang =new CT_DonHang();;
 
     public DonHang() {
     }
@@ -108,7 +108,6 @@ public class DonHang {
     
     
     public void datHang(String tenfile) {
-        this.chitietDonHang = new CT_DonHang();
         this.getChitietDonHang().setInfo();
         ArrayList<CT_GioHang> sanPhamDatHang=this.getChitietDonHang().chonSachTuDanhSach(tenfile);
         System.out.println("--BẠN CÓ XÁC NHẬN ĐẶT HÀNG?--");
@@ -179,6 +178,9 @@ public class DonHang {
             {
                 if ( donHang.getMaKH().equalsIgnoreCase(maKhach))
                     System.out.println(donHang.toString());
+                try{
+                    Thread.sleep(200);
+                    }catch(InterruptedException e){}
             }
             
             System.out.print("Chọn mã đơn mà bạn muốn hủy đặt: ");
@@ -243,18 +245,15 @@ public class DonHang {
                     CT_DonHang thongtin= new CT_DonHang(donhang[0],donhang[1],donhang[2],donhang[3],donhang[4],donhang[5],Double.parseDouble(donhang[6]),donhang[7],Integer.parseInt(donhang[8]));
                     System.out.println(thongtin.toString());
                 }
+                try{
+                    Thread.sleep(200);
+                    }catch(InterruptedException e){}
                 
             }
         } catch (FileNotFoundException ex) {
             System.out.println("Không tìm được file DonHang.txt");
         }
     }
+
    
-    public static void main(String[] args) {
-        DonHang demo= new DonHang();
-        demo.datHang("GioHangDTA7656.txt");
-    }
-    
-    
-    
 }

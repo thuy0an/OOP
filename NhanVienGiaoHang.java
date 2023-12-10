@@ -54,7 +54,6 @@ public class NhanVienGiaoHang extends NhanVien {
 					try {
 						Thread.sleep(200);
 					} catch (InterruptedException e) {
-						// TODO: handle exception
 					}
 					System.out.printf("| %-15s || %-15s || %-20s || %-15s || %-15s || %-15s || %-15s || %-10s || %s|\n",
 							donhang.getMaDonHang(), donhang.getMaKH(), donhang.getDiaChi(), donhang.getEmail(),
@@ -79,7 +78,6 @@ public class NhanVienGiaoHang extends NhanVien {
 					try {
 						Thread.sleep(200);
 					} catch (InterruptedException e) {
-						// TODO: handle exception
 					}
 
 					System.out.printf("| %-15s || %-15s || %-20s || %-15s || %-15s || %-15s || %-15s || %-10s || %s|\n",
