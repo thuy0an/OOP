@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -118,59 +119,7 @@ public class TuSach {
             System.out.println("Khong hop le" + e.getMessage());
         }
     }
-    public void xoaSachTheoID(){
-        Scanner input = new Scanner(System.in);
-        String canXoa = input.nextLine();
-        try{
-            File inputFile = new File("book.txt");
-            File tempFile = new File("TempBook.txt");
-            
-            Scanner scanner = new Scanner(inputFile);
-            FileWriter writer = new FileWriter(tempFile);
-            
-            while(scanner.hasNextLine()){
-                String currentLine = scanner.nextLine();
-                String[] bookDetails = currentLine.split("#");
-                if(bookDetails.length>1 && bookDetails[1].equalsIgnoreCase(canXoa)){
-                    continue; //Skip writing this line to the temporary file (delete it)
-                }
-                writer.write(currentLine + System.lineSeparator()); //Write into temporary file
-            }
-            writer.close();
-            scanner.close();
-            
-            //Replace the original file with the updated one
-            if(inputFile.delete()){
-                if(!tempFile.renameTo(inputFile)){
-                    throw new IOException("Khong the cap nhat ten file.....");
-                }
-                System.out.println("Xoa sach thanh cong <3");
-            }else{
-                throw new IOException("Khong the xoa file goc.....");
-            }
-        }catch(IOException e){
-            System.out.println("Co loi khi thao tac voi file: " + e.getMessage());
-        }
-        
-        
-    }
     
-    public void xoaSachTheoTen(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Nhap ten sach ban muon xoa: ");
-        String tenSachCanXoa = input.nextLine();
-        
-        Iterator<Sach> iterator = books.iterator();
-        while(iterator.hasNext()){
-            Sach sach = iterator.next();
-            if(sach.getTenSach().equalsIgnoreCase(tenSachCanXoa)){
-                iterator.remove();
-                soSach--;
-                System.out.println("Xoa sach thanh cong <3");
-                break;
-            }
-        }
-    }
     public void timSachTheoTen(){
         Scanner input = new Scanner(System.in);
         System.out.println("Nhap ten sach ban muon tim: ");
@@ -302,45 +251,53 @@ public class TuSach {
         String maSachCanTim = id;
         Sach foundSach=null;
         while(!maSachCanTim.matches("^[a-zA-Z0-9\\s]+$")||maSachCanTim.isBlank()){
-            return foundSach;
+            System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
+            maSachCanTim=id;
         }
+        boolean found = false;
         String fileName = "book.txt";
         File file = new File(fileName);
         try(Scanner scanner = new Scanner(file)){
-           while(scanner.hasNextLine()){
+            System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+            System.out.println("|                                                                    THONG TIN SACH                                                                                                                                                                                 |");
+            System.out.println("|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+//            System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
+            System.out.printf("| %-50s| %-10s| %-30s| %-9s| %-15s| %-15s| %-10s| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Size","Loai Bia","FSize","Dung Luong","So Luong", "|");
+            System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
+            while(scanner.hasNextLine()){
                 String line = scanner.nextLine();
                 String[] sachDuocDoc = line.split("#");
                 String tenSach = sachDuocDoc[0];
                 String maSach = sachDuocDoc[1];
                 String tacGia = sachDuocDoc[2];
                 int soTrang = Integer.parseInt(sachDuocDoc[3]);
-                String theLoai = sachDuocDoc[4];
-                String NXB = sachDuocDoc[5];
-                double gia = Double.parseDouble(sachDuocDoc[6]);
+                String theloai = sachDuocDoc[4];
+                String nXB = sachDuocDoc[5];
+                double Gia = Double.parseDouble(sachDuocDoc[6]);
                 String moTa = sachDuocDoc[7];
                 String loaiSach = sachDuocDoc[8];
                 String kichThuoc="";
                 String loaiBia="";
                 String kichCoDungLuong="";
                 String dungLuong="";
-                int soLuong=0;
+                String soLuong="";
                 if ( loaiSach.equals("Giay")){
                     kichThuoc = sachDuocDoc[9];
                     loaiBia = sachDuocDoc[10];
                     kichCoDungLuong="////";
                     dungLuong="////";
-                    soLuong=Integer.parseInt(sachDuocDoc[13]);
+                    soLuong=sachDuocDoc[13];
                 }
-                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDF")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
                     kichThuoc="////";
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
                     dungLuong =sachDuocDoc[12];
-                    soLuong=0;
+                    soLuong="////";
                 }
-//                (String tenSach,String maSach,String tacGia,int soTrang,String theLoai,String NXB,double gia,String moTa,String loaiSach,int soLuong)
-                if(maSach.equalsIgnoreCase(maSachCanTim)){
-                    foundSach=new Sach(tenSach,maSach,tacGia,soTrang,theLoai,NXB,gia,moTa,loaiSach,soLuong);
+                
+                if(maSach.toLowerCase().contains(maSachCanTim)){
+                    foundSach=new Sach();
                 }
             }
         }catch(IOException e){
@@ -727,11 +684,194 @@ public class TuSach {
             System.out.println("Exception occurred: " + e.getMessage());
         }
     }
-    
-    public void chinhSuaThongTinSach(){
-       
+    public void suaTenSach(){
+        String fileName = "Sach.txt";
+        File file = new File(fileName);
+        Scanner input = new Scanner(System.in);
+
+        try (Scanner scanner = new Scanner(file)) {
+            System.out.println("Nhap ma sach ban muon chinh sua: ");
+            String maSachCanSua = input.nextLine();
+
+            while (!maSachCanSua.matches("^[a-zA-Z0-9\\s]+$") || maSachCanSua.isBlank()) {
+                System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
+                maSachCanSua = input.nextLine();
+            }
+
+            //Tạo 1 danh sách tạm chứa tt các sách modified
+            List<String> modifiedBookInfo = new ArrayList<>();
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] sachDuocDoc = line.split("#");
+                String maSach = sachDuocDoc[1];
+
+                if (maSach.toLowerCase().equalsIgnoreCase(maSachCanSua)) {
+                    //Tìm thấy sách trùng khớp, cho user chỉnh sửa
+                    System.out.println("Nhập tên sách mới: ");
+                    String newBookName = input.nextLine();
+                    sachDuocDoc[0] = newBookName; // Cập nhật tên sách
+
+                    // Chuyển cái array lại thành 1 line và add nó vào midifed list
+                    String modifiedLine = String.join("#", sachDuocDoc);
+                    modifiedBookInfo.add(modifiedLine);
+                } else {
+                    modifiedBookInfo.add(line); // Giữ nhứng sách không chỉnh sửa trong list
+                }
+            }
+
+            // Viết lại thông tin sách được chỉnh sửa
+            try (FileWriter writer = new FileWriter(fileName)) {
+                for (String modifiedLine : modifiedBookInfo) {
+                    writer.write(modifiedLine + "\n"); // Write each modified line to the file
+                }
+                System.out.println("Cập nhật thông tin sách thành công.");
+            } catch (IOException e) {
+                System.out.println("Error writing to file: " + e.getMessage());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found....." + e.getMessage());
+        }
     }
-    public static void taoFileTuDong(){
+    public void suaGiaSach(){
+        String fileName = "Sach.txt";
+        File file = new File(fileName);
+        Scanner input = new Scanner(System.in);
+
+        try (Scanner scanner = new Scanner(file)) {
+            System.out.println("Nhap ma sach ban muon chinh sua: ");
+            String maSachCanSua = input.nextLine();
+
+            while (!maSachCanSua.matches("^[a-zA-Z0-9\\s]+$") || maSachCanSua.isBlank()) {
+                System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
+                maSachCanSua = input.nextLine();
+            }
+
+            //Tạo 1 danh sách tạm chứa tt các sách modified
+            List<String> modifiedBookInfo = new ArrayList<>();
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] sachDuocDoc = line.split("#");
+                String maSach = sachDuocDoc[1];
+
+                if (maSach.toLowerCase().equalsIgnoreCase(maSachCanSua)) {
+                    //Tìm thấy sách trùng khớp, cho user chỉnh sửa
+                    System.out.println("Nhập giá sách mới: ");
+                    String newBookPrice = input.nextLine();
+                    sachDuocDoc[6] = newBookPrice; // Cập nhật tên sách
+
+                    // Chuyển cái array lại thành 1 line và add nó vào midifed list
+                    String modifiedLine = String.join("#", sachDuocDoc);
+                    modifiedBookInfo.add(modifiedLine);
+                } else {
+                    modifiedBookInfo.add(line); // Giữ nhứng sách không chỉnh sửa trong list
+                }
+            }
+
+            // Viết lại thông tin sách được chỉnh sửa
+            try (FileWriter writer = new FileWriter(fileName)) {
+                for (String modifiedLine : modifiedBookInfo) {
+                    writer.write(modifiedLine + "\n"); // Write each modified line to the file
+                }
+                System.out.println("Cập nhật thông tin sách thành công.");
+            } catch (IOException e) {
+                System.out.println("Error writing to file: " + e.getMessage());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found....." + e.getMessage());
+        }
+    }
+    public void suaSoLuongSach(){
+        String fileName = "Sach.txt";
+        File file = new File(fileName);
+        Scanner input = new Scanner(System.in);
+
+        try (Scanner scanner = new Scanner(file)) {
+            System.out.println("Nhap ma sach ban muon chinh sua: ");
+            String maSachCanSua = input.nextLine();
+
+            while (!maSachCanSua.matches("^[a-zA-Z0-9\\s]+$") || maSachCanSua.isBlank()) {
+                System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
+                maSachCanSua = input.nextLine();
+            }
+
+            //Tạo 1 danh sách tạm chứa tt các sách modified
+            List<String> modifiedBookInfo = new ArrayList<>();
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] sachDuocDoc = line.split("#");
+                String maSach = sachDuocDoc[1];
+
+                if (maSach.toLowerCase().equalsIgnoreCase(maSachCanSua)) {
+                    //Tìm thấy sách trùng khớp, cho user chỉnh sửa
+                    System.out.println("Nhập số lượng sách mới: ");
+                    String newBookQuantity = input.nextLine();
+                    sachDuocDoc[13] = newBookQuantity; // Cập nhật tên sách
+
+                    // Chuyển cái array lại thành 1 line và add nó vào midifed list
+                    String modifiedLine = String.join("#", sachDuocDoc);
+                    modifiedBookInfo.add(modifiedLine);
+                } else {
+                    modifiedBookInfo.add(line); // Giữ nhứng sách không chỉnh sửa trong list
+                }
+            }
+
+            // Viết lại thông tin sách được chỉnh sửa
+            try (FileWriter writer = new FileWriter(fileName)) {
+                for (String modifiedLine : modifiedBookInfo) {
+                    writer.write(modifiedLine + "\n"); // Write each modified line to the file
+                }
+                System.out.println("Cập nhật thông tin sách thành công.");
+            } catch (IOException e) {
+                System.out.println("Error writing to file: " + e.getMessage());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found....." + e.getMessage());
+        }
+    }
+    public void chinhSuaThongTinSach(){
+        String code;
+        Scanner input = new Scanner(System.in);
+        
+        System.out.println("\n");
+        System.out.println("\t+---------- Query Options ----------+");
+        System.out.println("\t|     1. Sua Ten Sach               |");
+        System.out.println("\t|     2. Sua Gia Sach               |");
+        System.out.println("\t|     3. Sua So Luong Sach          |");
+        System.out.println("\t+-----------------------------------+");
+        System.out.print("\n Moi ban nhap:  ");
+        code = input.nextLine();
+        while(!code.equals("1")&&!code.equals("2")&&!code.equals("3")&&!code.equals("4")&&!code.equals("5")&&!code.equals("6")){
+            System.out.println("Lua chon khong hop le, vui long nhap lai.....");
+            code=input.nextLine();
+        }
+        switch(code){
+            case "1":
+                System.out.println("\n\n\t\t\tSUA TEN SACH");
+                suaTenSach();
+                break;
+            case "2":
+                System.out.println("\n\n\t\t\tSUA GIA SACH");
+                suaGiaSach();
+                break;
+            case "3":
+                System.out.println("\n\n\t\t\tSUA SO LUONG SACH");
+                suaSoLuongSach();
+                break;
+            
+        }
+        System.out.println("Ban co muon tiep tuc chinh sua? (Y/N)");
+        String opt=input.nextLine();
+        while(!opt.toLowerCase().equalsIgnoreCase("N")&&!opt.toLowerCase().equalsIgnoreCase("Y")&&!opt.toLowerCase().equalsIgnoreCase("No")&&!opt.toLowerCase().equalsIgnoreCase("Yes")){
+                        System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
+                        opt = input.nextLine();
+                    }
+        if(opt.toLowerCase().equalsIgnoreCase("Y")||opt.toLowerCase().equalsIgnoreCase("Yes"))
+            chinhSuaThongTinSach();
+    }
+    public void taoFileTuDong(){
         File file = new File("book.txt");
         if(!file.exists()){
             try(FileWriter write = new FileWriter(file,true)){
@@ -865,6 +1005,7 @@ public class TuSach {
         TuSach tuSach = new TuSach();
         Scanner input = new Scanner(System.in);
         tuSach.taoFileTuDong();
+        
 //        //Them sach cach 1
 //        System.out.println("Nhap so luong sach ban muon them: ");
 //        int soLuongSach = Integer.parseInt(input.nextLine());
@@ -880,10 +1021,7 @@ public class TuSach {
         //Hien thi nhung sach dang kinh doanh
 //        tuSach.hienThiSachDangKinhDoanh();
 
-        //Xoa sach theo ID
-        //tuSach.xoaSachTheoID();
-//        //Xoa sach theo ten
-//        tuSach.xoaSachTheoTen();
+        
 //        tuSach.hienThiSachDangCo();
 //        //Danh gia sach
 //        tuSach.danhGia();
@@ -891,7 +1029,8 @@ public class TuSach {
 //        System.out.println(danhGiaTuKhachHang);
 //        //Menu Tim Sach
 //        tuSach.timSach();
-        
+        //Menu Chỉnh Sửa Sách
+        tuSach.chinhSuaThongTinSach();
        
     }
 }
