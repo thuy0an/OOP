@@ -45,7 +45,7 @@ public class SachMem extends Sach{
     }
 
     
-    public void nhapVaCheckLoaiSach(){
+    private void nhapVaCheckLoaiSach(){
         Scanner nhapttsachmem = new Scanner(System.in);
         boolean validType = false;
         do{
@@ -65,7 +65,7 @@ public class SachMem extends Sach{
         }while(!validType);
     }
     
-    public void nhapVaCheckDungLuong(){
+    private void nhapVaCheckDungLuong(){
         String input1;
         Scanner nhapttsachmem = new Scanner(System.in);
         boolean validSizeType = false;

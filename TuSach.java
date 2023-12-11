@@ -692,7 +692,7 @@ public class TuSach {
     }
     
     
-    public void suaTenSach(){
+    private void suaTenSach(){
         String fileName = "book.txt";
         File file = new File(fileName);
         Scanner input = new Scanner(System.in);
@@ -741,7 +741,7 @@ public class TuSach {
             System.out.println("File not found....." + e.getMessage());
         }
     }
-    public void suaGiaSach(){
+    private void suaGiaSach(){
         String fileName = "book.txt";
         File file = new File(fileName);
         Scanner input = new Scanner(System.in);
@@ -790,7 +790,7 @@ public class TuSach {
             System.out.println("File not found....." + e.getMessage());
         }
     }
-    public void suaSoLuongSach(){
+    private void suaSoLuongSach(){
         String fileName = "book.txt";
         File file = new File(fileName);
         Scanner input = new Scanner(System.in);
