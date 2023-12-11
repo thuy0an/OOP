@@ -25,7 +25,7 @@ public class Sach {
     private String loaiSach;
     private int soLuong;
 
-    Scanner nhapttsach = new Scanner(System.in);
+    
     public Sach() {
         
     }
@@ -99,22 +99,6 @@ public class Sach {
     public void setLoaiSach(String loaiSach) {    
         this.loaiSach = loaiSach;
     }
-
-//    public String getDanhGia() {
-//        return danhGia;
-//    }
-//
-//    public void setDanhGia(String danhGia) {
-//        this.danhGia = danhGia;
-//    }
-//
-//    public int getSoSao() {
-//        return soSao;
-//    }
-//
-//    public void setSoSao(int soSao) {
-//        this.soSao = soSao;
-//    }
     
     public int getSoLuong() {
         return this.soLuong;
@@ -128,7 +112,7 @@ public class Sach {
     public void nhapThongTinSachChoNhanVien() {
 
         nhapVaCheckTenSach();
-        
+
         nhapVaCheckMaSach();
 
         nhapVaCheckTenTG();
@@ -141,18 +125,17 @@ public class Sach {
 
         nhapVaCheckGia();
         
-        System.out.println("Nhap mo ta sach: ");
-        this.moTa = nhapttsach.nextLine();
-        String mota = this.getMoTa();
+        nhapVaCheckMoTa();
         
 //        System.out.println("Nhap so luong: ");
 //        this.soLuong = Integer.parseInt(nhapttsach.nextLine());
         //nhapVaCheckSoLuong();
         
     }
-
+    
     //Hàm kiểm tra tính hợp lệ khi nhập tên sách
-    public void nhapVaCheckTenSach(){
+    private void nhapVaCheckTenSach(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validTen = false;
         do{
             try{
@@ -173,7 +156,8 @@ public class Sach {
     }
     
     //Hàm kiểm tra tính hợp lệ khi nhập mã sách
-    public void nhapVaCheckMaSach(){
+    private void nhapVaCheckMaSach(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validMa = false;
         do{
             try{
@@ -205,7 +189,8 @@ public class Sach {
     }
     
     //Hàm kiểm tra tính hợp lệ khi nhập tên tác giả
-    public void nhapVaCheckTenTG(){
+    private void nhapVaCheckTenTG(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validTG = false;
         do{
             try{
@@ -226,7 +211,8 @@ public class Sach {
     }
     
     //Hàm kiểm tra tính hợp lệ khi nhập số trang
-    public void nhapVaCheckSoTrang() {
+    private void nhapVaCheckSoTrang() {
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validPageNum = false;
         do {
             try {
@@ -245,8 +231,9 @@ public class Sach {
         } while (!validPageNum);
     }
     
-    //Hàm kiểm tra tính hợp lệ khi nhập tên NXB
-    public void nhapVaCheckTenNXB(){
+    //Hàm kiểm tra tính hợp lệ khi nhập ten NXB
+    private void nhapVaCheckTenNXB(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validNXB = false;
         do{
             try{
@@ -267,7 +254,9 @@ public class Sach {
         }while(!validNXB);
     }
     
-    public void nhapVaCheckTheLoai(){
+    //Hàm kiểm tra tính hợp lệ khi nhập the loai
+    private void nhapVaCheckTheLoai(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validCate = false;
         do{
            try{
@@ -288,7 +277,8 @@ public class Sach {
         }while(!validCate);
     }
     
-    public void nhapVaCheckGia(){
+    private void nhapVaCheckGia(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validGia = false;
         do{
             try{
@@ -307,8 +297,8 @@ public class Sach {
             }
         }while(!validGia);
     }
-    
-    public void nhapVaCheckSoLuong(){
+    private void nhapVaCheckSoLuong(){
+        Scanner nhapttsach = new Scanner(System.in);
         boolean validSoLuong = false;
         do{
             try{
@@ -328,6 +318,28 @@ public class Sach {
         }while(!validSoLuong);
     }
     
+    private void nhapVaCheckMoTa(){
+        Scanner nhapttsach = new Scanner(System.in);
+        boolean validMoTa = false;
+        do{
+            try{
+                System.out.println("Nhap mo ta: ");
+                String input = nhapttsach.nextLine().trim();
+                this.setMoTa(input);
+                String mota=this.getNXB();
+                
+                if(!mota.matches("^[a-zA-Z0-9\\s]+$")||mota.isBlank()){
+                    System.out.println("Mo ta chi duoc chua chu va so, moi ban nhap lai.....");
+                }
+                else{
+                    validMoTa = true;
+                }
+            }catch(Exception e){
+                System.out.println("Ten NXB khong hop le, moi ban nhap lai.....");
+            }
+        }while(!validMoTa);
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(); //Thay đổi nội dung của chuỗi mà k tạo ra một chuỗi mới each time
@@ -345,17 +357,7 @@ public class Sach {
         
         return sb.toString();
     }
-//    public String danhGiaTuKhachHang(){
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("Danh gia sach: ").append(this.danhGia).append("\n");
-//        sb.append("So sao: ").append(this.soSao).append("/5").append("\n");
-//        
-//        return sb.toString();
-//    }
-    public String tenSach(){
-        return this.tenSach;
-    }
-    
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
        
