@@ -39,7 +39,8 @@ public class CT_DonHang {
    
     private String taoMaDH() {
         Random rand = new Random();
-        int soNgauNhien = rand.nextInt(1000000); 
+        int soNgauNhien = rand.nextInt(1000); 
+        System.out.println("Mã khách:" + this.getMaKH());
         String maSoNgauNhien = String.format("%03d", soNgauNhien);
         
         String maDonHang = "DH" + this.getMaKH() + maSoNgauNhien;

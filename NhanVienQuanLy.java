@@ -19,7 +19,19 @@ public class NhanVienQuanLy extends NhanVien {
 		super(ma, ten, ngayVao, viTri, loai,ngayCong) ;
 			
 	}
-	
+        private String trangThai(int so)
+        {
+            if ( so==1)
+                return "Đang xử lý";
+            else if ( so==2)
+                return "Đã xử lý";
+            else if ( so==3)
+                return "Đang giao hàng";
+            else if ( so==4)
+                return "Đã nhận hàng";
+            return "";
+        }
+        
         public void quanLySach() {
 		TuSach tuSach = new TuSach();
 		Scanner input = new Scanner(System.in);
@@ -128,7 +140,7 @@ public class NhanVienQuanLy extends NhanVien {
                         {
                             System.out.printf("| %-15s || %-15s || %-20s || %-15s || %-15s || %-15s || %-15s || %-10s || %s|\n",
 						donhang.getMaDonHang(), donhang.getMaKH(), donhang.getDiaChi(), donhang.getEmail(),
-						donhang.getNgayDH(), donhang.getPtThanhToan(), donhang.getTongTien(), donhang.getTrangThai(),
+						donhang.getNgayDH(), donhang.getPtThanhToan(), donhang.getTongTien(), trangThai(donhang.getTrangThai()),
 						donhang.getDsSanPham());
                             try {
 				Thread.sleep(150);
@@ -151,7 +163,7 @@ public class NhanVienQuanLy extends NhanVien {
 					System.out.printf("| %-15s || %-15s || %-20s || %-15s || %-15s || %-15s || %-15s || %-10s || %s|\n",
 							donhang.getMaDonHang(), donhang.getMaKH(), donhang.getDiaChi(), donhang.getEmail(),
 							donhang.getNgayDH(), donhang.getPtThanhToan(), donhang.getTongTien(),
-							donhang.getTrangThai(), donhang.getDsSanPham());
+							trangThai(donhang.getTrangThai()), donhang.getDsSanPham());
                             try {
 				Thread.sleep(150);
                             } 
@@ -174,7 +186,7 @@ public class NhanVienQuanLy extends NhanVien {
 					System.out.printf("| %-15s || %-15s || %-20s || %-15s || %-15s || %-15s || %-15s || %-10s || %s|\n",
 							donhang.getMaDonHang(), donhang.getMaKH(), donhang.getDiaChi(), donhang.getEmail(),
 							donhang.getNgayDH(), donhang.getPtThanhToan(), donhang.getTongTien(),
-							donhang.getTrangThai(), donhang.getDsSanPham());
+							trangThai(donhang.getTrangThai()), donhang.getDsSanPham());
                             try {
 				Thread.sleep(150);
                             } 
