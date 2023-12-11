@@ -431,10 +431,13 @@ public class TaiKhoanKhachHang {
                     break;
                 case 9:
                     this.getDonhang().huyDonhang(this.getKhachhang().getMaKH());
+                    break;
                 case 10:
                     this.getDanhgia().danhGia("DonHang.txt");
+                    break;
                 case 11:
                     this.getDanhgia().xemDanhGia();
+                    break;
             }
         }while (choice!=0);
     }

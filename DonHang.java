@@ -185,43 +185,51 @@ public class DonHang {
             
             System.out.print("Chọn mã đơn mà bạn muốn hủy đặt: ");
             String maDon=input.nextLine();
-            boolean daXoa=false;
+            boolean daXoa=false, trangthai=false; // kiểm tra nếu 
             for(int i=0; i < danhsachDon.size();i++)
                 if (danhsachDon.get(i).getMaDonHang().equalsIgnoreCase(maDon))
                 {
-                    danhsachDon.remove(i);
-                    daXoa=true;
-                    break;
-                }               
-            if (daXoa)
-            {
-                try(FileWriter fileWrt= new FileWriter("Donhang.txt",false))
-                {
-                    StringBuilder don= new StringBuilder();
-                    for( CT_DonHang donHang: danhsachDon)
+                    if (danhsachDon.get(i).getTrangThai()!=3 && danhsachDon.get(i).getTrangThai()!=4)
                     {
-                        don.append(donHang.getMaKH()).append("#");
-                        don.append(donHang.getMaDonHang()).append("#");
-                        don.append(donHang.getEmail()).append("#");
-                        don.append(donHang.getDiaChi()).append("#");
-                        don.append(donHang.getNgayDH()).append("#");
-                        don.append(donHang.getDsSanPham()).append("#");
-                        don.append(donHang.getTongTien()).append("#");
-                        don.append(donHang.getPtThanhToan()).append("#");
-                        don.append(donHang.getTrangThai()).append("#");
-                        don.append(System.lineSeparator());
+                        danhsachDon.remove(i);
+                        daXoa=true;
+                        trangthai=true;
+                        break;
                     }
-                    fileWrt.write(don.toString());
-                    fileWrt.flush();
-                }
-                catch (IOException ex) {
-                    System.out.println("Lỗi khi ghi vào file");
+                } 
+            if (trangthai)
+            {
+                if (daXoa){
+                    try(FileWriter fileWrt= new FileWriter("Donhang.txt",false))
+                    {
+                        StringBuilder don= new StringBuilder();
+                        for( CT_DonHang donHang: danhsachDon)
+                        {
+                            don.append(donHang.getMaKH()).append("#");
+                            don.append(donHang.getMaDonHang()).append("#");
+                            don.append(donHang.getEmail()).append("#");
+                            don.append(donHang.getDiaChi()).append("#");
+                            don.append(donHang.getNgayDH()).append("#");
+                            don.append(donHang.getDsSanPham()).append("#");
+                            don.append(donHang.getTongTien()).append("#");
+                            don.append(donHang.getPtThanhToan()).append("#");
+                            don.append(donHang.getTrangThai()).append("#");
+                            don.append(System.lineSeparator());
+                        }
+                        fileWrt.write(don.toString());
+                        fileWrt.flush();
+                    }
+                    catch (IOException ex) {
+                        System.out.println("Lỗi khi ghi vào file");
+                    }
+                } else 
+                {
+                    System.out.println("Mã đơn của bạn không đúng");
                 }
             }
             else 
-            {
-                System.out.println("Mã đơn của bạn không đúng");
-            }
+                System.out.println("Đơn đang giao hoặc đã nhận hàng thì không thể hủy đơn !!!");
+            
             
         } catch (FileNotFoundException ex) {
             System.out.println("Ko có file đơn hàng");

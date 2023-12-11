@@ -12,16 +12,16 @@ import java.util.Scanner;
 
 public class DanhGia {
     private String maKhachHang;
-    public String maSach;
-    public String binhLuan;
-    public Float sao;
-    public String ngayDG;
+    private String maSach;
+    private String binhLuan;
+    private float sao;
+    private String ngayDG;
 
 
     public DanhGia() {
     }
 
-    public DanhGia(String maKhachHang, String maSach, String ngayDG, Float sao, String binhLuan) {
+    public DanhGia(String maKhachHang, String maSach, String ngayDG, float sao, String binhLuan) {
         this.binhLuan = binhLuan;
         this.sao = sao;
         this.maKhachHang = maKhachHang;
@@ -37,11 +37,11 @@ public class DanhGia {
         this.binhLuan = binhLuan;
     }
     
-    public Float getSao() {
+    public float getSao() {
         return sao;
     }
 
-    public void setSao(Float sao) {
+    public void setSao(float sao) {
         this.sao = sao;
     }
     
@@ -74,14 +74,15 @@ public class DanhGia {
         Scanner input = new Scanner(System.in);
         boolean flag = false;
         do {
+            float sosao;
             try {
                 System.out.println("Nhập số sao (Từ 1->5): ");
                 String nhap = input.nextLine().trim();
-                this.sao = Float.parseFloat(nhap);
-                if (this.sao < 0.0 || this.sao > 5.0) {
+                sosao = Float.parseFloat(nhap);
+                if (sosao < 0.0 || sosao > 5.0) {
                     System.out.println("Số sao phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 5! Vui lòng nhập lại!");
                 } else {
-                    this.setSao(this.sao);
+                    this.setSao(sosao);
                     flag = true;
                 }
             } catch(NumberFormatException e){
@@ -239,7 +240,7 @@ public class DanhGia {
                     String maKH = danhGia[0];
                     String maSacha = danhGia[1];
                     String ngayDGa = danhGia[2];
-                    Float soSao = Float.parseFloat(danhGia[3]);
+                    float soSao = Float.parseFloat(danhGia[3]);
                     String binhLuana = danhGia[4];
                     DanhGia danhgia= new DanhGia(maKH, maSacha, ngayDGa, soSao, binhLuana);
                     System.out.println(danhgia.toString());

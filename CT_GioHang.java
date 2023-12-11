@@ -6,11 +6,11 @@ public class CT_GioHang {
     private String maSach;
     private String tenSach;
     private String loaiSach;
-    private Double giaSach;
+    private double giaSach;
     private int soLuong;
-    private Double thanhTien;
+    private double thanhTien;
 
-    public CT_GioHang(String maKhachhang, String maSach, String tenSach, String loaiSach,Double giaSach, int soLuong, Double thanhTien) {
+    public CT_GioHang(String maKhachhang, String maSach, String tenSach, String loaiSach,double giaSach, int soLuong, double thanhTien) {
         this.maKhachhang = maKhachhang;
         this.maSach = maSach;
         this.tenSach = tenSach;
@@ -40,11 +40,11 @@ public class CT_GioHang {
         return loaiSach;
     }
 
-    public Double getGiaSach() {
+    public double getGiaSach() {
         return giaSach;
     }
 
-    public void setGiaSach(Double giaSach) {
+    public void setGiaSach(double giaSach) {
         this.giaSach = giaSach;
     }
     
@@ -57,11 +57,11 @@ public class CT_GioHang {
         this.soLuong = soLuong;
     }
     
-    public Double getThanhTien() {
+    public double getThanhTien() {
         return thanhTien;
     }
     
-    public void setThanhTien(Double thanhTien) {
+    public void setThanhTien(double thanhTien) {
         this.thanhTien = thanhTien;
     }
 

@@ -19,13 +19,13 @@ public class CT_DonHang {
     private String ngayDH;
     private String ptThanhToan;
     private int trangThai; //1: đang xử lý; 2: đã xác nhận , 3: đang giao; 4: đã nhận hàng
-    private Double tongTien=0.0;
+    private double tongTien=0.0;
     private String dsSanPham="";
     
     public CT_DonHang() {
     }
 
-    public CT_DonHang(String maKH, String maDonHang, String email, String diaChi, String ngayDH, String dsSanPham,Double tongTien,String ptThanhToan, int trangThai) {
+    public CT_DonHang(String maKH, String maDonHang, String email, String diaChi, String ngayDH, String dsSanPham,double tongTien,String ptThanhToan, int trangThai) {
         this.maDonHang = maDonHang;
         this.maKH = maKH;
         this.diaChi = diaChi;
@@ -87,11 +87,11 @@ public class CT_DonHang {
         this.ptThanhToan = ptThanhToan;
     }
 
-    public Double getTongTien() {
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void setTongTien(Double tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
     
@@ -244,7 +244,7 @@ public class CT_DonHang {
         ArrayList<CT_GioHang> giohang_dachon = new ArrayList<>();
         int luachon;
         String sanPham="";
-        Double tongtien=0.0;
+        double tongtien=0.0;
         do
         {
             Scanner scan = new Scanner(System.in);
