@@ -157,7 +157,9 @@ public class TaiKhoanKhachHang {
             System.out.println("File ko tồn tại");
         }
         System.out.println("Đã tạo tài khoản thành công!");
-        
+        int check=kiemTraDangNhap();
+        if ( check==1)
+            giaodienKhachHang();
     }
     
     
@@ -180,6 +182,7 @@ public class TaiKhoanKhachHang {
     
     public  int kiemTraDangNhap()
     {
+        int solan=1;
         int tieptuc=1, flag=0;
         do
         {
@@ -223,6 +226,7 @@ public class TaiKhoanKhachHang {
                 }
                 else 
                 {
+                    if ( solan <3)
                     do 
                     {
                     System.out.println("Tài khoản không tồn tại !");
@@ -232,6 +236,26 @@ public class TaiKhoanKhachHang {
                     if (tieptuc != 1 && tieptuc != 0)
                         System.out.println("Vui lòng chọn đúng thao tác !!");
                     }while (tieptuc != 1 && tieptuc != 0);
+                        
+                }
+                if ( tieptuc==1)
+                    solan++;
+                if( solan >3)
+                {
+                    do 
+                    {
+                    System.out.println("Tài khoản không tồn tại !");
+                    System.out.println("Bạn có muốn nhập lại ?");
+                    System.out.println("0.Không\t 1.Có\t 2.Tạo tài khoản");    
+                    tieptuc=Integer.parseInt(input.nextLine());
+                    if (tieptuc != 1 && tieptuc != 0 && tieptuc!=2)
+                        System.out.println("Vui lòng chọn đúng thao tác !!");
+                    }while (tieptuc != 1 && tieptuc != 0 && tieptuc!=2);
+                    if( tieptuc==2)
+                    {
+                        setInfo();
+                        break;
+                    }
                         
                 }
             } 

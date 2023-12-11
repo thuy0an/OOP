@@ -180,7 +180,7 @@ public class TuSach {
                    //break; //ngừng tìm khi sách đã được tìm thấy
                 }
                 try{
-                    Thread.sleep(200);
+                    Thread.sleep(50);
                     }catch(InterruptedException e){}
             }
             
@@ -246,7 +246,7 @@ public class TuSach {
                     found = true;
                 }
                 try{
-                    Thread.sleep(200);
+                    Thread.sleep(50);
                     }catch(InterruptedException e){}
                                     
             }
@@ -361,7 +361,7 @@ public class TuSach {
                     found = true;
                 }
                                 try{
-                    Thread.sleep(200);
+                    Thread.sleep(50);
                     }catch(InterruptedException e){}
             }
         }catch(IOException e){
@@ -426,7 +426,7 @@ public class TuSach {
                     found = true;
                 }
                                 try{
-                    Thread.sleep(200);
+                    Thread.sleep(50);
                     }catch(InterruptedException e){}
             }
         }catch(IOException e){
@@ -489,7 +489,7 @@ public class TuSach {
                     found = true;
                 }
                                 try{
-                    Thread.sleep(200);
+                    Thread.sleep(50);
                     }catch(InterruptedException e){}
             }
         }catch(IOException e){
@@ -553,7 +553,7 @@ public class TuSach {
                     found = true;
                 }
                                 try{
-                    Thread.sleep(200);
+                    Thread.sleep(50);
                     }catch(InterruptedException e){}
             }
         }catch(IOException e){

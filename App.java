@@ -242,8 +242,3 @@ public class App {
     }
     
 }
-//                    try{
-//                        Thread.sleep(1000);
-//                    }catch(InterruptedException e){
-//                        System.out.println("lỗi abc");
-//                    }ring ngayVaoLam = nhanvien[2];
