@@ -2,11 +2,6 @@
 package BookStore;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -19,13 +14,13 @@ public class CT_DonHang {
     private String ngayDH;
     private String ptThanhToan;
     private int trangThai; //1: đang xử lý; 2: đã xác nhận , 3: đang giao; 4: đã nhận hàng
-    private Double tongTien=0.0;
+    private double tongTien=0.0;
     private String dsSanPham="";
     
     public CT_DonHang() {
     }
 
-    public CT_DonHang(String maKH, String maDonHang, String email, String diaChi, String ngayDH, String dsSanPham,Double tongTien,String ptThanhToan, int trangThai) {
+    public CT_DonHang(String maDonHang, String maKH, String diaChi, String email, String ngayDH, String ptThanhToan, int trangThai) {
         this.maDonHang = maDonHang;
         this.maKH = maKH;
         this.diaChi = diaChi;
@@ -33,8 +28,6 @@ public class CT_DonHang {
         this.ngayDH = ngayDH;
         this.ptThanhToan = ptThanhToan;
         this.trangThai = trangThai;
-        this.tongTien = tongTien;
-        this.dsSanPham = dsSanPham;
     }
    
     private String taoMaDH() {
@@ -87,11 +80,11 @@ public class CT_DonHang {
         this.ptThanhToan = ptThanhToan;
     }
 
-    public Double getTongTien() {
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void setTongTien(Double tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
     
@@ -118,7 +111,7 @@ public class CT_DonHang {
     public void setDsSanPham(String dsSanPham) {
         this.dsSanPham=this.dsSanPham.concat(dsSanPham);
     }
-      
+    
     //
     public void chonPTTT() {
         Scanner scan=new Scanner(System.in);
@@ -237,14 +230,41 @@ public class CT_DonHang {
         return gioHangList;
     }
     
+    private ArrayList<PhieuGiamGia> docVoucherTuFile() {
+        ArrayList<PhieuGiamGia> voucherList = new ArrayList<>();
+        File file= new File("voucher.txt");
+        try (Scanner scanner = new Scanner(file))
+        {
+            while(scanner.hasNextLine()){ 
+                String line = scanner.nextLine();
+                String[] voucher = line.split("#");
+                    String maphieu = voucher[0];
+                    Integer mucGiam = Integer.parseInt(voucher[1]);
+                    Double donToiThieu = Double.parseDouble(voucher[2]);
+                    String doiTuong = voucher[3];
+                    Integer soLuong = Integer.parseInt(voucher[4]);
+                    PhieuGiamGia phieugiam = new PhieuGiamGia(maphieu, mucGiam, donToiThieu, doiTuong, soLuong);
+                    voucherList.add(phieugiam);  
+                    
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("Không tìm thấy file");
+        }
+        return voucherList;
+    }
+   
     public ArrayList<CT_GioHang> chonSachTuDanhSach(String tenfile) {
         ArrayList<CT_GioHang> danhsach = docGioHangTuFile(tenfile);
         GioHang gioHang= new GioHang();
         gioHang.setDsSanPham(danhsach);
         ArrayList<CT_GioHang> giohang_dachon = new ArrayList<>();
+        ArrayList<PhieuGiamGia> voucherList = docVoucherTuFile();
+        ArrayList<PhieuGiamGia> voucher_hople = new ArrayList<>();
         int luachon;
         String sanPham="";
-        Double tongtien=0.0;
+        double tongtien=0.0;
+        double thanhtien = 0.0;
+        
         do
         {
             Scanner scan = new Scanner(System.in);
@@ -267,6 +287,7 @@ public class CT_DonHang {
                     gioHang.getDsSanPham().remove(gioHang.getDsSanPham().get(i));
                     gioHang.ghiGioHangVaoFile(tenfile);
                     flag=true;
+                    
                 }
             }
             if (!flag)
@@ -275,9 +296,27 @@ public class CT_DonHang {
             System.out.println("1. Tiếp tục");
             System.out.println("2. Dừng lại");
             luachon=Integer.parseInt(scan.nextLine());
+            
+            for (CT_GioHang giohang : giohang_dachon) {
+            for (PhieuGiamGia voucher : voucherList) {
+                if (tongtien >= voucher.getDonToiThieu() && voucher.getDoiTuong().equals("Hoá đơn") || voucher.getDoiTuong().equalsIgnoreCase(giohang.getMaSach()) && tongtien >= voucher.getDonToiThieu()) {
+                    voucher_hople.add(voucher);
+                } 
+            } 
+            }
+            System.out.println(voucher_hople.toString());
+            System.out.println("--Chọn voucher: --");
+            String maVoucherChon = scan.nextLine();
+            for (PhieuGiamGia voucher : voucher_hople) {
+                if (maVoucherChon.equals(voucher.getMaPhieu())) {
+                    thanhtien = tongtien*(100 - voucher.getMucGiam());
+                } else {
+                    System.out.println("Mã voucher không hợp lệ! ");
+                }
+            }
         }while(luachon !=2);
         this.setDsSanPham(sanPham);
-        this.setTongTien(tongtien);
+        this.setTongTien(thanhtien);
         System.out.println(giohang_dachon.toString());
         return giohang_dachon;
     }
@@ -306,20 +345,5 @@ public class CT_DonHang {
        return sb.toString();
     }
     
-        
-//    public double giamGia() {
-//        if (this.tinhTongTien() >= 500000) {
-//            return (10/100)*this.tinhTongTien();
-//        } else { 
-//            if (this.tinhTongTien() >= 300000) {
-//                return (5/100)*this.tinhTongTien();
-//            } else return 0;
-//        }
-//    }
-//        
-//    public double giaSauKhiGiam() {
-//        this.tongTien = this.tinhTongTien() - this.giamGia();
-//        return this.tongTien;
-//    }
 
 }
