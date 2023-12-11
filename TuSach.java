@@ -247,7 +247,64 @@ public class TuSach {
         if(!found)
             System.out.println("Khong tim thay sach.....");
     }
-    
+    private Sach timSachTheoID(String id){
+        String maSachCanTim = id;
+        Sach foundSach=null;
+        while(!maSachCanTim.matches("^[a-zA-Z0-9\\s]+$")||maSachCanTim.isBlank()){
+            System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
+            maSachCanTim=id;
+        }
+        boolean found = false;
+        String fileName = "book.txt";
+        File file = new File(fileName);
+        try(Scanner scanner = new Scanner(file)){
+            System.out.println("\n+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+            System.out.println("|                                                                    THONG TIN SACH                                                                                                                                                                                 |");
+            System.out.println("|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+//            System.out.println("|"+"                      Ten Sach                     |" +"  Ma Sach "+"|" + "          Tac Gia              |"+"So Trang  "+"|"+ "     The Loai   |"+ "       NXB      "+"|"+ "    Gia    |"+"                            Mo Ta                  |"+ " Loai Sach|"+ " Size|"+ " Loai Bia |"+ "FSize|"+ "Dung Luong|"+ " So Luong |");
+            System.out.printf("| %-50s| %-10s| %-30s| %-9s| %-15s| %-15s| %-10s| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Size","Loai Bia","FSize","Dung Luong","So Luong", "|");
+            System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
+            while(scanner.hasNextLine()){
+                String line = scanner.nextLine();
+                String[] sachDuocDoc = line.split("#");
+                String tenSach = sachDuocDoc[0];
+                String maSach = sachDuocDoc[1];
+                String tacGia = sachDuocDoc[2];
+                int soTrang = Integer.parseInt(sachDuocDoc[3]);
+                String theloai = sachDuocDoc[4];
+                String nXB = sachDuocDoc[5];
+                double Gia = Double.parseDouble(sachDuocDoc[6]);
+                String moTa = sachDuocDoc[7];
+                String loaiSach = sachDuocDoc[8];
+                String kichThuoc="";
+                String loaiBia="";
+                String kichCoDungLuong="";
+                String dungLuong="";
+                String soLuong="";
+                if ( loaiSach.equals("Giay")){
+                    kichThuoc = sachDuocDoc[9];
+                    loaiBia = sachDuocDoc[10];
+                    kichCoDungLuong="////";
+                    dungLuong="////";
+                    soLuong=sachDuocDoc[13];
+                }
+                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                    kichThuoc="////";
+                    loaiBia="////";
+                    kichCoDungLuong = sachDuocDoc[11];
+                    dungLuong =sachDuocDoc[12];
+                    soLuong="////";
+                }
+                
+                if(maSach.toLowerCase().contains(maSachCanTim)){
+                    foundSach=new Sach();
+                }
+            }
+        }catch(IOException e){
+            System.out.println("Khong doc duoc file.....\n" + e.getMessage());
+        }
+        return foundSach;
+    }
     private void timSachTheoTG(){
         Scanner input = new Scanner(System.in);
         System.out.println("Nhap ten tac gia ma ban muon tim: ");
