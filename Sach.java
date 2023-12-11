@@ -22,30 +22,15 @@ public class Sach {
     private String NXB;
     private double gia;
     private String moTa;
-    //private String danhGia;
-    //private int soSao;
     private String loaiSach;
     private int soLuong;
-    private int soLuongMua;
+
     Scanner nhapttsach = new Scanner(System.in);
     public Sach() {
         
     }
-    public Sach(String tenSach,String maSach,String tacGia,int soTrang,String theLoai,String NXB,double gia,String moTa,String loaiSach,int soLuong) {
-    	this.tenSach=tenSach;
-    	this.maSach=maSach;
-    	this.tacGia=tacGia;
-    	this.soTrang=soTrang;
-    	this.theLoai=theLoai;
-    	this.NXB=NXB;
-    	this.gia=gia;
-    	this.moTa=moTa;
-    	this.loaiSach=loaiSach;
-    	this.soLuong=soLuong;
-
-    }
     public String getTenSach() {
-        return tenSach;
+        return this.tenSach;
     }
 
     public void setTenSach(String tenSach) {
@@ -53,7 +38,7 @@ public class Sach {
     }
 
     public String getMaSach() {
-        return maSach;
+        return this.maSach;
     }
 
     public void setMaSach(String maSach) {
@@ -61,7 +46,7 @@ public class Sach {
     }
 
     public String getTacGia() {
-        return tacGia;
+        return this.tacGia;
     }
 
     public void setTacGia(String tacGia) {
@@ -69,7 +54,7 @@ public class Sach {
     }
 
     public int getSoTrang() {
-        return soTrang;
+        return this.soTrang;
     }
 
     public void setSoTrang(int soTrang) {
@@ -77,7 +62,7 @@ public class Sach {
     }
 
     public String getNXB() {
-        return NXB;
+        return this.NXB;
     }
 
     public void setNXB(String NXB) {
@@ -85,23 +70,23 @@ public class Sach {
     }
 
     public String getMoTa() {
-        return moTa;
+        return this.moTa;
     }
 
     public void setMoTa(String moTa) {
         this.moTa = moTa;
     }
 
-    public double getgia() {
-        return gia;
+    public double getGia() {
+        return this.gia;
     }
 
-    public void setDonGia(double donGia) {
-        this.gia = donGia;
+    public void setGia(double Gia) {
+        this.gia = Gia;
     }
 
     public String getTheLoai() {
-        return theLoai;
+        return this.theLoai;
     }
 
     public void setTheLoai(String theLoai) {
@@ -109,7 +94,7 @@ public class Sach {
     }
     
     public String getLoaiSach() {    
-        return loaiSach;
+        return this.loaiSach;
     }
     public void setLoaiSach(String loaiSach) {    
         this.loaiSach = loaiSach;
@@ -132,70 +117,40 @@ public class Sach {
 //    }
     
     public int getSoLuong() {
-        return soLuong;
+        return this.soLuong;
     }
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
     
-    private int getsoLuongMua(){
-        return soLuongMua;
-    }
-    private void setsoLuongMua(int soLuongMua){
-        this.soLuongMua=soLuongMua;
-    }
+    
     public void nhapThongTinSachChoNhanVien() {
-//        System.out.println("Nhap ten sach: ");
-//        this.tenSach = nhapttsach.nextLine();
-//        checkTenSach();
+
         nhapVaCheckTenSach();
         
-//        System.out.println("Nhap ma sach: ");
-//        this.maSach = nhapttsach.nextLine();
-//        checkMaSach();
         nhapVaCheckMaSach();
 
-//        System.out.println("Nhap ten tac gia: ");
-//        this.tacGia = nhapttsach.nextLine();
-//        checkTenTG(); //Đây là hàm non-static nhưng vì nó đang nằm trong cùng lớp Sach và truy cập các thành viên non-static của lớp như this.tacgia mà không cần đối tượng tham chiếu cụ thể. Khi gọi hàm nó tự hiểu 'this' tham chiêu đến đối tượng hiện tại của lớp Sach 
         nhapVaCheckTenTG();
         
-//        System.out.println("Nhap so trang: ");
-//        this.soTrang = Integer.parseInt(nhapttsach.nextLine());
         nhapVaCheckSoTrang();
         
         nhapVaCheckTheLoai();
         
-//        System.out.println("Nhap NXB: ");
-//        this.NXB = nhapttsach.nextLine();
-//        checkTenNXB();
         nhapVaCheckTenNXB();
 
-//        System.out.println("Nhap don gia: ");
-//        this.donGia = Double.parseDouble(nhapttsach.nextLine());
         nhapVaCheckGia();
         
         System.out.println("Nhap mo ta sach: ");
         this.moTa = nhapttsach.nextLine();
+        String mota = this.getMoTa();
         
 //        System.out.println("Nhap so luong: ");
 //        this.soLuong = Integer.parseInt(nhapttsach.nextLine());
         //nhapVaCheckSoLuong();
         
     }
-    
-//    public void danhGia(){
-//        System.out.println("Moi ban danh gia: ");
-//        this.danhGia = nhapttsach.nextLine();
-//
-//        System.out.println("Moi ban cho sao: ");
-//        this.soSao = Integer.parseInt(nhapttsach.nextLine());
-//        while (this.soSao < 0 || this.soSao > 5) {
-//            System.out.println("Moi ban nhap lai so sao (0-5): ");
-//            this.soSao = Integer.parseInt(nhapttsach.nextLine());
-//        }
-//    }
+
     //Hàm kiểm tra tính hợp lệ khi nhập tên sách
     public void nhapVaCheckTenSach(){
         boolean validTen = false;
@@ -203,11 +158,10 @@ public class Sach {
             try{
                 System.out.println("Nhap ten sach: ");
                 String input = nhapttsach.nextLine().trim();
-                this.tenSach = input;
-                
-                if(!this.tenSach.matches("^[a-zA-Z0-9\\s]+$")||this.tenSach.isBlank()){
+                this.setTenSach(input);
+                String tensach = this.getTenSach();
+                if(!tensach.matches("^[a-zA-Z0-9\\s]+$")||tensach.isBlank()){
                     System.out.println("Ten sach chi duoc chua chu, so va khoang trang. Moi ban nhap lai.....");
-                    this.tenSach = input;
                 }
                 else{
                     validTen = true;
@@ -217,21 +171,7 @@ public class Sach {
             }
         }while(!validTen);
     }
-    public void checkTenSach(){
-        String tensach = this.tenSach;
-        boolean validTenSach = false;
-        
-        do{
-            if(!tensach.matches("^[a-zA-Z0-9\\s]+$")||tensach.isBlank()){
-                System.out.println("Ten sach khong hop le, moi ban nhap la.....");
-                this.tenSach = nhapttsach.nextLine();
-                tensach = this.tenSach;
-            }
-            else{
-                validTenSach = true;
-            }
-        }while(!validTenSach);
-    }
+    
     //Hàm kiểm tra tính hợp lệ khi nhập mã sách
     public void nhapVaCheckMaSach(){
         boolean validMa = false;
@@ -239,24 +179,23 @@ public class Sach {
             try{
                 System.out.println("Nhap ma sach: ");
                 String input = nhapttsach.nextLine().trim();
-                this.maSach = input;
-                
-                if(!this.maSach.matches("^[a-zA-Z0-9\\s]+$")||this.maSach.isBlank()){
+                this.setMaSach(input);
+                String masacH = this.getMaSach();
+                if(!masacH.matches("^[a-zA-Z0-9\\s]+$")||masacH.isBlank()){
                     System.out.println("Ma sach chi duoc chua chu, so va khoang trang. Moi ban nhap lai.....");
-                    this.maSach = input;
                 }
                 else{
                     validMa = true;
                 }
                 // Check if it's SachGiay or SachMem
                 if(this instanceof SachGiay){
-                    this.maSach += "P"; //P: Paper
+                    this.setMaSach(masacH + "P"); //P: Paper
                 }else if(this instanceof SachMem){
                     SachMem sachmem = (SachMem) this;
                     if(sachmem.getLoai().equalsIgnoreCase("PDF")){
-                        this.maSach += "SP"; //SP: Soft PDF
+                        this.setMaSach(masacH + "SP"); //SP: Soft PDF
                     }else if(sachmem.getLoai().equalsIgnoreCase("EPUB")){
-                        this.maSach += "SE"; //SE: Soft EPUB
+                        this.setMaSach(masacH + "SE"); //SE: Soft EPUB
                     }
                 }
             }catch(Exception e){
@@ -264,32 +203,18 @@ public class Sach {
             }
         }while(!validMa);
     }
-    public void checkMaSach(){
-        String masach = this.maSach;
-        boolean validMa =false;
-        
-        do{
-            if(!masach.matches("^[a-zA-Z0-9\\s]+$")||masach.isBlank()){
-                System.out.println("Ma sach khong hop le. moi ban nhap lai.....");
-                this.maSach = nhapttsach.nextLine();
-                masach = this.maSach;
-            }
-            else{
-                validMa = true;
-            }
-        }while(!validMa);
-    }
+    
+    //Hàm kiểm tra tính hợp lệ khi nhập tên tác giả
     public void nhapVaCheckTenTG(){
         boolean validTG = false;
         do{
             try{
                 System.out.println("Nhap ten tac gia: ");
                 String input = nhapttsach.nextLine().trim();
-                this.tacGia = input;
-                
-                if(!this.tacGia.matches("^[a-zA-Z\\s]+$")||this.tacGia.isBlank()){
+                this.setTacGia(input);
+                String tg=this.getTacGia();
+                if(!tg.matches("^[a-zA-Z\\s]+$")||tg.isBlank()){
                     System.out.println("Ten tac gia khong hop le, moi ban nhap lai.....");
-                    this.tacGia = input;
                 }
                 else{
                     validTG = true;
@@ -299,22 +224,7 @@ public class Sach {
             }
         }while(!validTG);
     }
-    //Hàm kiểm tra tính hợp lệ khi nhập tên tác giả
-    public void checkTenTG(){
-        String author = this.tacGia;
-        boolean validTG = false;
-        do{
-            //author = this.tacGia.trim(); //Remove trailing whitespace, phương thức trim(): trả về một chuỗi mới mà không bao gồm các ký tự trắng ở cả hai đầu của chuỗi gốc.
-            
-            if (!author.matches("^[a-zA-Z\\s]+$") /*|| author.isEmpty()*/ || author.isBlank()) {
-                System.out.println("Ten khong hop le, moi ban nhap lai: ");
-                this.tacGia = nhapttsach.nextLine();
-                author=this.tacGia;
-            } else {
-                validTG = true;
-            }
-        } while (!validTG);
-    }
+    
     //Hàm kiểm tra tính hợp lệ khi nhập số trang
     public void nhapVaCheckSoTrang() {
         boolean validPageNum = false;
@@ -322,9 +232,9 @@ public class Sach {
             try {
                 System.out.println("Nhap so trang: ");
                 String input = nhapttsach.nextLine().trim();
-                this.soTrang = Integer.parseInt(input);
-            
-                if (this.soTrang <= 0) {
+                this.setSoTrang(Integer.parseInt(input)); 
+                int sotrang = this.getSoTrang();
+                if (sotrang <= 0) {
                     System.out.println("So trang phai lon hon 0, moi ban nhap lai.....");
                 } else {
                     validPageNum = true;
@@ -334,17 +244,19 @@ public class Sach {
             }
         } while (!validPageNum);
     }
+    
+    //Hàm kiểm tra tính hợp lệ khi nhập tên NXB
     public void nhapVaCheckTenNXB(){
         boolean validNXB = false;
         do{
             try{
                 System.out.println("Nhap ten NXB: ");
                 String input = nhapttsach.nextLine().trim();
-                this.NXB = input;
+                this.setNXB(input);
+                String nxb=this.getNXB();
                 
-                if(!this.NXB.matches("^[a-zA-Z\\s]+$")||this.NXB.isBlank()){
+                if(!nxb.matches("^[a-zA-Z\\s]+$")||nxb.isBlank()){
                     System.out.println("Ten NXB khong hop le, moi ban nhap lai.....");
-                    this.NXB = input;
                 }
                 else{
                     validNXB = true;
@@ -354,32 +266,17 @@ public class Sach {
             }
         }while(!validNXB);
     }
-    //Hàm kiểm tra tính hợp lệ khi nhập tên NXB
-    public void checkTenNXB(){
-        String nxb = this.NXB;
-        boolean validNXB = false;
-        do{
-            nxb = this.NXB.trim();
-            
-            if (!nxb.matches("^[a-zA-Z\\s]+$") || nxb.isEmpty()) {
-                System.out.println("Ten khong hop le, moi ban nhap lai: ");
-                this.NXB = nhapttsach.nextLine();
-                nxb=this.NXB;
-            } else {
-                validNXB = true;
-            }
-        } while (!validNXB);
-    }
+    
     public void nhapVaCheckTheLoai(){
         boolean validCate = false;
         do{
            try{
                System.out.println("Nhap the loai: ");
                String input = nhapttsach.nextLine().trim();
-               this.theLoai = input;
-               if(!this.theLoai.matches("^[a-zA-Z0-9\\s]+$")||this.theLoai.isBlank()){
+               this.setTheLoai(input);
+               String genre = this.getTheLoai();
+               if(!genre.matches("^[a-zA-Z0-9\\s]+$")||genre.isBlank()){
                    System.out.println("The loai khong hop le, moi ban nhap lai.....");
-                   this.theLoai = input;
                }
                else{
                    validCate = true;
@@ -397,9 +294,9 @@ public class Sach {
             try{
                 System.out.println("Nhap gia: ");
                 String input = nhapttsach.nextLine().trim();
-                this.gia = Double.parseDouble(input);
-                
-                if(this.gia<=0){
+                this.setGia(Double.parseDouble(input));
+                Double price = this.getGia();
+                if(price<=0){
                     System.out.println("Gia phai lon hon 0,moi ban nhap lai.....");
                 }
                 else{
@@ -410,15 +307,16 @@ public class Sach {
             }
         }while(!validGia);
     }
+    
     public void nhapVaCheckSoLuong(){
         boolean validSoLuong = false;
         do{
             try{
                 System.out.println("Nhap so luong: ");
                 String input = nhapttsach.nextLine().trim();
-                this.soLuong = Integer.parseInt(input);
-                
-                if(this.soLuong<=0){
+                this.setSoLuong(Integer.parseInt(input));
+                int sl = this.getSoLuong();
+                if(sl<=0){
                     System.out.println("So luong phai lon hon 0, moi ban nhap lai.....");
                 }
                 else{
@@ -429,8 +327,6 @@ public class Sach {
             }
         }while(!validSoLuong);
     }
-    
-    
     
     @Override
     public String toString() {
