@@ -326,7 +326,7 @@ public class Sach {
                 System.out.println("Nhap mo ta: ");
                 String input = nhapttsach.nextLine().trim();
                 this.setMoTa(input);
-                String mota=this.getNXB();
+                String mota=this.getMoTa();
                 
                 if(!mota.matches("^[a-zA-Z0-9\\s]+$")||mota.isBlank()){
                     System.out.println("Mo ta chi duoc chua chu va so, moi ban nhap lai.....");
