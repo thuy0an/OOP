@@ -272,16 +272,16 @@ public class NhanVienQuanLy extends NhanVien {
 			String maSach = thongtin[1].trim();
 			if (tusach.timSachTheoID(maSach) != null) {
 				Sach sach = new Sach(tusach.timSachTheoID(maSach));
-				tongDoanhThu += soLuong * sach.getgia();
+				tongDoanhThu += soLuong * sach.getGia();
 				if (thongKeTheLoai.containsKey(sach.getLoaiSach())) {
 					double[] dulieu = thongKeTheLoai.get(sach.getLoaiSach());
 					dulieu[0] += soLuong;
-					dulieu[1] += soLuong * sach.getgia();
+					dulieu[1] += soLuong * sach.getGia();
 					thongKeTheLoai.put(sach.getLoaiSach(), dulieu);
 				} else {
 					double[] dulieu = new double[2];
 					dulieu[0] = soLuong;
-					dulieu[1] = soLuong * sach.getgia();
+					dulieu[1] = soLuong * sach.getGia();
 					thongKeTheLoai.put(sach.getLoaiSach(), dulieu);
 				}
 			}
@@ -324,16 +324,16 @@ public class NhanVienQuanLy extends NhanVien {
 			String maSach = thongtin[1].trim();
 			if (tusach.timSachTheoID(maSach) != null) {
 				Sach sach = new Sach(tusach.timSachTheoID(maSach));
-				tongDoanhThu += soLuong * sach.getgia();
+				tongDoanhThu += soLuong * sach.getGia();
 				if (thongKeTheLoai.containsKey(sach.getTheLoai())) {
 					double[] dulieu = thongKeTheLoai.get(sach.getTheLoai());
 					dulieu[0] += soLuong;
-					dulieu[1] += soLuong * sach.getgia();
+					dulieu[1] += soLuong * sach.getGia();
 					thongKeTheLoai.put(sach.getTheLoai(), dulieu);
 				} else {
 					double[] dulieu = new double[2];
 					dulieu[0] = soLuong;
-					dulieu[1] = soLuong * sach.getgia();
+					dulieu[1] = soLuong * sach.getGia();
 					thongKeTheLoai.put(sach.getTheLoai(), dulieu);
 				}
 			}
@@ -377,16 +377,16 @@ public class NhanVienQuanLy extends NhanVien {
 			String maSach = thongtin[1].trim();
 			if (tusach.timSachTheoID(maSach) != null) {
 				Sach sach = new Sach(tusach.timSachTheoID(maSach));
-				tongDoanhThu += soLuong * sach.getgia();
+				tongDoanhThu += soLuong * sach.getGia();
 				if (thongKeTheLoai.containsKey(sach.getMaSach())) {
 					double[] dulieu = thongKeTheLoai.get(sach.getMaSach());
 					dulieu[0] += soLuong;
-					dulieu[1] += soLuong * sach.getgia();
+					dulieu[1] += soLuong * sach.getGia();
 					thongKeTheLoai.put(sach.getMaSach(), dulieu);
 				} else {
 					double[] dulieu = new double[2];
 					dulieu[0] = soLuong;
-					dulieu[1] = soLuong * sach.getgia();
+					dulieu[1] = soLuong * sach.getGia();
 					thongKeTheLoai.put(sach.getMaSach(), dulieu);
 				}
 			}

@@ -62,14 +62,14 @@ public class TuSach {
             switch (choice) {
             case "1":
                 sach = new SachGiay();
-                ((SachGiay) sach).nhapThongTinSachGiay();
+                ((SachGiay) sach).nhapThongTinSachChoNhanVien();
                 this.setBooks(sach);
                 soSach++;
                 vietSachVaoFile(choice);
                 break;
             case "2":
                 sach = new SachMem();
-                ((SachMem) sach).nhapThongTinSachMem();
+                ((SachMem) sach).nhapThongTinSachChoNhanVien();
                 this.setBooks(sach);
                 soSach++;
                 vietSachVaoFile(choice);
@@ -82,7 +82,7 @@ public class TuSach {
             tiepTuc=input.nextLine();
         }while(!tiepTuc.equalsIgnoreCase("N"));  
     }
-    public void vietSachVaoFile(String choice) {
+    private void vietSachVaoFile(String choice) {
         String fileName = "book.txt";
         File file = new File(fileName);
 
@@ -95,7 +95,7 @@ public class TuSach {
                 sb.append(sach.getSoTrang()).append("#");
                 sb.append(sach.getTheLoai()).append("#");
                 sb.append(sach.getNXB()).append("#");
-                sb.append(sach.getgia()).append("#");
+                sb.append(sach.getGia()).append("#");
                 sb.append(sach.getMoTa()).append("#");
 
                 if (sach instanceof SachGiay) {
@@ -125,7 +125,7 @@ public class TuSach {
     }
     
     
-    public void timSachTheoTen(){
+    private void timSachTheoTen(){
         Scanner input = new Scanner(System.in);
         System.out.println("Nhap ten sach ban muon tim: ");
         String tenSachCanTim = input.nextLine();
@@ -191,7 +191,7 @@ public class TuSach {
         if(!found) //(found) có nghĩa là cách viết khác của found==true, vậy !found tức là false
             System.out.println("Khong tim thay sach.....");
     }
-    public void timSachTheoID(){
+    private void timSachTheoID(){
         Scanner input = new Scanner(System.in);
         System.out.println("Nhap ma sach ban muon tim: ");
         String maSachCanTim = input.nextLine();
@@ -306,7 +306,7 @@ public class TuSach {
         }
         return foundSach;
     }
-    public void timSachTheoTG(){
+    private void timSachTheoTG(){
         Scanner input = new Scanner(System.in);
         System.out.println("Nhap ten tac gia ma ban muon tim: ");
         String tgCanTim = input.nextLine();
@@ -371,7 +371,7 @@ public class TuSach {
         if(!found)
             System.out.println("Khong tim thay sach.....");
     }
-    public void timSachTheoNXB(){
+    private void timSachTheoNXB(){
         Scanner input = new Scanner(System.in);
         System.out.println("Nhap NXB ma ban muon tim: ");
         String nxbCanTim = input.nextLine();
@@ -436,7 +436,7 @@ public class TuSach {
         if(!found)
             System.out.println("Khong tim thay sach.....");
     }
-    public void timSachTheoKhoangGia(){
+    private void timSachTheoKhoangGia(){
         boolean found = false;
         String fileName = "book.txt";
         File file = new File(fileName);
@@ -498,7 +498,7 @@ public class TuSach {
         if(!found)
             System.out.println("\nKhong co sach trong khoang nay...");
     }
-    public void timSachTheoTheLoai(){
+    private void timSachTheoTheLoai(){
         Scanner input = new Scanner(System.in);
         System.out.println("Nhap the loai ban muon tim kiem: ");
         String theLoaiCanTim = input.nextLine();

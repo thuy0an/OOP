@@ -10,10 +10,8 @@ public class SachMem extends Sach{
     private String loai;
     private String kichCoDungLuong;
     private double dungLuong;
-    private String maSachMem;
     private String s1="kb";
     private String s2="mb";
-    private String s3="gb";
     public SachMem() {
     }
 
@@ -57,7 +55,6 @@ public class SachMem extends Sach{
                 this.setLoai(input);
                 if(!this.getLoai().equalsIgnoreCase("PDF")&&!this.getLoai().equalsIgnoreCase("EPUB")||this.getLoai().isEmpty()){
                     System.out.println("Loai sach khong hop le, moi ban nhap lai.....");
-                    this.setLoai(nhapttsachmem.nextLine().trim());
                 }
                 else{
                     validType = true;
@@ -73,10 +70,10 @@ public class SachMem extends Sach{
         Scanner nhapttsachmem = new Scanner(System.in);
         boolean validSizeType = false;
         do{
-            System.out.println("Nhap kich co dung luong (kb/mb/gb): ");
+            System.out.println("Nhap kich co dung luong (kb/mb): ");
             input1 = nhapttsachmem.nextLine().trim();
             
-            if(!input1.equals(s1)&&!input1.equals(s1)&&!input1.equals(s1)){
+            if(!input1.equals(s1)&&!input1.equals(s2)){
                 System.out.println("Kich co khong hop le, moi ban nhap lai.....");
             }
             else{
@@ -88,10 +85,6 @@ public class SachMem extends Sach{
                     this.setKichCoDungLuong(s2);
                     validSizeType = true;
                 }
-                else if(input1.toLowerCase().equalsIgnoreCase(s3)){
-                    this.setKichCoDungLuong(s3);
-                    validSizeType = true;
-                }
             }
         }while(!validSizeType);
         
@@ -99,16 +92,18 @@ public class SachMem extends Sach{
             System.out.println("Nhap dung luong: ");
             String dungluong = nhapttsachmem.nextLine().trim();
             this.setDungLuong(Double.parseDouble(dungluong));
-            if(this.getDungLuong()<0){
+            Double dungluonG = this.getDungLuong();
+            if(dungluonG<0){
                 System.out.println("Dung luong phai lon hon hoac bang 0, moi ban nhap lai.....");
                 nhapVaCheckDungLuong();
             }
         }catch(NumberFormatException e){
             System.out.println("Dung luong khong hop le, moi ban nhap lai.....");
-            nhapVaCheckDungLuong();
+            input1 = nhapttsachmem.nextLine().trim();
         }
     }
-    public void nhapThongTinSachMem(){
+    @Override
+    public void nhapThongTinSachChoNhanVien(){
         nhapVaCheckLoaiSach();
         super.nhapThongTinSachChoNhanVien();
         nhapVaCheckDungLuong();
@@ -124,11 +119,5 @@ public class SachMem extends Sach{
         return sb.toString();
     }
     
-    public static void main(String[]args){
-        SachMem sachmem = new SachMem();
-        sachmem.nhapThongTinSachMem();
-        
-        System.out.println(sachmem.toString());
-    }
 }
 

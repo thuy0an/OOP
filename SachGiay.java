@@ -15,7 +15,6 @@ import java.util.Scanner;
         private String kichThuoc;
         private String loaiBia;
         private int hienCo;
-        private String maSachGiay;
 
         public SachGiay() {
         }
@@ -58,8 +57,8 @@ import java.util.Scanner;
                     System.out.println("Nhap so luong: ");
                     String input = nhapttSachGiay.nextLine().trim();
                     this.setHienCo(Integer.parseInt(input));
-                    
-                    if(this.getHienCo()<=0){
+                    int hienco = this.getHienCo();
+                    if(hienco<=0){
                         System.out.println("So luong phai lon 0, moi ban nhap lai.....");
                         this.setHienCo(Integer.parseInt(input));
                     }
@@ -72,18 +71,58 @@ import java.util.Scanner;
             }while(!validHienCo);
         }
         
-        public void nhapThongTinSachGiay(){
-            super.nhapThongTinSachChoNhanVien();
-            Scanner nhapttSachGiay = new Scanner(System.in);
-
-            System.out.println("Nhap kich thuoc sach: ");
-            this.setKichThuoc(nhapttSachGiay.nextLine());
-            
-            System.out.println("Nhap loai bia: ");
-            this.setLoaiBia(nhapttSachGiay.nextLine());
-            
-            nhapVaCheckHienCo();
+        private void nhapVaCheckKichThuoc(){
+            Scanner nhapttsach = new Scanner(System.in);
+            boolean validSize = false;
+            do{
+                try{
+                    System.out.println("Nhap kich thuoc sach (A4-A5): ");
+                    String input = nhapttsach.nextLine().trim();
+                    this.setKichThuoc(input);
+                    String kichthuoC = this.getKichThuoc();
+                    if(!kichthuoC.equalsIgnoreCase("A4")&&!kichthuoC.equalsIgnoreCase("A5")){
+                        System.out.println("Kich thuoc khong hop le. Moi ban nhap lai.....");
+                    }
+                    else{
+                        validSize = true;
+                    }
+                }catch(Exception e){
+                    System.out.println("Kich thuoc khong hop le, moi ban nhap lai.....");
+                }
+            }while(!validSize);
         }
+        private void nhapVaCheckLoaiBia(){
+            Scanner nhapttsach = new Scanner(System.in);
+            boolean validBia = false;
+            do{
+                try{
+                    System.out.println("Nhap loai bia (Cung-Mem): ");
+                    String input = nhapttsach.nextLine().trim();
+                    this.setLoaiBia(input);
+                    String loaibiA = this.getLoaiBia();
+                    if(!loaibiA.toLowerCase().equalsIgnoreCase("Cung")&&!loaibiA.toLowerCase().equalsIgnoreCase("Mem")){
+                        System.out.println("Loai bia khong hop le. Moi ban nhap lai.....");
+                    }
+                    else{
+                        validBia = true;
+                    }
+                }catch(Exception e){
+                    System.out.println("Loai bia khong hop le, moi ban nhap lai.....");
+                }
+            }while(!validBia);
+        }
+        
+
+    @Override
+    public void nhapThongTinSachChoNhanVien() {
+        super.nhapThongTinSachChoNhanVien(); 
+        
+        nhapVaCheckKichThuoc();
+
+        nhapVaCheckLoaiBia();
+
+        nhapVaCheckHienCo();
+    }
         
         @Override
         public String toString(){
@@ -95,5 +134,11 @@ import java.util.Scanner;
             
             return sb.toString();
         }
+        public static void main(String[] args){
+            SachGiay sachgiay = new SachGiay();
+            sachgiay.nhapThongTinSachChoNhanVien();
+            System.out.println("Thong tin sach giay: " + sachgiay.toString());
+        }
 
     }
+
