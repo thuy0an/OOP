@@ -22,7 +22,6 @@ public class PhieuGiamGia {
 }
 
 
-
 	public String getMaGiamGia() {
 		return maGiamGia;
 	}

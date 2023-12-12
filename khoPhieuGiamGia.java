@@ -35,6 +35,16 @@ public class khoPhieuGiamGia {
 		}
 		return dsPhieuGiamGia;
 	}
+	public void  giamSoLuongTonPhieuGiam(String maGiamGia) {
+		ArrayList<PhieuGiamGia> dsPhieuGiamGia=docPhieuGiamGiaTuFile();
+		for(PhieuGiamGia phieugiamgia:dsPhieuGiamGia) {
+			if(phieugiamgia.getMaGiamGia().equals(maGiamGia));
+			phieugiamgia.setSoLuongTon(phieugiamgia.getSoLuongTon()-1);
+		}
+		ghiPhieuGiamGiaVaoFile(dsPhieuGiamGia);
+		
+		
+	}
 	public void ghiPhieuGiamGiaVaoFile(ArrayList<PhieuGiamGia> dsphieugiamgia) {
 		String fileName = "phieugiamgia.txt";
 		File file = new File(fileName);

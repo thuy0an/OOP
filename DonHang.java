@@ -94,8 +94,10 @@ public class DonHang {
 
 	public void datHang(String tenfile) {
 		Scanner scan = new Scanner(System.in);
-		this.getChitietDonHang().setInfo();
+		CT_DonHang donhang=this.getChitietDonHang();
+		this.getChitietDonHang().setInfo(); 	 	
 		ArrayList<CT_GioHang> sanPhamDatHang = this.getChitietDonHang().chonSachTuDanhSach(tenfile);
+		khoPhieuGiamGia khogiamgia = new khoPhieuGiamGia();
 		int luachon;
 		do {
 			System.out.println("--BẠN CÓ MUỐN DÙNG PHIẾU GIẢM GIÁ?--");
@@ -112,14 +114,25 @@ public class DonHang {
 			}
 		} while (luachon != 2);
 		if (luachon == 1) {
-			khoPhieuGiamGia khogiamgia = new khoPhieuGiamGia();
+	
 			khogiamgia.hienThiPhieuGiamGiaDuDieuKien(chitietDonHang);
 			PhieuGiamGia phieu;
+			double tienTruocGiamGia=donhang.getTongTien();
+			double tienSauGiamGia;
 			do {
 				System.out.println("Mời nhập phiếu giảm giá:");
 				String maPhieu = scan.nextLine();
 				phieu = khogiamgia.chonPhieuGiamGia(maPhieu);
 			} while (phieu == null);
+			
+			if(phieu.getLoaiGiamGia().equalsIgnoreCase("codinh")) {
+				tienSauGiamGia=tienTruocGiamGia-(double)phieu.getGiam();
+				
+			}else {
+				tienSauGiamGia=tienTruocGiamGia-(tienTruocGiamGia*((double)phieu.getGiam()/100));
+			}
+			donhang.setTongTien(tienSauGiamGia);
+			xemDonHienTai();
 		}
 		System.out.println("--BẠN CÓ XÁC NHẬN ĐẶT HÀNG?--");
 		System.out.println("1. Đồng ý đặt hàng");
@@ -127,10 +140,11 @@ public class DonHang {
 		System.out.print("\nChọn thao tác: ");
 		int chon = 0;
 		do {
-
+			
 			chon = Integer.parseInt(scan.nextLine());
 			switch (chon) {
 			case 1:
+				if(luachon==1) khogiamgia.giamSoLuongTonPhieuGiam(this.getChitietDonHang().getMaDonHang());
 				this.getChitietDonHang().setTrangThai(1);
 				this.getChitietDonHang().setMaDonHang();
 				LocalDateTime myDateObj = LocalDateTime.now();
@@ -167,6 +181,15 @@ public class DonHang {
 		} while (chon != 2);
 	}
 
+	public void xemDonHienTai() {
+		CT_DonHang donhang=this.getChitietDonHang();
+		
+		System.out.println("\t+-----------------------------------------------------------+");
+		System.out.println("\t|                   DON HANG CUA BAN                        |");
+		System.out.println("\t|-----------------------------------------------------------|");
+		System.out.printf(donhang.toString());
+		
+	}
 	public void huyDonhang(String maKhach) {
 		Scanner input = new Scanner(System.in);
 		File file = new File("DonHang.txt");
