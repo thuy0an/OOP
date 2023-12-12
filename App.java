@@ -181,7 +181,7 @@ public class App {
                 {
                     case 1:
                         int chon=0;
-                        System.out.println("\t+-------------------------------------------------------------+");
+                        System.out.println("\t+--------------------Loại tài khoản đăng nhập-----------------+");
                         System.out.printf("\t| %-60s|\n","1. Đăng nhập vào tài khoản khách hàng");
                         System.out.printf("\t| %-60s|\n","2. Đăng nhập vào tài khoản nhân viên");
                         System.out.println("\t+-------------------------------------------------------------+");

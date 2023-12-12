@@ -109,11 +109,16 @@ public class DonHang {
     
     
     public void datHang(String tenfile) {
-        this.getChitietDonHang().setInfo();
+        
         ArrayList<CT_GioHang> sanPhamDatHang=this.getChitietDonHang().chonSachTuDanhSach(tenfile);
-        System.out.println("--BẠN CÓ XÁC NHẬN ĐẶT HÀNG?--");
-        System.out.println("1. Đồng ý đặt hàng");
-        System.out.println("2. Xem thêm sản phẩm");
+        if ( sanPhamDatHang!= null)
+        {
+            this.getChitietDonHang().setInfo();
+            System.out.println(sanPhamDatHang.toString());
+            System.out.println("\nTổng tiền: " + this.getChitietDonHang().getTongTien() +"\n");
+            System.out.println("--BẠN CÓ XÁC NHẬN ĐẶT HÀNG?--");
+            System.out.println("1. Đồng ý đặt hàng");
+            System.out.println("2. Xem thêm sản phẩm");
         int chon = 0;
         do {
             Scanner scan = new Scanner(System.in);
@@ -140,7 +145,7 @@ public class DonHang {
                         sb.append(System.lineSeparator());
                         fileWriter.write(sb.toString());
                         fileWriter.flush(); 
-                        System.out.println("ĐẶT HÀNG THÀNH CÔNG!");
+                        System.out.println("ĐẶT HÀNG THÀNH CÔNG!\n");
                         xuLySoLuongSanPham(sanPhamDatHang);
                         chon=2;
                     }
@@ -157,6 +162,8 @@ public class DonHang {
             if (chon < 1 || chon > 2)
                 System.out.println("\n Vui lòng xác nhận đặt hàng! \n");
         } while (chon != 2);
+        }
+        
     }   
     
     

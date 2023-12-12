@@ -85,11 +85,11 @@ public class CT_GioHang {
     public String toString() {
        StringBuilder sb = new StringBuilder();
        sb.append("\n");
-       sb.append("Ten sach: ").append(this.getTenSach()).append("\n");
+       sb.append("Ten sach: ").append(this.getTenSach()).append("\t");
        sb.append("Ma sach: ").append(this.getMaSach()).append("\n");
-       sb.append("Loai sach: ").append(this.getLoaiSach()).append("\t\t");
-       sb.append("Gia sach: ").append(this.getGiaSach()).append("\n");
-       sb.append("So luong: ").append(this.getSoLuong()).append("\t\t");
+       sb.append("Loai sach: ").append(this.getLoaiSach()).append("\t");
+       sb.append("Gia sach: ").append(this.getGiaSach()).append("\t");
+       sb.append("So luong: ").append(this.getSoLuong()).append("\t");
        sb.append("Thanh tien: ").append(this.getThanhTien()).append("\n");
        return sb.toString();
    }

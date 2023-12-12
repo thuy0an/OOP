@@ -145,11 +145,7 @@ public class CT_DonHang {
                 {
                     System.out.println("Vui lòng chọn đúng các thao tác đã hiển thị!!!");
                 }
-                catch ( Exception e)
-                {
-                    System.out.println(e.getMessage());
-                }
-            } while (chon != 2);
+            } while (chon !=1 && chon != 2);
         this.setPtThanhToan(ptThanhtoan);
     }
    
@@ -239,32 +235,11 @@ public class CT_DonHang {
         return gioHangList;
     }
     
-    private ArrayList<PhieuGiamGia> docVoucherTuFile() {
-        ArrayList<PhieuGiamGia> voucherList = new ArrayList<>();
-        File file= new File("voucher.txt");
-        try (Scanner scanner = new Scanner(file))
-        {
-            while(scanner.hasNextLine()){ 
-                String line = scanner.nextLine();
-                String[] voucher = line.split("#");
-                    String maphieu = voucher[0];
-                    Integer mucGiam = Integer.parseInt(voucher[1]);
-                    Double donToiThieu = Double.parseDouble(voucher[2]);
-                    String doiTuong = voucher[3];
-                    Integer soLuong = Integer.parseInt(voucher[4]);
-                    PhieuGiamGia phieugiam = new PhieuGiamGia(maphieu, mucGiam, donToiThieu, doiTuong, soLuong);
-                    voucherList.add(phieugiam);  
-                    
-            }
-        } catch (FileNotFoundException ex) {
-            System.out.println("Không tìm thấy file");
-        }
-        return voucherList;
-    }
     
     public ArrayList<CT_GioHang> chonSachTuDanhSach(String tenfile) {
         ArrayList<CT_GioHang> danhsach = docGioHangTuFile(tenfile);
-        ArrayList<PhieuGiamGia> voucherList = docVoucherTuFile();
+        PhieuGiamGia phieu= new PhieuGiamGia();
+        ArrayList<PhieuGiamGia> voucherList = phieu.docVoucherTuFile();
         GioHang gioHang= new GioHang();
         gioHang.setDsSanPham(danhsach);
         ArrayList<CT_GioHang> giohang_dachon = new ArrayList<>();       
@@ -327,33 +302,45 @@ public class CT_DonHang {
                         
                 if ( voucherFlag)
                 {
+                    System.out.println("\n\t+---------------------------------------------------------------------------------+");
+                    System.out.println("\t|                                       PHIẾU GIẢM GIÁ                            |");
+                    System.out.println("\t|---------------------------------------------------------------------------------|");
+                    System.out.printf("\t| %-15s | %-15s | %-15s | %-10s | %-10s |\n","Mã giảm giá","Mức giảm giá","Đơn tối thiểu","Dành cho","Số lượng còn");
+                    System.out.println("\t|---------------------------------------------------------------------------------|");
                     for( int i=0; i < voucher_hople.size();i++)
-                        System.out.println(voucher_hople.get(i).toString());
-                    
+                    {
+                        System.out.printf("\t| %-42s |\n",voucher_hople.get(i).toString());
+                    }
+                    System.out.println("\t+---------------------------------------------------------------------------------+");
+                    boolean chonVoucher=false;
                     System.out.println("--Chọn voucher: --");
                     String maVoucherChon = scan.nextLine();
                     for (PhieuGiamGia voucher : voucher_hople) {
                         if (maVoucherChon.equals(voucher.getMaPhieu()) && voucher.getDoiTuong().equalsIgnoreCase("Hoa don")) {
+                            chonVoucher=true;
                             thanhtien = tongtien*(100 - voucher.getMucGiam())/100;
+                            voucher.xuLyKhiChonGianGia(maVoucherChon);
                         } 
                         else if (maVoucherChon.equals(voucher.getMaPhieu()) && !voucher.getDoiTuong().equalsIgnoreCase("Hoa don")){
                             for ( int i=0; i < giohang_dachon.size(); i++)
                                 if ( giohang_dachon.get(i).getMaSach().equalsIgnoreCase(voucher.getDoiTuong()))
                                 {
+                                    chonVoucher=true;
                                     double tienSach=giohang_dachon.get(i).getThanhTien()*giohang_dachon.get(i).getSoLuong();
                                     thanhtien=tongtien-tienSach+ tienSach*(100-voucher.getMucGiam())/100;
+                                    voucher.xuLyKhiChonGianGia(maVoucherChon);
                                 }
-                        }else 
-                            System.out.println("Mã voucher không hợp lệ! ");
+                        }
+                            
                     }
+                    if ( !chonVoucher)
+                        System.out.println("Mã voucher không hợp lệ! ");
                 }
                 
             }
         }while(luachon !=2);
         this.setDsSanPham(sanPham);
         this.setTongTien(thanhtien);
-        System.out.println(giohang_dachon.toString());
-        System.out.println("Tổng tiền: " +tongtien);
         return giohang_dachon;
     }
     
@@ -380,20 +367,6 @@ public class CT_DonHang {
        
        return sb.toString();
     }
-    
-//    public double giamGia() {
-//        if (this.tinhTongTien() >= 500000) {
-//            return (10/100)*this.tinhTongTien();
-//        } else { 
-//            if (this.tinhTongTien() >= 300000) {
-//                return (5/100)*this.tinhTongTien();
-//            } else return 0;
-//        }
-//    }
-//        
-//    public double giaSauKhiGiam() {
-//        this.tongTien = this.tinhTongTien() - this.giamGia();
-//        return this.tongTien;
-//    }
+
 
 }

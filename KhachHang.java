@@ -46,22 +46,29 @@ public class KhachHang {
     
     private String ktraSdt(String sdt){
         Scanner input= new Scanner(System.in);
-        String Sdt="";
+        String Sdt=sdt;
         boolean flag=false;
-        while (!flag)
+        do
         {
             flag=true; // cho số đt là lun đúng
-            for( int i=0; i < sdt.length();i++)
-                if ( !Character.isDigit(sdt.charAt(i)))
+            if ( Sdt.length() <10)
+            {
+                System.out.println("Vui lòng nhập đủ 10 số !!!");
+                System.out.print("Nhập số điện thoại: ");
+                Sdt=input.nextLine();
+                flag=false;
+            }
+            for( int i=0; i < Sdt.length();i++)
+                if ( !Character.isDigit(Sdt.charAt(i)))
                 {
                     flag=false;
                     System.out.println("Số điện thoại không hợp lệ. Vui lòng chỉ nhập số.");
-                    sdt=input.nextLine();
-                    break;
+                    System.out.print("Nhập số điện thoại: ");
+                    Sdt=input.nextLine();
                 }
             if (flag)
                 Sdt=sdt;
-        }
+        }while (flag==false);
         return Sdt;
     }
     

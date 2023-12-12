@@ -385,7 +385,8 @@ public class TaiKhoanKhachHang {
             System.out.printf("\t| %-35s| %-35s| %-35s|\n","1.Xem thông tin cá nhân","2.Xem danh sách sản phẩm bán","3.Tìm kiếm sản phẩm");
             System.out.printf("\t| %-35s| %-35s| %-35s|\n","4.Thêm sản phẩm trong giỏ","5.Xem giỏ hàng","6.Xóa sản phẩm trong giỏ hàng");
             System.out.printf("\t| %-35s| %-35s| %-35s|\n","7.Đặt đơn hàng","8.Xem đơn đã đặt","9.Hủy đơn hàng");
-            System.out.printf("\t| %-35s| %-35s| %-35s|\n","10.Dánh giá sản phẩm","11.Xem đánh giá sách" ,"0.Thoát khỏi chức năng người dùng ");
+            System.out.printf("\t| %-35s| %-35s| %-35s|\n","10.Dánh giá sản phẩm","11.Xem đánh giá sách" ,"12. Xem các mã giảm giá");
+            System.out.printf("\t| %-109s|\n", "0.Thoát khỏi chức năng người dùng");
             System.out.println("\t+--------------------------------------------------------------------------------------------------------------+");
             System.out.print("Chọn thao tác: ");
             choice=Integer.parseInt(input.nextLine());
@@ -406,7 +407,8 @@ public class TaiKhoanKhachHang {
                     }else System.out.println(this.getKhachhang().toString());
                    break;
                 case 2:
-                    TuSach.hienThiSachDangKinhDoanh();
+                    TuSach tusach= new TuSach();
+                    tusach.hienThiSachDangKinhDoanh();
                     break;
                 case 3:
                     this.getTuSach().timSach();
@@ -437,6 +439,9 @@ public class TaiKhoanKhachHang {
                 case 11:
                     this.getDanhgia().xemDanhGia();
                     break;
+                case 12:
+                    PhieuGiamGia.xemVoucher();
+                    break;
             }
         }while (choice!=0);
     }
@@ -457,7 +462,8 @@ public class TaiKhoanKhachHang {
             switch(choice)
             {
                 case 1:
-                    TuSach.hienThiSachDangKinhDoanh();
+                    TuSach tusach= new TuSach();
+                    tusach.hienThiSachDangKinhDoanh();
                     break;
                 case 2:
                     this.getTuSach().timSach();

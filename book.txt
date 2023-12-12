@@ -2,12 +2,12 @@ Giai thich ngu phap tieng Anh#001P#M.L Huong;H.T Uyen#560#Giao duc#Da Nang#22000
 Giai thich ngu phap tieng Anh#002P#M.L Huong;H.T Uyen#560#Giao duc#Da Nang#285000#Sach danh cho viec on luyen ngu phap#Giay#A4#Cung#\\\\#\\\\#5
 Su im lang cua bay cuu#003P#Thomas Harris#359#Trinh tham#Hoi Nha Van#115000#Tieu thuyet trinh tham kinh di day hap dan#Giay#A4#Mem#\\\\#\\\\#10
 Su im lang cua bay cuu#004P#Thomas Harris#359#Trinh tham#Hoi Nha Van#185000#Tieu thuyet trinh tham kinh di day hap dan#Giay#A4#Cung#\\\\#\\\\#5
-Nhan gui mot toi nguoi da yeu em#005P#Otono Yomoji#235#Tinh cam#Ha Noi#128000#Cau truyen tinh cam va noi buon#Giay#A5#Mem#\\\\#\\\\#26
+Nhan gui mot toi nguoi da yeu em#005P#Otono Yomoji#235#Tinh cam#Ha Noi#128000#Cau truyen tinh cam va noi buon#Giay#A5#Mem#\\\\#\\\\#25
 Nhan gui tat ca cac em nguoi toi da yeu#006P#Otono Yomoji#235#Tinh cam#Ha Noi#128000#Cau truyen tinh cam va noi buon#Giay#A5#Mem#\\\\#\\\\#30
 5centimet tren giay#007P#Shinkai Makoto#188#Tinh cam#Ha Noi#50000#Cau truyen tinh cam tuoi thanh xuan#Giay#A5#Mem#\\\\#\\\\#18
 Thi va su phoi hop thi trong tieng Anh#008P#M.L Huong; N.T.T Tam#183#Giao duc#Da Nang#56800#Sach danh cho viec on luyen ngu phap#Giay#A4#Mem#\\\\#\\\\#22
-Thi va su phoi hop thi trong tieng Anh#009P#M.L Huong; N.T.T Tam#183#Giao duc#Da Nang#122000#Sach danh cho viec on luyen ngu phap#Giay#A4#Cung#\\\\#\\\\#10
-Dong tu bat quy tac & ngu phap tieng Anh co ban#010P#M.LHuong#200#Giao duc#Da Nang#34400#Sach danh cho viec on luyen ngu phap#Giay#A4#Mem#\\\\#\\\\#7
+Thi va su phoi hop thi trong tieng Anh#009P#M.L Huong; N.T.T Tam#183#Giao duc#Da Nang#122000#Sach danh cho viec on luyen ngu phap#Giay#A4#Cung#\\\\#\\\\#9
+Dong tu bat quy tac & ngu phap tieng Anh co ban#010P#M.LHuong#200#Giao duc#Da Nang#34400#Sach danh cho viec on luyen ngu phap#Giay#A4#Mem#\\\\#\\\\#6
 Hieu ve trai tim#011P#Minh Niem#480#Tam ly#TP.HCM#158000#Hieu them ve tam ly cua ban than#Giay#A4#Mem#\\\\#\\\\#10
 Atomic Habits#012P#James Clear#200#Tam ly#NXB The Gioi#186000#Hieu them ve tam ly cua ban than#Giay#A4#Mem#\\\\#\\\\#20
 Atomic Habits#013P#James Clear#200#Tam ly#NXB The Gioi#250000#Hieu them ve tam ly cua ban than#Giay#A4#Cung#\\\\#\\\\#5
@@ -16,13 +16,13 @@ Thay doi cuoc song than so hoc#015P#L.D.Q Huong#240#Tam ly#NXB HaNoi#342000#Hieu
 Toi thay hoa vang tren co xanh#016P#Nguyen Nhat Anh#378#Truyen ngan#NXB Tre#82000#Nhung cau truyen thu vi hap dan#Giay#A5#Mem#\\\\#\\\\#16
 Toi thay hoa vang tren co xanh#017P#Nguyen Nhat Anh#378#Truyen ngan#NXB Tre#150000#Nhung cau truyen thu vi hap dan#Giay#A5#Cung#\\\\#\\\\#5
 Co hai con meo ngoi ben cua so#018P#Nguyen Nhat Anh#210#Truyen ngan#NXB Tre#71500#Nhung cau truyen thu vi hap dan#Giay#A5#Mem#\\\\#\\\\#16
-Mat biec#019P#Nguyen Nhat Anh#300#Truyen ngan#NXB Tre#75400#Nhung cau truyen thu vi hap dan#Giay#A5#Mem#\\\\#\\\\#12
-Cho toi xin mot ve di tuoi tho#020P#Nguyen Nhat Anh#208#Truyen ngan#NXB Tre#72000#Nhung cau truyen thi vi hap dan#Giay#A5#Mem#\\\\#\\\\#13
+Mat biec#019P#Nguyen Nhat Anh#300#Truyen ngan#NXB Tre#75400#Nhung cau truyen thu vi hap dan#Giay#A5#Mem#\\\\#\\\\#11
+Cho toi xin mot ve di tuoi tho#020P#Nguyen Nhat Anh#208#Truyen ngan#NXB Tre#72000#Nhung cau truyen thi vi hap dan#Giay#A5#Mem#\\\\#\\\\#6
 Tuoi tre dang gia bao nhieu#021P#Rosie Nguyen#283#Tam ly#Hoi Nha Vien#80000#Hieu them ve tam ly cua ban than#Giay#A4#Mem#\\\\#\\\\#7
-O quan ca phe cua tuoi tre lac loi#022P#Patrick Modiano#153#Truyen ngan#NXB Van Hoc#59000#Nhung cau truyen thi vi hap dan#Giay#A5#Mem#\\\\#\\\\#4
+O quan ca phe cua tuoi tre lac loi#022P#Patrick Modiano#153#Truyen ngan#NXB Van Hoc#59000#Nhung cau truyen thi vi hap dan#Giay#A5#Mem#\\\\#\\\\#2
 Vo nhat#023P#Kim Lan#242#Truyen ngan#NXB Van Hoc#41500#Nhung cau truyen thi vi hap dan#Giay#A4#Mem#\\\\#\\\\#4
 Lap trinh ngon ngu C++#024P#V.V Vu; P.T.T Hien#300#Giao duc#NXB KHKT#108000#Lap trinh ngon ngu may tinh#Giay#A4#Mem#\\\\#\\\\#18
-Lap trinh huong doi tuong#025P#P.V At; L.T Thong#488#Giao duc#NXB BKHN#168000#Lap trinh huong doi tuong#Giay#A4#Mem#\\\\#\\\\#4
+Lap trinh huong doi tuong#025P#P.V At; L.T Thong#488#Giao duc#NXB BKHN#168000#Lap trinh huong doi tuong#Giay#A4#Mem#\\\\#\\\\#3
 Tra hoa nu#026P#Alexandre Dumas#303#Tinh cam#Hoi Nha Van#60000#nhung cau truyen tinh yeu lang man#Giay#A4#Mem#\\\\#\\\\#8
 Rung Na Uy#027P#Naruki Murakami#556#Tinh cam#Hoi Nha Van#126000#nhung cau truyen tinh yeu lang man#Giay#A4#Mem#\\\\#\\\\#12
 An mang tren song Nile#028P#Agatha Christie#336#Trinh tham#NXB Tre#147000#Nhung cau truyen ly ki hap dan#Giay#A4#Mem#\\\\#\\\\#22

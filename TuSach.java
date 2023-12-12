@@ -21,6 +21,7 @@ public class TuSach {
     private static int sachDaHienThi = 0;
     private ArrayList<Sach> books = new ArrayList<>();
 
+    
     public TuSach() {
         this.soSach = 0;
     }
@@ -257,6 +258,7 @@ public class TuSach {
         if(!found)
             System.out.println("Khong tim thay sach.....");
     }
+    
     public Sach timSachTheoID(String id){
         String maSachCanTim = id;
         Sach foundSach=null;
@@ -306,6 +308,9 @@ public class TuSach {
         }
         return foundSach;
     }
+    
+    
+    
     private void timSachTheoTG(){
         Scanner input = new Scanner(System.in);
         System.out.println("Nhap ten tac gia ma ban muon tim: ");
@@ -618,7 +623,7 @@ public class TuSach {
     }
 
     
-    public static void hienThiSachDangKinhDoanh() { 
+    public void hienThiSachDangKinhDoanh() { 
         File file= new File("book.txt");
         try (Scanner scanner = new Scanner(file)) 
         {
