@@ -204,6 +204,7 @@ public class PhieuGiamGia {
             }
             catch(NumberFormatException ei)            {
                 System.out.println("\n--Vui lòng nhập đúng nội dung !!!--\n");
+                break;
             }
 
         } while (tieptuc != 2);
