@@ -1,5 +1,6 @@
 package BookStore;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -825,6 +826,7 @@ public class NhanVienQuanLy extends NhanVien {
 			System.out.printf("\t| %-50s|\n","2.Quản lý sách");
 			System.out.printf("\t| %-50s|\n","3.Quản lý đơn hàng");
 			System.out.printf("\t| %-50s|\n","4.Thống kê các loại");
+                        System.out.printf("\t| %-50s|\n","5.Thêm voucher giảm giá");
 			System.out.printf("\t| %-50s|\n","0.Thoát");
 			System.out.println("\t+---------------------------------------------------+");
                         try{
@@ -845,8 +847,13 @@ public class NhanVienQuanLy extends NhanVien {
                             case 4:
                                     luaChonThongKe();
                                     break;
+                            case 5:
+                                System.out.println("Case 5 chạy");
+                                    PhieuGiamGia phieu= new PhieuGiamGia();
+                                    phieu.themVoucher();
+                                    break;
                             }
-                            if (luachon <0 || luachon >4)
+                            if (luachon <0 || luachon >5)
                             System.out.println("--Vui lòng nhập đúng các chức năng--");
                         }
                     catch(NumberFormatException ei)
