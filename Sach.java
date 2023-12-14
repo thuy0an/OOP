@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.bookstore_management;
+package BookStore;
 
 import java.io.IOException;
 import static java.lang.Character.isDigit;
@@ -24,11 +24,37 @@ public class Sach {
     private String moTa;
     private String loaiSach;
     private int soLuong;
-
-    
     public Sach() {
         
     }
+
+    public Sach(String tenSach,String maSach,String tacGia,int soTrang,String theLoai,String NXB,double gia,String moTa,String loaiSach,int soLuong) {
+    	this.tenSach=tenSach;
+    	this.maSach=maSach;
+    	this.tacGia=tacGia;
+    	this.soTrang=soTrang;
+    	this.theLoai=theLoai;
+    	this.NXB=NXB;
+    	this.gia=gia;
+    	this.moTa=moTa;
+    	this.loaiSach=loaiSach;
+    	this.soLuong=soLuong;
+
+    }
+    
+    public Sach(Sach sach) {
+    	this.tenSach=sach.getTenSach();
+    	this.maSach=sach.getMaSach();
+    	this.tacGia=sach.getTacGia();
+    	this.soTrang=sach.getSoTrang();
+    	this.theLoai=sach.getTheLoai();
+    	this.NXB=sach.getNXB();
+    	this.gia=sach.getGia();
+    	this.moTa=sach.getMoTa();
+    	this.loaiSach=sach.getLoaiSach();
+    	this.soLuong=sach.getSoLuong();
+    }
+
     public String getTenSach() {
         return this.tenSach;
     }
@@ -107,7 +133,7 @@ public class Sach {
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
-    
+
     
     public void nhapThongTinSachChoNhanVien() {
 
@@ -126,11 +152,6 @@ public class Sach {
         nhapVaCheckGia();
         
         nhapVaCheckMoTa();
-        
-//        System.out.println("Nhap so luong: ");
-//        this.soLuong = Integer.parseInt(nhapttsach.nextLine());
-        //nhapVaCheckSoLuong();
-        
     }
     
     //Hàm kiểm tra tính hợp lệ khi nhập tên sách
@@ -143,7 +164,7 @@ public class Sach {
                 String input = nhapttsach.nextLine().trim();
                 this.setTenSach(input);
                 String tensach = this.getTenSach();
-                if(!tensach.matches("^[a-zA-Z0-9\\s]+$")||tensach.isBlank()){
+                if(!tensach.matches("^[a-zA-Z0-9\\s]+$")||tensach.trim().isEmpty()){
                     System.out.println("Ten sach chi duoc chua chu, so va khoang trang. Moi ban nhap lai.....");
                 }
                 else{
@@ -165,7 +186,7 @@ public class Sach {
                 String input = nhapttsach.nextLine().trim();
                 this.setMaSach(input);
                 String masacH = this.getMaSach();
-                if(!masacH.matches("^[a-zA-Z0-9\\s]+$")||masacH.isBlank()){
+                if(!masacH.matches("^[a-zA-Z0-9\\s]+$")||masacH.trim().isEmpty()){
                     System.out.println("Ma sach chi duoc chua chu, so va khoang trang. Moi ban nhap lai.....");
                 }
                 else{
@@ -198,7 +219,7 @@ public class Sach {
                 String input = nhapttsach.nextLine().trim();
                 this.setTacGia(input);
                 String tg=this.getTacGia();
-                if(!tg.matches("^[a-zA-Z\\s]+$")||tg.isBlank()){
+                if(!tg.matches("^[a-zA-Z\\s]+$")||tg.trim().isEmpty()){
                     System.out.println("Ten tac gia khong hop le, moi ban nhap lai.....");
                 }
                 else{
@@ -242,7 +263,7 @@ public class Sach {
                 this.setNXB(input);
                 String nxb=this.getNXB();
                 
-                if(!nxb.matches("^[a-zA-Z\\s]+$")||nxb.isBlank()){
+                if(!nxb.matches("^[a-zA-Z\\s]+$")||nxb.trim().isEmpty()){
                     System.out.println("Ten NXB khong hop le, moi ban nhap lai.....");
                 }
                 else{
@@ -264,7 +285,7 @@ public class Sach {
                String input = nhapttsach.nextLine().trim();
                this.setTheLoai(input);
                String genre = this.getTheLoai();
-               if(!genre.matches("^[a-zA-Z0-9\\s]+$")||genre.isBlank()){
+               if(!genre.matches("^[a-zA-Z0-9\\s]+$")||genre.trim().isEmpty()){
                    System.out.println("The loai khong hop le, moi ban nhap lai.....");
                }
                else{
@@ -285,7 +306,7 @@ public class Sach {
                 System.out.println("Nhap gia: ");
                 String input = nhapttsach.nextLine().trim();
                 this.setGia(Double.parseDouble(input));
-                Double price = this.getGia();
+                double price = this.getGia();
                 if(price<=0){
                     System.out.println("Gia phai lon hon 0,moi ban nhap lai.....");
                 }
@@ -328,7 +349,7 @@ public class Sach {
                 this.setMoTa(input);
                 String mota=this.getMoTa();
                 
-                if(!mota.matches("^[a-zA-Z0-9\\s]+$")||mota.isBlank()){
+                if(!mota.matches("^[a-zA-Z0-9\\s]+$")||mota.trim().isEmpty()){
                     System.out.println("Mo ta chi duoc chua chu va so, moi ban nhap lai.....");
                 }
                 else{
@@ -344,25 +365,17 @@ public class Sach {
     public String toString() {
         StringBuilder sb = new StringBuilder(); //Thay đổi nội dung của chuỗi mà k tạo ra một chuỗi mới each time
         sb.append("\n");
-        sb.append("Ten sach: ").append(this.tenSach).append("\n");
-        sb.append("Ma sach: ").append(this.maSach).append("\n");
-        sb.append("Ten tac gia: ").append(this.tacGia).append("\n");
-        sb.append("So trang: ").append(this.soTrang).append(" trang\n");
-        sb.append("Nha xuat ban: ").append(this.NXB).append("\n");
-        sb.append("The loai: ").append(this.theLoai).append("\n");
-        sb.append("Gia: ").append(this.gia).append("\n");
-        sb.append("Mo ta sach: ").append(this.moTa).append("\n");
-        sb.append("So luong: ").append(this.soLuong).append("\n");
+        sb.append("Ten sach: ").append(this.getTenSach()).append("\n");
+        sb.append("Ma sach: ").append(this.getMaSach()).append("\n");
+        sb.append("Ten tac gia: ").append(this.getTacGia()).append("\n");
+        sb.append("So trang: ").append(this.getSoTrang()).append(" trang\n");
+        sb.append("Nha xuat ban: ").append(this.getNXB()).append("\n");
+        sb.append("The loai: ").append(this.getTheLoai()).append("\n");
+        sb.append("Gia: ").append(this.getGia()).append("\n");
+        sb.append("Mo ta sach: ").append(this.getMoTa()).append("\n");
+        sb.append("So luong: ").append(this.getSoLuong()).append("\n");
         //Thêm thông tin khác tại đây nếu cần
         
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-       
-        Sach sach = new Sach();
-        sach.nhapThongTinSachChoNhanVien();
-        System.out.println(sach.toString());
     }
 }

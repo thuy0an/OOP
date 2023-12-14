@@ -21,6 +21,14 @@ public class Ngaythangnam {
         this.thang = thang;
         this.nam = nam;
     }
+    
+    public Ngaythangnam(String ngaythangnam)
+    {
+        String dulieu[] = ngaythangnam.split("/");
+        this.ngay = Integer.parseInt(dulieu[0]);
+        this.thang = Integer.parseInt(dulieu[1]);
+        this.nam = Integer.parseInt(dulieu[2]);
+    }
 
     public Ngaythangnam()
     {
@@ -63,6 +71,6 @@ public class Ngaythangnam {
     }
     @Override
     public String toString() {
-        return ngay + "/" + thang + "/" + nam;
+        return this.getNgay() + "/" + this.getThang() + "/" + this.getNam();
     }
 }

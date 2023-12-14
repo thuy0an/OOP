@@ -2,7 +2,7 @@
      * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
      * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
      */
-    package com.mycompany.bookstore_management;
+package BookStore;
 
 import java.util.Scanner;
 
@@ -14,7 +14,6 @@ import java.util.Scanner;
         private String kichThuoc;
         private String loaiBia;
         private int hienCo;
-        private String maSachGiay;
 
         public SachGiay() {
         }
@@ -49,7 +48,7 @@ import java.util.Scanner;
             this.hienCo = hienCo;
         }
 
-        private void nhapVaCheckHienCo(){
+        public void nhapVaCheckHienCo(){
             Scanner nhapttSachGiay = new Scanner(System.in);
             boolean validHienCo = false;
             do{
@@ -60,7 +59,7 @@ import java.util.Scanner;
                     int hienco = this.getHienCo();
                     if(hienco<=0){
                         System.out.println("So luong phai lon 0, moi ban nhap lai.....");
-                        this.hienCo = Integer.parseInt(input); 
+                        this.setHienCo(Integer.parseInt(input));
                     }
                     else{
                         validHienCo = true;
@@ -70,6 +69,7 @@ import java.util.Scanner;
                 }
             }while(!validHienCo);
         }
+        
         private void nhapVaCheckKichThuoc(){
             Scanner nhapttsach = new Scanner(System.in);
             boolean validSize = false;
@@ -115,8 +115,7 @@ import java.util.Scanner;
     @Override
     public void nhapThongTinSachChoNhanVien() {
         super.nhapThongTinSachChoNhanVien(); 
-        Scanner nhapttSachGiay = new Scanner(System.in);
-
+        
         nhapVaCheckKichThuoc();
 
         nhapVaCheckLoaiBia();
@@ -128,9 +127,9 @@ import java.util.Scanner;
         public String toString(){
             String superString = super.toString();
             StringBuilder sb = new StringBuilder(superString);
-            sb.append("Kich thuoc: ").append(this.kichThuoc).append("\n");
-            sb.append("Loai bia: ").append(this.loaiBia).append("\n");
-            sb.append("Hien co: ").append(this.hienCo).append("\n");
+            sb.append("Kich thuoc: ").append(this.getKichThuoc()).append("\n");
+            sb.append("Loai bia: ").append(this.getLoaiBia()).append("\n");
+            sb.append("Hien co: ").append(this.getHienCo()).append("\n");
             
             return sb.toString();
         }
@@ -141,3 +140,4 @@ import java.util.Scanner;
         }
 
     }
+
