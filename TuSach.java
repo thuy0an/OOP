@@ -167,14 +167,14 @@ public class TuSach {
                     dungLuong="////";
                     soLuong=sachDuocDoc[13];
                 }
-                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                else if(loaiSach.equalsIgnoreCase("PDf")||loaiSach.equalsIgnoreCase("EPUB")){
                     kichThuoc="////";
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
                     dungLuong =sachDuocDoc[12];
                     soLuong="////";
                 }
-                if(tenSach.toLowerCase().contains(tenSachCanTim)){  //phần này để xét điều kiện để chọn các sách phù hợp yêu cầu để hiển thị
+                if(tenSach.contains(tenSachCanTim)){  //phần này để xét điều kiện để chọn các sách phù hợp yêu cầu để hiển thị
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -233,7 +233,7 @@ public class TuSach {
                     dungLuong="////";
                     soLuong=sachDuocDoc[13];
                 }
-                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                else if(loaiSach.equalsIgnoreCase("PDf")||loaiSach.equalsIgnoreCase("EPUB")){
                     kichThuoc="////";
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
@@ -241,7 +241,7 @@ public class TuSach {
                     soLuong="////";
                 }
                 
-                if(maSach.toLowerCase().contains(maSachCanTim)){
+                if(maSach.contains(maSachCanTim)){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -292,7 +292,7 @@ public class TuSach {
                     dungLuong="////";
                     soLuong=Integer.parseInt(sachDuocDoc[13]);
                 }
-                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDF")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                else if(loaiSach.equalsIgnoreCase("PDF")||loaiSach.equalsIgnoreCase("EPUB")){
                     kichThuoc="////";
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
@@ -352,7 +352,7 @@ public class TuSach {
                     dungLuong="////";
                     soLuong=sachDuocDoc[13];
                 }
-                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                else if(loaiSach.equalsIgnoreCase("PDf")||loaiSach.equalsIgnoreCase("EPUB")){
                     kichThuoc="////";
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
@@ -360,7 +360,7 @@ public class TuSach {
                     soLuong="////";
                 }
                 
-                if(tacGia.toLowerCase().contains(tgCanTim)){
+                if(tacGia.contains(tgCanTim)){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -417,7 +417,7 @@ public class TuSach {
                     dungLuong="////";
                     soLuong=sachDuocDoc[13];
                 }
-                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                else if(loaiSach.equalsIgnoreCase("PDf")||loaiSach.equalsIgnoreCase("EPUB")){
                     kichThuoc="////";
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
@@ -425,7 +425,7 @@ public class TuSach {
                     soLuong="////";
                 }
                 
-                if(nXB.toLowerCase().contains(nxbCanTim)){
+                if(nXB.contains(nxbCanTim)){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -481,7 +481,7 @@ public class TuSach {
                     dungLuong="////";
                     soLuong=sachDuocDoc[13];
                 }
-                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                else if(loaiSach.equalsIgnoreCase("PDf")||loaiSach.equalsIgnoreCase("EPUB")){
                     kichThuoc="////";
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
@@ -544,7 +544,7 @@ public class TuSach {
                     dungLuong="////";
                     soLuong=sachDuocDoc[13];
                 }
-                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                else if(loaiSach.equalsIgnoreCase("PDf")||loaiSach.equalsIgnoreCase("EPUB")){
                     kichThuoc="////";
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
@@ -552,7 +552,7 @@ public class TuSach {
                     soLuong="////";
                 }
                 
-                if(theloai.toLowerCase().contains(theLoaiCanTim)){
+                if(theloai.contains(theLoaiCanTim)){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -614,11 +614,11 @@ public class TuSach {
         }
         System.out.println("Ban co muon tiep tuc tim kiem? (Y/N)");
         String opt=input.nextLine();
-        while(!opt.toLowerCase().equalsIgnoreCase("N")&&!opt.toLowerCase().equalsIgnoreCase("Y")&&!opt.toLowerCase().equalsIgnoreCase("No")&&!opt.toLowerCase().equalsIgnoreCase("Yes")){
+        while(!opt.equalsIgnoreCase("N")&&!opt.equalsIgnoreCase("Y")&&!opt.equalsIgnoreCase("No")&&!opt.equalsIgnoreCase("Yes")){
                         System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
                         opt = input.nextLine();
                     }
-        if(opt.toLowerCase().equalsIgnoreCase("Y")||opt.toLowerCase().equalsIgnoreCase("Yes"))
+        if(opt.equalsIgnoreCase("Y")||opt.equalsIgnoreCase("Yes"))
             timSach();
     }
 
@@ -657,7 +657,7 @@ public class TuSach {
                     dungLuong="////";
                     soLuong=sachDuocDoc[13];
                 }
-                else if(loaiSach.toLowerCase().equalsIgnoreCase("PDf")||loaiSach.toLowerCase().equalsIgnoreCase("EPUB")){
+                else if(loaiSach.equalsIgnoreCase("PDf")||loaiSach.equalsIgnoreCase("EPUB")){
                     kichThuoc="////";
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
@@ -677,11 +677,11 @@ public class TuSach {
                     Scanner input = new Scanner(System.in);
                     String opt = input.nextLine();
                     
-                    while(!opt.toLowerCase().equalsIgnoreCase("N")&&!opt.toLowerCase().equalsIgnoreCase("Y")&&!opt.toLowerCase().equalsIgnoreCase("No")&&!opt.toLowerCase().equalsIgnoreCase("Yes")){
+                    while(!opt.equalsIgnoreCase("N")&&!opt.equalsIgnoreCase("Y")&&!opt.equalsIgnoreCase("No")&&!opt.equalsIgnoreCase("Yes")){
                         System.out.println("Lua chon khong phu hop, vui long nhap lai.....");
                         opt = input.nextLine();
                     }
-                    if(opt.toLowerCase().equalsIgnoreCase("N")||opt.toLowerCase().equalsIgnoreCase("No")){
+                    if(opt.equalsIgnoreCase("N")||opt.equalsIgnoreCase("No")){
                         sachDaHienThi=0;
                         break;
                     }
@@ -719,7 +719,7 @@ public class TuSach {
                 String[] sachDuocDoc = line.split("#");
                 String maSach = sachDuocDoc[1];
 
-                if (maSach.toLowerCase().equalsIgnoreCase(maSachCanSua)) {
+                if (maSach.equalsIgnoreCase(maSachCanSua)) {
                     //Tìm thấy sách trùng khớp, cho user chỉnh sửa
                     System.out.println("Nhập tên sách mới: ");
                     String newBookName = input.nextLine();
@@ -768,7 +768,7 @@ public class TuSach {
                 String[] sachDuocDoc = line.split("#");
                 String maSach = sachDuocDoc[1];
 
-                if (maSach.toLowerCase().equalsIgnoreCase(maSachCanSua)) {
+                if (maSach.equalsIgnoreCase(maSachCanSua)) {
                     //Tìm thấy sách trùng khớp, cho user chỉnh sửa
                     System.out.println("Nhập giá sách mới: ");
                     String newBookPrice = input.nextLine();
@@ -817,7 +817,7 @@ public class TuSach {
                 String[] sachDuocDoc = line.split("#");
                 String maSach = sachDuocDoc[1];
 
-                if (maSach.toLowerCase().equalsIgnoreCase(maSachCanSua)) {
+                if (maSach.equalsIgnoreCase(maSachCanSua)) {
                     //Tìm thấy sách trùng khớp, cho user chỉnh sửa
                     System.out.println("Nhập số lượng sách mới: ");
                     String newBookQuantity = input.nextLine();
@@ -876,11 +876,11 @@ public class TuSach {
         }
         System.out.println("Có muốn tiếp tục chỉnh sửa ? (Y/N)");
         String opt=input.nextLine();
-        while(!opt.toLowerCase().equalsIgnoreCase("N")&&!opt.toLowerCase().equalsIgnoreCase("Y")&&!opt.toLowerCase().equalsIgnoreCase("No")&&!opt.toLowerCase().equalsIgnoreCase("Yes")){
+        while(!opt.equalsIgnoreCase("N")&&!opt.equalsIgnoreCase("Y")&&!opt.equalsIgnoreCase("No")&&!opt.equalsIgnoreCase("Yes")){
                         System.out.println("Lựa chọn không phù hợp, vui lòng nhập lại.....");
                         opt = input.nextLine();
                     }
-        if(opt.toLowerCase().equalsIgnoreCase("Y")||opt.toLowerCase().equalsIgnoreCase("Yes"))
+        if(opt.equalsIgnoreCase("Y")||opt.equalsIgnoreCase("Yes"))
             chinhSuaThongTinSach();
     }
     

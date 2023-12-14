@@ -138,41 +138,74 @@ public class PhieuGiamGia {
         int tieptuc = 0;
         do {
             try {
+                int mucgiam,sotien,chon,soluong,choice;
                 System.out.println("-------Thêm voucher-------");
                 System.out.println("Nhập mã voucher: ");
                 this.setMaPhieu(scan.nextLine());
-                System.out.println("Mức giảm(%): ");
-                this.setMucGiam(Integer.parseInt(scan.nextLine()));
-                System.out.println("Đơn tối thiểu(VNĐ): ");
-                this.setDonToiThieu(Integer.parseInt(scan.nextLine()));
-                System.out.println("Chọn đối tượng giảm giá: ");
-                System.out.println("1. Sách || 2. Đơn hàng");
-                // thêm đk cho chọn
-                int chon = Integer.parseInt(scan.nextLine());
+                do{
+                    System.out.println("Mức giảm(%): ");
+                    mucgiam=Integer.parseInt(scan.nextLine());
+                    if ( mucgiam<1 || mucgiam>100)
+                        System.out.println("Vui lòng nhập đúng mức giảm");
+                }while ( mucgiam<1 || mucgiam >100);
+                this.setMucGiam(mucgiam);
+                do {
+                    System.out.println("Đơn tối thiểu(VNĐ): ");
+                    sotien=Integer.parseInt(scan.nextLine());
+                    if ( sotien <1000)
+                        System.out.println("Vui lòng nhập đúng số tiền tối thiểu để có voucher");
+                }
+                while (sotien<1000);
+                this.setDonToiThieu(sotien);
+                do
+                {
+                   System.out.println("Chọn đối tượng giảm giá: ");
+                   System.out.println("1. Sách || 2. Đơn hàng");
+                   chon = Integer.parseInt(scan.nextLine());
+                   if( chon != 1 && chon != 2)
+                       System.out.println("Hãy nhập đúng lựa chọn đã hiển thị!!");
+                }
+                while ( chon != 1 && chon!=2);
                 switch (chon) {
 
                     case 1:
-                        System.out.println("Nhập mã sách: ");
-                        String maSach = scan.nextLine().trim();
-                for (String sach : dsSach) {
-                    if (maSach.equalsIgnoreCase(sach)) {
-                        this.setDoiTuong(maSach);
-                        ktraMaSach = true;
-                    }
-                }
+                        do {
+                            System.out.println("Nhập mã sách: ");
+                            String maSach = scan.nextLine().trim();
+                            for (String sach : dsSach) {
+                                if (maSach.equalsIgnoreCase(sach)) {
+                                        this.setDoiTuong(maSach);
+                                        ktraMaSach = true;
+                                }
+                            }
                         if (!ktraMaSach) {
-                            System.out.println("Mã sách không hợp lệ!");
+                            System.out.println("Mã sách không hợp lệ, vui lòng nhập lại!");
                         }
+                        }while (!ktraMaSach);
+
                         break;
                     case 2: 
                         this.setDoiTuong("Hoa don");
                         break;
                 }
-                System.out.print("Số lượng sử dụng: ");
-                this.setSoLuong(Integer.parseInt(scan.nextLine()));
-                System.out.println("Bạn muốn lưu voucher??"); 
-                System.out.println("1. Lưu voucher || 2. Bỏ lưu");
-                int choice = Integer.parseInt(scan.nextLine());
+                do{
+                     System.out.print("Số lượng sử dụng: ");
+                     soluong=Integer.parseInt(scan.nextLine());
+                     if ( soluong <1)
+                         System.out.println("Vui lòng nhập số lượng đúng");
+                    
+                }while (soluong <1);
+                this.setSoLuong(soluong);
+
+                do
+                {
+                    System.out.println("Bạn muốn lưu voucher??"); 
+                    System.out.println("1. Lưu voucher || 2. Bỏ lưu");;
+                    choice= Integer.parseInt(scan.nextLine());
+                   if( choice != 1 || choice != 2)
+                       System.out.println("Hãy nhập đúng lựa chọn đã hiển thị!!");
+                }
+                while ( choice != 1 && choice!=2);
                 switch (choice) {
                     case 1:
                         String fileName = "voucher.txt";
@@ -254,8 +287,12 @@ public class PhieuGiamGia {
                 String dontoithieu = thongtin[2];
                 String doituong=thongtin[3];
                 String soluong = thongtin[4];
-                System.out.printf("\t| %-15s | %-15s | %-15s | %-10s | %-15s |\n",magiamgia,mucgiam,dontoithieu,doituong,soluong);
-                System.out.println("\t+------------------------------------------------------------------------------------+");
+                if (Integer.parseInt(soluong)>0)
+                {
+                    System.out.printf("\t| %-15s | %-15s | %-15s | %-10s | %-15s |\n",magiamgia,mucgiam,dontoithieu,doituong,soluong);
+                    System.out.println("\t+------------------------------------------------------------------------------------+");
+                }
+
                 try{
                     Thread.sleep(200);
                     }catch(InterruptedException e){}

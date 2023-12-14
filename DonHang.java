@@ -196,19 +196,20 @@ public class DonHang {
             
             System.out.print("Chọn mã đơn mà bạn muốn hủy đặt: ");
             String maDon=input.nextLine();
-            boolean daXoa=false, trangthai=false; // kiểm tra nếu 
+            boolean daXoa=false, timkiem=false, trangthai=false; // kiểm tra nếu 
             for(int i=0; i < danhsachDon.size();i++)
                 if (danhsachDon.get(i).getMaDonHang().equalsIgnoreCase(maDon))
                 {
+                    trangthai=true;
                     if (danhsachDon.get(i).getTrangThai()!=3 && danhsachDon.get(i).getTrangThai()!=4)
                     {
                         danhsachDon.remove(i);
                         daXoa=true;
-                        trangthai=true;
+                        timkiem=true;
                         break;
                     }
                 } 
-            if (trangthai)
+            if (timkiem)
             {
                 if (daXoa){
                     try(FileWriter fileWrt= new FileWriter("Donhang.txt",false))
@@ -239,7 +240,13 @@ public class DonHang {
                 }
             }
             else 
-                System.out.println("Đơn đang giao hoặc đã nhận hàng thì không thể hủy đơn !!!");
+            {
+                if (trangthai)
+                    System.out.println("Đơn đang giao hoặc đã nhận hàng thì không thể hủy đơn !!!");
+                else 
+                    System.out.println("Mã đơn không tồn tại");
+            }
+                
             
             
         } catch (FileNotFoundException ex) {

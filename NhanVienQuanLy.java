@@ -848,7 +848,6 @@ public class NhanVienQuanLy extends NhanVien {
                                     luaChonThongKe();
                                     break;
                             case 5:
-                                System.out.println("Case 5 chạy");
                                     PhieuGiamGia phieu= new PhieuGiamGia();
                                     phieu.themVoucher();
                                     break;
