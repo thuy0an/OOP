@@ -192,11 +192,11 @@ public class DanhGia {
                                          break;
                                 }
                             }
-                            else {
-                                System.out.println("Mã sách không đúng");
-                                tieptuc=2;
-                                break;
-                            }
+                        }
+                        if( !flag)
+                        {
+                            System.out.println("Mã sách không đúng");
+                            tieptuc=2;
                         }
                     }
                 }
@@ -253,7 +253,7 @@ public class DanhGia {
             System.out.println("Không tìm được file DonHang.txt");
         }
         if ( !flag)
-            System.out.println("Rất tiếc sách chưa có đánh giá :<");
+            System.out.println("\tRất tiếc sách chưa có đánh giá :<\n");
     }
     
     @Override

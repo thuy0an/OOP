@@ -524,7 +524,7 @@ public class NhanVienQuanLy extends NhanVien {
 			for (Map.Entry<String, double[]> set : thongKeTheoTG.entrySet()) {
 				String ngayDH = set.getKey();
 				double[] dulieu = set.getValue();
-				System.out.printf("| %-10s || %-15s || %-10s|\n",ngayDH,Double.toString(dulieu[0]),Double.toString(dulieu[1]));
+				System.out.printf("\t| %-10s || %-15s || %-10s|\n",ngayDH,Double.toString(dulieu[0]),Double.toString(dulieu[1]));
 				try {
 					Thread.sleep(150);
 				} catch (InterruptedException e) {
@@ -594,7 +594,7 @@ public class NhanVienQuanLy extends NhanVien {
 			for (Map.Entry<String, double[]> set : thongKeTheoTG.entrySet()) {
 				String ngayDH = set.getKey();
 				double[] dulieu = set.getValue();
-				System.out.printf("| %-10s || %-15s || %-10s|\n",ngayDH,Double.toString(dulieu[0]),Double.toString(dulieu[1]));
+				System.out.printf("\t| %-10s || %-15s || %-10s|\n",ngayDH,Double.toString(dulieu[0]),Double.toString(dulieu[1]));
 				try {
 					Thread.sleep(150);
 				} catch (InterruptedException e) {
@@ -753,7 +753,7 @@ public class NhanVienQuanLy extends NhanVien {
 			for (Map.Entry<String, double[]> set : thongKeTheoTG.entrySet()) {
 				String ngayDH = set.getKey();
 				double[] dulieu = set.getValue();
-				System.out.printf("| %-10s || %-15s || %-10s|\n",ngayDH,Double.toString(dulieu[0]),Double.toString(dulieu[1]));
+				System.out.printf("\t| %-10s || %-15s || %-10s|\n",ngayDH,Double.toString(dulieu[0]),Double.toString(dulieu[1]));
 				try {
 					Thread.sleep(150);
 				} catch (InterruptedException e) {

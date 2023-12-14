@@ -202,7 +202,7 @@ public class PhieuGiamGia {
                     System.out.println("Bạn muốn lưu voucher??"); 
                     System.out.println("1. Lưu voucher || 2. Bỏ lưu");;
                     choice= Integer.parseInt(scan.nextLine());
-                   if( choice != 1 || choice != 2)
+                   if( choice != 1 && choice != 2)
                        System.out.println("Hãy nhập đúng lựa chọn đã hiển thị!!");
                 }
                 while ( choice != 1 && choice!=2);

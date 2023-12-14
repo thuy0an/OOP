@@ -12,6 +12,18 @@ public class NhanVienGiaoHang extends NhanVien {
 		super(ma, ten, ngayVao, viTri, loai,ngayCong) ;
 			
 	}
+        private String trangThai(int so)
+        {
+            if ( so==1)
+                return "Đang xử lý";
+            else if ( so==2)
+                return "Đã xử lý";
+            else if ( so==3)
+                return "Đang giao hàng";
+            else if ( so==4)
+                return "Đã nhận hàng";
+            return "";
+        }
         @Override
 	public void xemDonHang(int luachon) {
 		ArrayList<CT_DonHang> dsDonHang;
@@ -34,7 +46,7 @@ public class NhanVienGiaoHang extends NhanVien {
 					System.out.printf("| %-15s || %-15s || %-20s || %-15s || %-15s || %-15s || %-15s || %-10s || %s|\n",
                                         		donhang.getMaDonHang(), donhang.getMaKH(), donhang.getDiaChi(), donhang.getEmail(),
 							donhang.getNgayDH(), donhang.getPtThanhToan(), donhang.getTongTien(),
-							donhang.getTrangThai(), donhang.getDsSanPham());
+							trangThai(donhang.getTrangThai()), donhang.getDsSanPham());
 
 				}
 			}
@@ -59,7 +71,7 @@ public class NhanVienGiaoHang extends NhanVien {
 					System.out.printf("| %-15s || %-15s || %-20s || %-15s || %-15s || %-15s || %-15s || %-10s || %s|\n",
 							donhang.getMaDonHang(), donhang.getMaKH(), donhang.getDiaChi(), donhang.getEmail(),
 							donhang.getNgayDH(), donhang.getPtThanhToan(), donhang.getTongTien(),
-							donhang.getTrangThai(), donhang.getDsSanPham());
+							trangThai(donhang.getTrangThai()), donhang.getDsSanPham());
 
 				}
 			}
@@ -84,7 +96,7 @@ public class NhanVienGiaoHang extends NhanVien {
 					System.out.printf("| %-15s || %-15s || %-20s || %-15s || %-15s || %-15s || %-15s || %-10s || %s|\n",
                                                         donhang.getMaDonHang(), donhang.getMaKH(), donhang.getDiaChi(), donhang.getEmail(),
 							donhang.getNgayDH(), donhang.getPtThanhToan(), donhang.getTongTien(),
-							donhang.getTrangThai(), donhang.getDsSanPham());
+							trangThai(donhang.getTrangThai()), donhang.getDsSanPham());
 				}
 			}
 			System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");

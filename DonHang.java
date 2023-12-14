@@ -114,7 +114,6 @@ public class DonHang {
         if ( sanPhamDatHang!= null && !sanPhamDatHang.isEmpty())
         {
             this.getChitietDonHang().setInfo();
-            System.out.println(sanPhamDatHang.toString());
             System.out.println("Thong tin san pham dat: " + sanPhamDatHang);
             System.out.println("\nTổng tiền: " + this.getChitietDonHang().getTongTien() +"\n");
             System.out.println("--BẠN CÓ XÁC NHẬN ĐẶT HÀNG?--");
@@ -206,6 +205,7 @@ public class DonHang {
                         danhsachDon.remove(i);
                         daXoa=true;
                         timkiem=true;
+                        System.out.println("Đơn hàng đã hủy thành công\n");
                         break;
                     }
                 } 
