@@ -67,7 +67,7 @@ public class PhieuGiamGia {
         this.maPhieu = maPhieu;
     }
     
-    public void xuLyKhiChonGianGia(String maGiamGia)
+    public void xuLyKhiChonGiamGia(String maGiamGia)
     {
         File file= new File("voucher.txt");
         StringBuilder cacPhieuGiam= new StringBuilder();
@@ -147,6 +147,7 @@ public class PhieuGiamGia {
                 this.setDonToiThieu(Integer.parseInt(scan.nextLine()));
                 System.out.println("Chọn đối tượng giảm giá: ");
                 System.out.println("1. Sách || 2. Đơn hàng");
+                // thêm đk cho chọn
                 int chon = Integer.parseInt(scan.nextLine());
                 switch (chon) {
 

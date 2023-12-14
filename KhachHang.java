@@ -51,7 +51,7 @@ public class KhachHang {
         do
         {
             flag=true; // cho số đt là lun đúng
-            if ( Sdt.length() <10)
+            if ( Sdt.length()<0 ||Sdt.length() >10)
             {
                 System.out.println("Vui lòng nhập đủ 10 số !!!");
                 System.out.print("Nhập số điện thoại: ");

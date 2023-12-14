@@ -111,10 +111,11 @@ public class DonHang {
     public void datHang(String tenfile) {
         
         ArrayList<CT_GioHang> sanPhamDatHang=this.getChitietDonHang().chonSachTuDanhSach(tenfile);
-        if ( sanPhamDatHang!= null)
+        if ( sanPhamDatHang!= null && !sanPhamDatHang.isEmpty())
         {
             this.getChitietDonHang().setInfo();
             System.out.println(sanPhamDatHang.toString());
+            System.out.println("Thong tin san pham dat: " + sanPhamDatHang);
             System.out.println("\nTổng tiền: " + this.getChitietDonHang().getTongTien() +"\n");
             System.out.println("--BẠN CÓ XÁC NHẬN ĐẶT HÀNG?--");
             System.out.println("1. Đồng ý đặt hàng");
@@ -163,6 +164,8 @@ public class DonHang {
                 System.out.println("\n Vui lòng xác nhận đặt hàng! \n");
         } while (chon != 2);
         }
+        else
+            System.out.println("Không có sản phẩm để đặt hàng !!!!\n");
         
     }   
     

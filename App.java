@@ -233,6 +233,7 @@ public class App {
             catch(NumberFormatException ei)
             {
                 System.out.println("\n--Vui lòng chọn đúng các thao tác đã hiển thị!!!--\n");
+                choice=-1;
             }
             catch ( IOException e)
             {
@@ -240,7 +241,7 @@ public class App {
             }
             
             if ( choice==0)
-                System.out.println("Cảm ơn đã xử dụng dịch vụ ^^");
+                System.out.println("Cảm ơn đã sử dụng dịch vụ ^^");
             
         }while (choice !=0);
     }
