@@ -315,13 +315,24 @@ public class TaiKhoanKhachHang {
                         System.out.println("Số lượng sách này trong kho không đủ để bạn đặt hàng!!");
                         flag=false;
                     }
+                    if(!thongTinSach[8].equalsIgnoreCase("Giay") && soLuongSanPham > Integer.parseInt(thongTinSach[13]))
+                    {
+                        System.out.println("Các loại sách điện tử chỉ nên đặt một sản phẩm duy nhất!!");
+                        flag=false;
+                    }
                     for( CT_GioHang giohang: this.getGiohang().getDsSanPham())
-                        if (giohang.getMaSach().equalsIgnoreCase(maSanPham) && (giohang.getSoLuong()+soLuongSanPham) >Integer.parseInt(thongTinSach[13]))
+                        if (giohang.getLoaiSach().equalsIgnoreCase("Giay") &&giohang.getMaSach().equalsIgnoreCase(maSanPham) && (giohang.getSoLuong()+soLuongSanPham) >Integer.parseInt(thongTinSach[13]))
                         {
                             flag=false;
                             System.out.println("Số lượng sách này trong kho không đủ để bạn đặt hàng!!");
                             break;
-                        }      
+                        }
+                        else if (!giohang.getLoaiSach().equalsIgnoreCase("Giay") &&giohang.getMaSach().equalsIgnoreCase(maSanPham) && (giohang.getSoLuong()+soLuongSanPham) >Integer.parseInt(thongTinSach[13]))
+                        {
+                            flag=false;
+                            System.out.println("Sản phẩm phiên bản điện tử bạn đã đặt trong giỏ rồi !!");
+                            break;
+                        }
                     
                     if(flag){
                         if ( checkSanPhamTrongGio(this.getKhachhang().getMaKH(), maSanPham, soLuongSanPham)==true)
@@ -412,6 +423,19 @@ public class TaiKhoanKhachHang {
                     break;
                 case 3:
                     this.getTuSach().timSach();
+                    System.out.println("Bạn có muốn thêm sách vào giỏ không ?");
+                    System.out.println("1.Có\t2.Không");
+                    int chon;
+                   do {
+                        chon=Integer.parseInt(input.nextLine());
+                        if ( chon != 1 && chon !=2)
+                            System.out.println("Vui lòng nhập đúng thao tác!!");
+                        if( chon==1)
+                        {
+                            themVaoGiohang();
+                            this.getGiohang().ghiGioHangVaoFile(this.getFileGioHang());
+                        }
+                        }while( chon != 1 && chon != 2);
                     break;
                 case 4:
                     themVaoGiohang();
@@ -450,25 +474,46 @@ public class TaiKhoanKhachHang {
     {
         Scanner input= new Scanner(System.in);
         int choice;
+        
         do {
             System.out.println("\n***Hãy đăng nhập hoặc tạo tài khoản để dùng được nhiều chức năng hơn*** \n");
             System.out.println("\t+-----------------Chức năng dạng khách--------------+");
             System.out.printf("\t| %-50s|\n","1.Xem danh sách sản phẩm bán");
             System.out.printf("\t| %-50s|\n","2.Tìm kiếm sản phẩm");
+            System.out.printf("\t| %-50s|\n","3.Xem đánh giá sản phẩm");
             System.out.printf("\t| %-50s|\n","0.Thoát");
             System.out.println("\t+---------------------------------------------------+");
-            System.out.print("Chọn thao tác: ");
-            choice=Integer.parseInt(input.nextLine());
-            switch(choice)
-            {
-                case 1:
-                    TuSach tusach= new TuSach();
-                    tusach.hienThiSachDangKinhDoanh();
-                    break;
-                case 2:
-                    this.getTuSach().timSach();
-                    break;
+            try {
+                System.out.print("Chọn thao tác: ");
+                choice=Integer.parseInt(input.nextLine());
+                switch(choice)
+                {
+                    case 1:
+                        TuSach tusach= new TuSach();
+                        tusach.hienThiSachDangKinhDoanh();
+                        break;
+                    case 2:
+                        this.getTuSach().timSach();
+                        System.out.println("Bạn muốn đăng ký tài khoản để thêm sản phẩm vào giỏ hàng ?");
+                        System.out.println("1.Có\t2.Không");
+                        int chon;
+                        do {
+                            chon=Integer.parseInt(input.nextLine());
+                            if ( chon != 1 && chon !=2)
+                                System.out.println("Vui lòng nhập đúng thao tác!!");
+                            if( chon==1)
+                                this.setInfo();
+                        }while( chon != 1 && chon != 2);
+                        break;
+                    case 3:
+                        this.getDanhgia().xemDanhGia();
+                        break;
+                }
+            }catch (NumberFormatException ei) {
+                System.out.println("\n--Vui lòng chọn đúng các thao tác đã hiển thị!!!--\n");
+                choice=1;
             }
+            
         }while (choice!=0);
     }
         

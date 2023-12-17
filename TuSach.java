@@ -172,7 +172,7 @@ public class TuSach {
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
                     dungLuong =sachDuocDoc[12];
-                    soLuong="////";
+                    soLuong=sachDuocDoc[13];
                 }
                 if(tenSach.contains(tenSachCanTim)){  //phần này để xét điều kiện để chọn các sách phù hợp yêu cầu để hiển thị
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
@@ -238,7 +238,7 @@ public class TuSach {
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
                     dungLuong =sachDuocDoc[12];
-                    soLuong="////";
+                    soLuong=sachDuocDoc[13];
                 }
                 
                 if(maSach.contains(maSachCanTim)){
@@ -297,7 +297,7 @@ public class TuSach {
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
                     dungLuong =sachDuocDoc[12];
-                    soLuong=0;
+                    soLuong=Integer.parseInt(sachDuocDoc[13]);
                 }
                 if(maSach.equalsIgnoreCase(maSachCanTim)){
                     foundSach=new Sach(tenSach,maSach,tacGia,soTrang,theLoai,NXB,gia,moTa,loaiSach,soLuong);
@@ -357,7 +357,7 @@ public class TuSach {
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
                     dungLuong =sachDuocDoc[12];
-                    soLuong="////";
+                    soLuong=sachDuocDoc[13];
                 }
                 
                 if(tacGia.contains(tgCanTim)){
@@ -422,7 +422,7 @@ public class TuSach {
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
                     dungLuong =sachDuocDoc[12];
-                    soLuong="////";
+                    soLuong=sachDuocDoc[13];
                 }
                 
                 if(nXB.contains(nxbCanTim)){
@@ -486,7 +486,7 @@ public class TuSach {
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
                     dungLuong =sachDuocDoc[12];
-                    soLuong="////";
+                    soLuong=sachDuocDoc[13];
                 }
                 if(Gia>=min&&Gia<=max){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
@@ -549,7 +549,7 @@ public class TuSach {
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
                     dungLuong =sachDuocDoc[12];
-                    soLuong="////";
+                    soLuong=sachDuocDoc[13];
                 }
                 
                 if(theloai.contains(theLoaiCanTim)){
@@ -662,7 +662,7 @@ public class TuSach {
                     loaiBia="////";
                     kichCoDungLuong = sachDuocDoc[11];
                     dungLuong =sachDuocDoc[12];
-                    soLuong="////";
+                    soLuong=sachDuocDoc[13];
                 }
                 System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                 System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");

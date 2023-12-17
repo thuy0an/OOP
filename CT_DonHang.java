@@ -41,7 +41,6 @@ public class CT_DonHang {
     private String taoMaDH() {
         Random rand = new Random();
         int soNgauNhien = rand.nextInt(1000); 
-        System.out.println("Mã khách:" + this.getMaKH());
         String maSoNgauNhien = String.format("%03d", soNgauNhien);
         
         String maDonHang = "DH" + this.getMaKH() + maSoNgauNhien;
@@ -196,7 +195,7 @@ public class CT_DonHang {
                 System.out.println(e.getMessage());
             }
                     
-        }while (chon != 1 && chon!= 2);
+        }while (chon < 1 || chon > dchi.length);
         
         this.setDiaChi(dchi[chon-1]);
     }
@@ -236,6 +235,21 @@ public class CT_DonHang {
     }
     
     
+    private boolean ktraSoLuongTonKho(String maSachTrongGio, int soluongTrongGio)
+    {
+        TuSach tusach= new TuSach();
+        Sach sach=tusach.timSachTheoID(maSachTrongGio);
+        if ( sach.getSoLuong()<soluongTrongGio && sach.getLoaiSach().equalsIgnoreCase("Giay"))
+        {
+            System.out.println("Mã sản phẩm: "+ maSachTrongGio +" trong kho hiện không đủ để đặt hàng");
+            System.out.println("Số lượng còn trong kho của sản phẩm: " + sach.getSoLuong() +"\n");
+            return false;
+        }
+            
+        return true;
+        
+    }
+    
     public ArrayList<CT_GioHang> chonSachTuDanhSach(String tenfile) {
         ArrayList<CT_GioHang> danhsach = docGioHangTuFile(tenfile);
         PhieuGiamGia phieu= new PhieuGiamGia();
@@ -255,14 +269,14 @@ public class CT_DonHang {
         do
         {
             Scanner scan = new Scanner(System.in);
-            boolean flag=false;
+            boolean flag=false; // flag ktra sách có tồn tại trong giỏ
             if ( gioHang.getDsSanPham().isEmpty())
             {
                 System.out.println("Sản phẩm đã hết trong giỏ, tiến hành thanh toán nhé ^^");
                 luachon=2;
             }
             else {
-                gioHang.xemGioHang(tenfile);
+            gioHang.xemGioHang(tenfile);
             String maSachDuocChon;
             System.out.println("Chọn mã sách muốn đặt: " ); //cách bởi dấu ";"           
             maSachDuocChon = scan.nextLine();
@@ -270,16 +284,28 @@ public class CT_DonHang {
             {
                 if ( maSachDuocChon.equalsIgnoreCase(gioHang.getDsSanPham().get(i).getMaSach()))
                 {
-                    sanPham+=gioHang.getDsSanPham().get(i).getTenSach().concat(" x ").concat(gioHang.getDsSanPham().get(i).getMaSach()).concat(" x ").concat(String.valueOf(gioHang.getDsSanPham().get(i).getSoLuong()).concat(";"));
-                    tongtien+=gioHang.getDsSanPham().get(i).getThanhTien();
-                    giohang_dachon.add(gioHang.getDsSanPham().get(i));
-                    gioHang.getDsSanPham().remove(gioHang.getDsSanPham().get(i));
-                    gioHang.ghiGioHangVaoFile(tenfile);
                     flag=true;
+                    if (ktraSoLuongTonKho(maSachDuocChon, gioHang.getDsSanPham().get(i).getSoLuong()))
+                    {
+                        sanPham+=gioHang.getDsSanPham().get(i).getTenSach().concat(" x ").concat(gioHang.getDsSanPham().get(i).getMaSach()).concat(" x ").concat(String.valueOf(gioHang.getDsSanPham().get(i).getSoLuong()).concat(";"));
+                        tongtien+=gioHang.getDsSanPham().get(i).getThanhTien();
+                        giohang_dachon.add(gioHang.getDsSanPham().get(i));
+                        gioHang.getDsSanPham().remove(gioHang.getDsSanPham().get(i));
+                        gioHang.ghiGioHangVaoFile(tenfile);
+                    }
+                    else {
+                        gioHang.getDsSanPham().remove(gioHang.getDsSanPham().get(i));
+                        gioHang.ghiGioHangVaoFile(tenfile);
+                        break;
+                    }
+
                 }
             }
             if (!flag)
-                System.out.println("Vui lòng chọn đúng sách có trong giỏ!!!");
+                System.out.println("Vui lòng chọn đúng sách có trong giỏ!!!\n");
+
+                
+              
             System.out.println("Bạn muốn tiếp tục chon sản phẩm để thanh toán ?");
             System.out.println("1. Tiếp tục");
             System.out.println("2. Dừng lại");

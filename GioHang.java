@@ -52,6 +52,9 @@ public class GioHang {
         }
     }
 
+    
+    
+    
     public void xemGioHang(String fileGioHang) {
         File file= new File(fileGioHang);
         try (Scanner scanner = new Scanner(file))
@@ -83,6 +86,9 @@ public class GioHang {
             System.out.println("");
         }
         
+        
     }
+    
+    
 }    
  
