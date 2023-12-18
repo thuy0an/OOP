@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package BookStore;
+package com.mycompany.bookstore_management;
 
+import java.io.File;
 import java.io.IOException;
 import static java.lang.Character.isDigit;
 import java.util.ArrayList;
@@ -152,6 +153,7 @@ public class Sach {
         nhapVaCheckGia();
         
         nhapVaCheckMoTa();
+        System.out.println("info nhap: " +this.getTenSach()+this.getMaSach()+this.getTacGia()+this.getSoTrang()+this.getTheLoai()+this.getNXB()+this.getGia()+this.getMoTa());
     }
     
     //Hàm kiểm tra tính hợp lệ khi nhập tên sách
@@ -176,33 +178,66 @@ public class Sach {
         }while(!validTen);
     }
     
+    public String laySo(String id){
+        String phanMaSo = id.replaceAll("[^0-9]", ""); //thay the bat cu ki tu nao khong phai la so
+        return phanMaSo;
+    }
     //Hàm kiểm tra tính hợp lệ khi nhập mã sách
     private void nhapVaCheckMaSach(){
         Scanner nhapttsach = new Scanner(System.in);
         boolean validMa = false;
+        
+        File file = new File("Sach.txt");
         do{
             try{
                 System.out.println("Nhap ma sach: ");
                 String input = nhapttsach.nextLine().trim();
                 this.setMaSach(input);
                 String masacH = this.getMaSach();
-                if(!masacH.matches("^[a-zA-Z0-9\\s]+$")||masacH.trim().isEmpty()){
+                while(!masacH.matches("^[a-zA-Z0-9\\s]+$")||masacH.trim().isEmpty()){
                     System.out.println("Ma sach chi duoc chua chu, so va khoang trang. Moi ban nhap lai.....");
+                    input = nhapttsach.nextLine().trim();
                 }
-                else{
-                    validMa = true;
+                
+                int found = 0;
+                try(Scanner scanner = new Scanner(file)){
+                    while(scanner.hasNextLine()){
+                        String line = scanner.nextLine();
+                        String [] docduoc = line.split("#");
+                        String masacH2 = docduoc[1];
+                        String phanSo = laySo(masacH2);
+                        if(phanSo.equalsIgnoreCase(masacH)&&masacH2.contains("P")){
+                            System.out.println("Đã có sách Giấy");
+                            validMa=true; //nếu không có sẽ bị yêu càu nhập lại mã
+                            
+                        }
+                        else if(phanSo.equalsIgnoreCase(masacH)&&masacH2.contains("SF")){
+                            System.out.println("Đã có sách PDF");
+                            validMa=true;
+                            
+                        }
+                        if(phanSo.equalsIgnoreCase(masacH)&&masacH2.contains("SE")){
+                            System.out.println("Đã có sách EPUB");
+                            validMa=true;
+                            
+                        }
+                    }
+                }catch(Exception e){
+                    System.out.println("ERROR!!!");
                 }
-                // Check if it's SachGiay or SachMem
+                
                 if(this instanceof SachGiay){
+                    SachGiay sachgiay = (SachGiay) this;
                     this.setMaSach(masacH + "P"); //P: Paper
                 }else if(this instanceof SachMem){
                     SachMem sachmem = (SachMem) this;
                     if(sachmem.getLoai().equalsIgnoreCase("PDF")){
-                        this.setMaSach(masacH + "SP"); //SP: Soft PDF
+                        this.setMaSach(masacH +"SF"); //SF: Soft PDF
                     }else if(sachmem.getLoai().equalsIgnoreCase("EPUB")){
-                        this.setMaSach(masacH + "SE"); //SE: Soft EPUB
+                        this.setMaSach(masacH +"SE"); //SE: Soft EPUB
                     }
-                }
+                }   
+                    
             }catch(Exception e){
                 System.out.println("Ma sach khong hop le, moi ban nhap lai.....");
             }
