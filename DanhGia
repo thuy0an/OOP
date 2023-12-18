@@ -12,16 +12,16 @@ import java.util.Scanner;
 
 public class DanhGia {
     private String maKhachHang;
-    public String maSach;
-    public String binhLuan;
-    public Float sao;
-    public String ngayDG;
+    private String maSach;
+    private String binhLuan;
+    private float sao;
+    private String ngayDG;
 
 
     public DanhGia() {
     }
 
-    public DanhGia(String maKhachHang, String maSach, String ngayDG, Float sao, String binhLuan) {
+    public DanhGia(String maKhachHang, String maSach, String ngayDG, float sao, String binhLuan) {
         this.binhLuan = binhLuan;
         this.sao = sao;
         this.maKhachHang = maKhachHang;
@@ -37,11 +37,11 @@ public class DanhGia {
         this.binhLuan = binhLuan;
     }
     
-    public Float getSao() {
+    public float getSao() {
         return sao;
     }
 
-    public void setSao(Float sao) {
+    public void setSao(float sao) {
         this.sao = sao;
     }
     
@@ -74,14 +74,15 @@ public class DanhGia {
         Scanner input = new Scanner(System.in);
         boolean flag = false;
         do {
+            float sosao;
             try {
                 System.out.println("Nhập số sao (Từ 1->5): ");
                 String nhap = input.nextLine().trim();
-                this.sao = Float.parseFloat(nhap);
-                if (this.sao < 0.0 || this.sao > 5.0) {
+                sosao = Float.parseFloat(nhap);
+                if (sosao < 0.0 || sosao > 5.0) {
                     System.out.println("Số sao phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 5! Vui lòng nhập lại!");
                 } else {
-                    this.setSao(this.sao);
+                    this.setSao(sosao);
                     flag = true;
                 }
             } catch(NumberFormatException e){
@@ -90,7 +91,7 @@ public class DanhGia {
         } while(!flag);  
     }
     
-    public static ArrayList<CT_DonHang> docDonHangTuFile(String tenfile) {
+    public static ArrayList<CT_DonHang> docCTDonHangTuFile(String tenfile) {
         ArrayList<CT_DonHang> donHangList = new ArrayList<>();
         File file= new File(tenfile);
         try (Scanner scanner = new Scanner(file))
@@ -98,16 +99,12 @@ public class DanhGia {
             while(scanner.hasNextLine()){ 
                 String line = scanner.nextLine();
                 String[] donhang = line.split("#");
-                String maKH = donhang[0];
-                String maDon = donhang[1];
-                String email = donhang[2];
-                String diachi = donhang[3];
-                String ngaydat = donhang[4];
-                String sanpham = donhang[5];
-                Double tongtien = Double.parseDouble(donhang[6]);
-                String pttt = donhang[7];
-                Integer trangthai = Integer.parseInt(donhang[8]);
-                CT_DonHang donHang = new CT_DonHang(maKH, maDon, email, diachi, ngaydat, sanpham, tongtien, pttt, trangthai);
+                String maDon = donhang[0];
+                String maSach = donhang[1];
+                String tenSach = donhang[2];
+                int soLuong = Integer.parseInt(donhang[3]);
+                CT_GioHang gioHangList = new CT_GioHang(maSach, tenSach, soLuong);
+                CT_DonHang donHang = new CT_DonHang(maDon, gioHangList);
                 donHangList.add(donHang);  
             }
         } catch (FileNotFoundException ex) {
@@ -121,7 +118,11 @@ public class DanhGia {
         boolean ktraTrangThai=false; // kiểm tra xem có đơn nào đã nhận chưa
         boolean ktraMaDon=false; // kiểm tra xem mã đơn được nhập có đúng ko
         int tieptuc=0;
-        ArrayList<CT_DonHang> dsDonHang = DanhGia.docDonHangTuFile(tenfile);
+        ArrayList<CT_DonHang> dsCTDH = DanhGia.docCTDonHangTuFile(tenfile);
+        
+        DonHang donhang = new DonHang();
+        ArrayList<CT_DonHang> dsDonHang = donhang.docDonHangTuFile(this.getMaKhachHang());
+        
         if (dsDonHang.isEmpty())
         {
             System.out.println("Bạn không có sản phẩm để đánh giá!!");
@@ -130,31 +131,28 @@ public class DanhGia {
         do
         {
             Scanner scan = new Scanner(System.in);
-            for (CT_DonHang donHang: dsDonHang)
+            for (CT_DonHang donHang: dsDonHang) {
                 if ( this.getMaKhachHang().equalsIgnoreCase(donHang.getMaKH()) && donHang.getTrangThai()==4)
                 {
-                    System.out.println("\nMã đơn: "+ donHang.getMaDonHang());
-                    System.out.println("Danh sách sản phẩm: " + donHang.getDsSanPham());
+                    System.out.println(donHang.toString());
                     ktraTrangThai=true;
                 }
+            }
             System.out.print("\n");
             if( ktraTrangThai)
             {
                 System.out.println("Nhập mã đơn hàng muốn đánh giá: " );
                 String maDon = scan.nextLine();
                 
-                for (CT_DonHang donhang : dsDonHang) {
-                    if ( maDon.equalsIgnoreCase(donhang.getMaDonHang())&& donhang.getTrangThai()==4) 
-                    {
+                for (CT_DonHang donHang : dsDonHang) {
+                    if ( maDon.equalsIgnoreCase(donHang.getMaDonHang())&& donHang.getTrangThai()==4) 
+                    { 
                         ktraMaDon=true;
                         System.out.println("Nhập mã sách muốn đánh giá: ");
                         String maSachDanhGia = scan.nextLine();
-                        String dulieu[] = donhang.getDsSanPham().split(";");
-                        int chon = 0;
-                        for (String dulieu1 : dulieu) {
-                            String info[] = dulieu1.split(" x ");
-                            if (maSachDanhGia.equalsIgnoreCase(info[1])) 
-                            {
+                        for (CT_DonHang don : dsCTDH) {
+                            int chon = 0;
+                            if (don.getMaDonHang().equalsIgnoreCase(donHang.getMaDonHang()) && maSachDanhGia.equalsIgnoreCase(don.getDsSanPham().getMaSach())) {
                                 flag=true;
                                 System.out.println("-------Đánh Giá-------");
                                 System.out.println("Nhập bình luận: ");
@@ -162,9 +160,8 @@ public class DanhGia {
                                 this.kiemTraNhapSoSao();
                                 System.out.println("Bạn muốn lưu đánh giá??");
                                 System.out.println("1. Lưu đánh giá || 2. Bỏ lưu đánh giá");
-                                chon=Integer.parseInt(scan.nextLine());
-                                switch (chon) 
-                                {
+                                chon = Integer.parseInt(scan.nextLine());
+                                switch (chon) {
                                     case 1: 
                                         LocalDateTime myDateObj = LocalDateTime.now();   
                                         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -175,7 +172,7 @@ public class DanhGia {
                                         {
                                             StringBuilder sb = new StringBuilder();
                                             sb.append(this.getMaKhachHang()).append("#");
-                                            sb.append(info[1].trim()).append("#");
+                                            sb.append(don.getDsSanPham().getMaSach()).append("#");
                                             sb.append(this.getNgayDG()).append("#");
                                             sb.append(this.getSao()).append("#");
                                             sb.append(this.getBinhLuan());
@@ -188,14 +185,24 @@ public class DanhGia {
                                         }
                                         break;
                                     case 2:
-                                         break;
+                                        break;
                                 }
                             }
-                            else {
-                                System.out.println("Mã sách không đúng");
-                                tieptuc=2;
-                                break;
-                            }
+                        }
+//                        String dulieu[] = donHang.getDsSanPham().split(";");
+//                        int chon = 0;
+//                        for (String dulieu1 : dulieu) {
+//                            String info[] = dulieu1.split(" x ");
+//                            if (maSachDanhGia.equalsIgnoreCase(info[1])) 
+//                            {
+//                                
+//                                }
+//                            }
+//                        }
+                        if( !flag)
+                        {
+                            System.out.println("Mã sách không đúng");
+                            tieptuc=2;
                         }
                     }
                 }
@@ -239,17 +246,20 @@ public class DanhGia {
                     String maKH = danhGia[0];
                     String maSacha = danhGia[1];
                     String ngayDGa = danhGia[2];
-                    Float soSao = Float.parseFloat(danhGia[3]);
+                    float soSao = Float.parseFloat(danhGia[3]);
                     String binhLuana = danhGia[4];
                     DanhGia danhgia= new DanhGia(maKH, maSacha, ngayDGa, soSao, binhLuana);
                     System.out.println(danhgia.toString());
+                    try{
+                    Thread.sleep(200);
+                    }catch(InterruptedException e){}
                 }  
             }
         } catch (FileNotFoundException ex) {
             System.out.println("Không tìm được file DonHang.txt");
         }
         if ( !flag)
-            System.out.println("Rất tiếc sách chưa có đánh giá :<");
+            System.out.println("\tRất tiếc sách chưa có đánh giá :<\n");
     }
     
     @Override
@@ -263,5 +273,4 @@ public class DanhGia {
     }
     
 }
-
 
