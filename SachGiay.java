@@ -1,8 +1,5 @@
-    /*
-     * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-     * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-     */
-package BookStore;
+package com.mycompany.bookstore_management;
+
 
 import java.util.Scanner;
 
@@ -112,10 +109,16 @@ import java.util.Scanner;
         }
         
 
-    @Override
-    public void nhapThongTinSachChoNhanVien() {
-        super.nhapThongTinSachChoNhanVien(); 
-        
+    
+    public void nhapThongTinSachGiay(Sach sach) { 
+        super.setTenSach(sach.getTenSach());
+        super.setMaSach((sach.getMaSach()));
+        super.setTacGia(sach.getTacGia());
+        super.setSoTrang(sach.getSoTrang());
+        super.setTheLoai(sach.getTheLoai());
+        super.setNXB(sach.getNXB());
+        super.setGia(sach.getGia());
+        super.setMoTa(sach.getMoTa());
         nhapVaCheckKichThuoc();
 
         nhapVaCheckLoaiBia();
@@ -135,9 +138,8 @@ import java.util.Scanner;
         }
         public static void main(String[] args){
             SachGiay sachgiay = new SachGiay();
-            sachgiay.nhapThongTinSachChoNhanVien();
+            sachgiay.nhapThongTinSachGiay(sachgiay);
             System.out.println("Thong tin sach giay: " + sachgiay.toString());
         }
 
     }
-
