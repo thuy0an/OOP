@@ -47,33 +47,53 @@ public class TuSach {
     }
     
     
+    public String laySo(String id){
+        String phanMaSo = id.replaceAll("[^0-9]", ""); //thay the bat cu ki tu nao khong phai la so
+        return phanMaSo;
+    }
     public void themSach() {
         Scanner input = new Scanner(System.in);
         String tiepTuc=null;
+        File file = new File("Sach.txt");
         do{
-            Sach sach = null;
+            Sach sach = new Sach();
+            sach.nhapThongTinSachChoNhanVien();
+//            System.out.println("Info nhap: " + sach.toString());
             System.out.println("Ban muon them loai sach nao?");
-            System.out.println("1: Sach giay | 2: Sach mem");
+            System.out.println("1: Sach giay | 2: Sach mem | 3: Ca hai");
             
             String choice = input.nextLine();
-            if(!choice.equalsIgnoreCase("1")&&!choice.equalsIgnoreCase("2")){
+            while(!choice.equalsIgnoreCase("1")&&!choice.equalsIgnoreCase("2")&&!choice.equalsIgnoreCase("3")){
                 System.out.println("Lua chon khong hop le, moi ban nhap lai.....");
-                themSach();
+                choice = input.nextLine();
             }
             switch (choice) {
             case "1":
-                sach = new SachGiay();
-                ((SachGiay) sach).nhapThongTinSachChoNhanVien();
+                SachGiay sachA = new SachGiay();
+                ((SachGiay) sachA).nhapThongTinSachGiay(sach);
                 this.setBooks(sach);
                 soSach++;
-                vietSachVaoFile(choice);
+                vietSachVaoFile1(choice);   //vietSachVaoFile1 sẽ có dòng thông báo "viết sách vào file thành công", còn vietSachVaoFile2 sẽ không có dòng đó, chia ra là vid nếu dùng chung 1 cái mà đễ dòng thông báo sẽ bị lặp khi chọn case 3
                 break;
             case "2":
-                sach = new SachMem();
-                ((SachMem) sach).nhapThongTinSachChoNhanVien();
-                this.setBooks(sach);
+                SachMem sachB = new SachMem();
+                ((SachMem) sachB).nhapThongTinSachMem(sach);
+                this.setBooks(sachB);
                 soSach++;
-                vietSachVaoFile(choice);
+                vietSachVaoFile1(choice);
+                break;
+            case "3":
+                SachGiay sachC = new SachGiay();
+                ((SachGiay) sachC).nhapThongTinSachGiay(sach);
+                this.setBooks(sachC);
+                soSach++;
+                vietSachVaoFile2(choice);
+                
+                SachMem sachD = new SachMem();
+                ((SachMem) sachD).nhapThongTinSachMem(sach);
+                this.setBooks(sachD);
+                soSach++;
+                vietSachVaoFile1(choice);
                 break;
             default:
                 System.out.println("Lua chon khong phu hop.....");
@@ -83,15 +103,23 @@ public class TuSach {
             tiepTuc=input.nextLine();
         }while(!tiepTuc.equalsIgnoreCase("N"));  
     }
-    private void vietSachVaoFile(String choice) {
-        String fileName = "book.txt";
+    private void vietSachVaoFile1(String choice) {
+        String fileName = "Sach.txt";
         File file = new File(fileName);
 
         try (FileWriter fileWriter = new FileWriter(file, true)) {
             for (Sach sach : this.getBooks()) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(sach.getTenSach()).append("#");
-                sb.append(sach.getMaSach()).append("#");
+                if (sach instanceof SachGiay) {
+                    sb.append(sach.getMaSach()).append("P").append("#");
+                } else if (sach instanceof SachMem) {
+                    if(((SachMem) sach).getLoai().equalsIgnoreCase("pdf"))
+                        sb.append(sach.getMaSach()).append("SF").append("#");
+                    else if(((SachMem) sach).getLoai().equalsIgnoreCase("epub"))
+                        sb.append(sach.getMaSach()).append("SE").append("#");
+                }
+//                sb.append(sach.getMaSach()).append("#");
                 sb.append(sach.getTacGia()).append("#");
                 sb.append(sach.getSoTrang()).append("#");
                 sb.append(sach.getTheLoai()).append("#");
@@ -120,6 +148,54 @@ public class TuSach {
             this.getBooks().clear();
             fileWriter.flush();
             System.out.println("Viet sach vao file thanh cong.....");
+        } catch (IOException e) {
+            System.out.println("Khong hop le" + e.getMessage());
+        }
+    }
+    private void vietSachVaoFile2(String choice) {
+        String fileName = "Sach.txt";
+        File file = new File(fileName);
+
+        try (FileWriter fileWriter = new FileWriter(file, true)) {
+            for (Sach sach : this.getBooks()) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(sach.getTenSach()).append("#");
+                if (sach instanceof SachGiay) {
+                    sb.append(sach.getMaSach()).append("P").append("#");
+                } else if (sach instanceof SachMem) {
+                    if(((SachMem) sach).getLoai().equalsIgnoreCase("pdf"))
+                        sb.append(sach.getMaSach()).append("SP").append("#");
+                    else if(((SachMem) sach).getLoai().equalsIgnoreCase("epub"))
+                        sb.append(sach.getMaSach()).append("SE").append("#");
+                }
+//                sb.append(sach.getMaSach()).append("#");
+                sb.append(sach.getTacGia()).append("#");
+                sb.append(sach.getSoTrang()).append("#");
+                sb.append(sach.getTheLoai()).append("#");
+                sb.append(sach.getNXB()).append("#");
+                sb.append(sach.getGia()).append("#");
+                sb.append(sach.getMoTa()).append("#");
+
+                if (sach instanceof SachGiay) {
+                    sb.append("Giay").append("#");
+                    sb.append(((SachGiay) sach).getKichThuoc()).append("#");
+                    sb.append(((SachGiay) sach).getLoaiBia()).append("#");
+                    sb.append("////").append("#");
+                    sb.append("////").append("#");
+                    sb.append(((SachGiay) sach).getHienCo());
+                } else if (sach instanceof SachMem) {
+                    sb.append(((SachMem) sach).getLoai()).append("#");
+                    sb.append("////").append("#");
+                    sb.append("////").append("#");
+                    sb.append(((SachMem) sach).getKichCoDungLuong()).append("#");
+                    sb.append(((SachMem) sach).getDungLuong()).append("#");
+                    sb.append("////");
+                }
+                sb.append(System.lineSeparator());
+                fileWriter.write(sb.toString());      
+            }
+            this.getBooks().clear();
+            fileWriter.flush();
         } catch (IOException e) {
             System.out.println("Khong hop le" + e.getMessage());
         }
