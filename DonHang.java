@@ -309,7 +309,7 @@ public class DonHang {
         }
     }
     
-    private ArrayList<CT_DonHang> docDonHangTuFile(String maKhach)
+    public ArrayList<CT_DonHang> docDonHangTuFile(String maKhach)
     {
         ArrayList<CT_DonHang> dsSp = new ArrayList<>();
         File fileDonHang= new File("DonHang.txt");
