@@ -189,16 +189,6 @@ public class DanhGia {
                                 }
                             }
                         }
-//                        String dulieu[] = donHang.getDsSanPham().split(";");
-//                        int chon = 0;
-//                        for (String dulieu1 : dulieu) {
-//                            String info[] = dulieu1.split(" x ");
-//                            if (maSachDanhGia.equalsIgnoreCase(info[1])) 
-//                            {
-//                                
-//                                }
-//                            }
-//                        }
                         if( !flag)
                         {
                             System.out.println("Mã sách không đúng");
