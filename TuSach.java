@@ -71,7 +71,7 @@ public class TuSach {
             case "1":
                 SachGiay sachA = new SachGiay();
                 ((SachGiay) sachA).nhapThongTinSachGiay(sach);
-                this.setBooks(sach);
+                this.setBooks(sachA);
                 soSach++;
                 vietSachVaoFile1(choice);   //vietSachVaoFile1 sẽ có dòng thông báo "viết sách vào file thành công", còn vietSachVaoFile2 sẽ không có dòng đó, chia ra là vid nếu dùng chung 1 cái mà đễ dòng thông báo sẽ bị lặp khi chọn case 3
                 break;
@@ -164,7 +164,7 @@ public class TuSach {
                     sb.append(sach.getMaSach()).append("P").append("#");
                 } else if (sach instanceof SachMem) {
                     if(((SachMem) sach).getLoai().equalsIgnoreCase("pdf"))
-                        sb.append(sach.getMaSach()).append("SP").append("#");
+                        sb.append(sach.getMaSach()).append("SF").append("#");
                     else if(((SachMem) sach).getLoai().equalsIgnoreCase("epub"))
                         sb.append(sach.getMaSach()).append("SE").append("#");
                 }
