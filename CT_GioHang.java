@@ -20,6 +20,12 @@ public class CT_GioHang {
         this.thanhTien = thanhTien;
     }
     
+    public CT_GioHang(String maSach, String tenSach, int soLuong) {
+        this.maSach = maSach;
+        this.tenSach = tenSach;
+        this.soLuong = soLuong;
+    }
+    
     public CT_GioHang() {
     }
 
