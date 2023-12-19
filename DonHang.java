@@ -102,16 +102,13 @@ public class DonHang {
         
     }
     
-    
-    
-    
     public void datHang(String tenfile) {
         
         ArrayList<CT_GioHang> sanPhamDatHang=this.getChitietDonHang().chonSachTuDanhSach(tenfile);
         if ( sanPhamDatHang!= null && !sanPhamDatHang.isEmpty())
         {
             this.getChitietDonHang().setInfo();
-            System.out.println("Thong tin san pham dat: " + sanPhamDatHang);
+            System.out.println("Thông tin sản phẩm đặt: " + sanPhamDatHang);
             System.out.println("\nTổng tiền: " + this.getChitietDonHang().getTongTien() +"\n");
             System.out.println("--BẠN CÓ XÁC NHẬN ĐẶT HÀNG?--");
             System.out.println("1. Đồng ý đặt hàng");
@@ -136,7 +133,7 @@ public class DonHang {
                             CTDH.append(this.getChitietDonHang().getMaDonHang()).append("#");
                             CTDH.append(sanPhamDatHang.get(i).getMaSach()).append("#");
                             CTDH.append(sanPhamDatHang.get(i).getTenSach()).append("#");
-                            CTDH.append(sanPhamDatHang.get(i).getSoLuong()).append("#");
+                            CTDH.append(sanPhamDatHang.get(i).getSoLuong()).append("\n");
                             fileWriter.write(CTDH.toString());
                             fileWriter.flush();
                         }
@@ -179,8 +176,7 @@ public class DonHang {
         } while (chon != 2);
         }
         else
-            System.out.println("Không có sản phẩm để đặt hàng !!!!\n");
-        
+            System.out.println("Không có sản phẩm để đặt hàng !!!!\n");  
     }   
     
     
@@ -342,36 +338,59 @@ public class DonHang {
             case 1: 
                 ArrayList<CT_DonHang> dsSp = docDonHangTuFile(makhach);
                 File fileCTDH= new File("CT_DonHang.txt");
-                ArrayList<CT_DonHang> dsCTDH = new ArrayList<>();
                 boolean flag = false;
                 try (Scanner scan = new Scanner(fileCTDH)) {
-                    System.out.println("Nhập mã đơn muốn xem chi tiết đơn hàng: ");
-                    String madon = scan.nextLine();
-                    System.out.println("\t+-----------------------------------------------------------+");
-                    System.out.println("\t|                   CHI TIẾT ĐƠN HÀNG                       |");
-                    System.out.println("\t|-----------------------------------------------------------|");
+                    System.out.print("Nhập mã đơn muốn xem chi tiết đơn hàng: ");
+                    String madon = scanner.nextLine();
+                    System.out.println("\t+-------------------------------------------------------------------+");
+                    System.out.println("\t|                         CHI TIẾT ĐƠN HÀNG                         |");
+                    System.out.println("\t|-------------------------------------------------------------------|");
+                    System.out.printf("\t| %-40s | %-10s | %-10s|\n","Tên sách","Mã sách","Số lượng");
+                    System.out.println("\t|-------------------------------------------------------------------|");
                         while ( scan.hasNextLine())
                         {
+                            String line=scan.nextLine();
+                            String donhang[]=line.split("#");
                             for (int i=0; i < dsSp.size(); i++) {
-                                String line=scan.nextLine();
-                                String donhang[]=line.split("#");
                                 if (dsSp.get(i).getMaDonHang().equalsIgnoreCase(madon) && madon.equalsIgnoreCase(donhang[0]))   
                                 {
-                                    System.out.println(donhang[2] + " x " + donhang[1] + " x " + donhang[3] + "/n");
-                                    CT_GioHang dsSach = new CT_GioHang(donhang[1], donhang[2], Integer.parseInt(donhang[3]));
-                                    dsCTDH.add(new CT_DonHang(donhang[0], dsSach));
+                                    System.out.printf("\t| %-40s | %-10s | %-10s|\n",donhang[2],donhang[1],donhang[3]);
+                                    System.out.println("\t|-------------------------------------------------------------------|");
                                     flag = true;
                                 } 
-                            } 
+                            }
                         }
-                        if (flag) 
+                        if (!flag) 
                             System.out.println("Đơn hàng không tồn tại!");
                 } catch (FileNotFoundException ex) {
                     System.out.println("Không tìm được file DonHang.txt");
                 }
+                System.out.println();
+                break;
             case 2:
                 break;
         }
-        } while(chon < 1 || chon > 2);
+        } while(chon < 1 && chon > 2);
+    }
+    public static ArrayList<CT_DonHang> docCTDonHangTuFile(String tenfile) {
+        ArrayList<CT_DonHang> donHangList = new ArrayList<>();
+        File file= new File(tenfile);
+        try (Scanner scanner = new Scanner(file))
+        {
+            while(scanner.hasNextLine()){ 
+                String line = scanner.nextLine();
+                String[] donhang = line.split("#");
+                String maDon = donhang[0];
+                String maSach = donhang[1];
+                String tenSach = donhang[2];
+                int soLuong = Integer.parseInt(donhang[3]);
+                CT_GioHang gioHangList = new CT_GioHang(maSach, tenSach, soLuong);
+                CT_DonHang donHang = new CT_DonHang(maDon, gioHangList);
+                donHangList.add(donHang);  
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("Không tìm thấy file");
+        }
+        return donHangList;
     }
     }
