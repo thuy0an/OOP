@@ -133,7 +133,7 @@ public class DonHang {
                     {
                         StringBuilder CTDH = new StringBuilder();
                         for (int i=0; i < sanPhamDatHang.size(); i++) {
-                            CTDH.append(this.getChitietDonHang().getMaKH()).append("#");
+                            CTDH.append(this.getChitietDonHang().getMaDonHang()).append("#");
                             CTDH.append(sanPhamDatHang.get(i).getMaSach()).append("#");
                             CTDH.append(sanPhamDatHang.get(i).getTenSach()).append("#");
                             CTDH.append(sanPhamDatHang.get(i).getSoLuong()).append("#");
