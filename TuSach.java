@@ -46,19 +46,18 @@ public class TuSach {
         this.books.add(sach);
     }
     
-    
     public String laySo(String id){
         String phanMaSo = id.replaceAll("[^0-9]", ""); //thay the bat cu ki tu nao khong phai la so
         return phanMaSo;
     }
+    
     public void themSach() {
         Scanner input = new Scanner(System.in);
         String tiepTuc=null;
-        File file = new File("Sach.txt");
+        File file= new File("book.txt");
         do{
             Sach sach = new Sach();
             sach.nhapThongTinSachChoNhanVien();
-//            System.out.println("Info nhap: " + sach.toString());
             System.out.println("Ban muon them loai sach nao?");
             System.out.println("1: Sach giay | 2: Sach mem | 3: Ca hai");
             
@@ -73,7 +72,7 @@ public class TuSach {
                 ((SachGiay) sachA).nhapThongTinSachGiay(sach);
                 this.setBooks(sachA);
                 soSach++;
-                vietSachVaoFile1(choice);   //vietSachVaoFile1 sẽ có dòng thông báo "viết sách vào file thành công", còn vietSachVaoFile2 sẽ không có dòng đó, chia ra là vid nếu dùng chung 1 cái mà đễ dòng thông báo sẽ bị lặp khi chọn case 3
+                vietSachVaoFile1(choice);//vietSachVaoFile1 sẽ có dòng thông báo "viết sách vào file thành công", còn vietSachVaoFile2 sẽ không có dòng đó, chia ra là vid nếu dùng chung 1 cái mà đễ dòng thông báo sẽ bị lặp khi chọn case 3
                 break;
             case "2":
                 SachMem sachB = new SachMem();
@@ -94,7 +93,7 @@ public class TuSach {
                 this.setBooks(sachD);
                 soSach++;
                 vietSachVaoFile1(choice);
-                break;
+                break; 
             default:
                 System.out.println("Lua chon khong phu hop.....");
                 break;
@@ -104,7 +103,7 @@ public class TuSach {
         }while(!tiepTuc.equalsIgnoreCase("N"));  
     }
     private void vietSachVaoFile1(String choice) {
-        String fileName = "Sach.txt";
+        String fileName = "book.txt";
         File file = new File(fileName);
 
         try (FileWriter fileWriter = new FileWriter(file, true)) {
@@ -119,7 +118,6 @@ public class TuSach {
                     else if(((SachMem) sach).getLoai().equalsIgnoreCase("epub"))
                         sb.append(sach.getMaSach()).append("SE").append("#");
                 }
-//                sb.append(sach.getMaSach()).append("#");
                 sb.append(sach.getTacGia()).append("#");
                 sb.append(sach.getSoTrang()).append("#");
                 sb.append(sach.getTheLoai()).append("#");
@@ -140,7 +138,7 @@ public class TuSach {
                     sb.append("////").append("#");
                     sb.append(((SachMem) sach).getKichCoDungLuong()).append("#");
                     sb.append(((SachMem) sach).getDungLuong()).append("#");
-                    sb.append("////");
+                    sb.append("1");
                 }
                 sb.append(System.lineSeparator());
                 fileWriter.write(sb.toString());   
@@ -153,7 +151,7 @@ public class TuSach {
         }
     }
     private void vietSachVaoFile2(String choice) {
-        String fileName = "Sach.txt";
+        String fileName = "book.txt";
         File file = new File(fileName);
 
         try (FileWriter fileWriter = new FileWriter(file, true)) {
@@ -189,7 +187,7 @@ public class TuSach {
                     sb.append("////").append("#");
                     sb.append(((SachMem) sach).getKichCoDungLuong()).append("#");
                     sb.append(((SachMem) sach).getDungLuong()).append("#");
-                    sb.append("////");
+                    sb.append("1");
                 }
                 sb.append(System.lineSeparator());
                 fileWriter.write(sb.toString());      

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.mycompany.bookstore_management;
+package BookStore;
 
 import java.io.File;
 import java.io.IOException;
@@ -134,6 +134,17 @@ public class Sach {
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
+    public void setAll(String maSach, String tenSach, String tacgia, int sotrang, String theloai, String nxb, double gia, String mota)
+    {
+        this.maSach=maSach;
+        this.tenSach=tenSach;
+        this.tacGia=tacgia;
+        this.soTrang=sotrang;
+        this.theLoai=theloai;
+        this.NXB=nxb;
+        this.gia=gia;
+        this.moTa=mota;
+    }
 
     
     public void nhapThongTinSachChoNhanVien() {
@@ -153,7 +164,6 @@ public class Sach {
         nhapVaCheckGia();
         
         nhapVaCheckMoTa();
-        System.out.println("info nhap: " +this.getTenSach()+this.getMaSach()+this.getTacGia()+this.getSoTrang()+this.getTheLoai()+this.getNXB()+this.getGia()+this.getMoTa());
     }
     
     //Hàm kiểm tra tính hợp lệ khi nhập tên sách
@@ -182,12 +192,15 @@ public class Sach {
         String phanMaSo = id.replaceAll("[^0-9]", ""); //thay the bat cu ki tu nao khong phai la so
         return phanMaSo;
     }
+    
+    
+    
     //Hàm kiểm tra tính hợp lệ khi nhập mã sách
     private void nhapVaCheckMaSach(){
         Scanner nhapttsach = new Scanner(System.in);
         boolean validMa = false;
         
-        File file = new File("Sach.txt");
+        File file = new File("book.txt");
         do{
             try{
                 System.out.println("Nhap ma sach: ");
@@ -220,6 +233,7 @@ public class Sach {
                             validMa=true;
                             
                         }
+                        else validMa=true;
                     }
                 }catch(Exception e){
                     System.out.println("ERROR!!!");
