@@ -452,13 +452,13 @@ public class TaiKhoanKhachHang {
                     this.getDonhang().datHang(this.getFileGioHang());
                     break;
                 case 8:
-                    this.getDonhang().xemDonHang(this.getKhachhang().getMaKH());
+                    this.getDonhang().xemChiTietDonHang(this.getKhachhang().getMaKH());
                     break;
                 case 9:
                     this.getDonhang().huyDonhang(this.getKhachhang().getMaKH());
                     break;
                 case 10:
-                    this.getDanhgia().danhGia("DonHang.txt");
+                    this.getDanhgia().danhGia("CT_DonHang.txt");
                     break;
                 case 11:
                     this.getDanhgia().xemDanhGia();

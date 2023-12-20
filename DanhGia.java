@@ -91,38 +91,15 @@ public class DanhGia {
         } while(!flag);  
     }
     
-    public static ArrayList<CT_DonHang> docDonHangTuFile(String tenfile) {
-        ArrayList<CT_DonHang> donHangList = new ArrayList<>();
-        File file= new File(tenfile);
-        try (Scanner scanner = new Scanner(file))
-        {
-            while(scanner.hasNextLine()){ 
-                String line = scanner.nextLine();
-                String[] donhang = line.split("#");
-                String maKH = donhang[0];
-                String maDon = donhang[1];
-                String email = donhang[2];
-                String diachi = donhang[3];
-                String ngaydat = donhang[4];
-                String sanpham = donhang[5];
-                Double tongtien = Double.parseDouble(donhang[6]);
-                String pttt = donhang[7];
-                Integer trangthai = Integer.parseInt(donhang[8]);
-                CT_DonHang donHang = new CT_DonHang(maKH, maDon, email, diachi, ngaydat, sanpham, tongtien, pttt, trangthai);
-                donHangList.add(donHang);  
-            }
-        } catch (FileNotFoundException ex) {
-            System.out.println("Không tìm thấy file");
-        }
-        return donHangList;
-    }
-    
     public void danhGia(String tenfile) {
         boolean flag=false; // biến cờ kiểm tra người dùng đã đánh giá hay  chưa
         boolean ktraTrangThai=false; // kiểm tra xem có đơn nào đã nhận chưa
         boolean ktraMaDon=false; // kiểm tra xem mã đơn được nhập có đúng ko
         int tieptuc=0;
-        ArrayList<CT_DonHang> dsDonHang = DanhGia.docDonHangTuFile(tenfile);
+        DonHang donhang = new DonHang();
+        ArrayList<CT_DonHang> dsCTDH = DonHang.docCTDonHangTuFile(tenfile);
+        ArrayList<CT_DonHang> dsDonHang = donhang.docDonHangTuFile(this.getMaKhachHang());
+        
         if (dsDonHang.isEmpty())
         {
             System.out.println("Bạn không có sản phẩm để đánh giá!!");
@@ -131,31 +108,39 @@ public class DanhGia {
         do
         {
             Scanner scan = new Scanner(System.in);
-            for (CT_DonHang donHang: dsDonHang)
+            for (CT_DonHang donHang: dsDonHang) {
                 if ( this.getMaKhachHang().equalsIgnoreCase(donHang.getMaKH()) && donHang.getTrangThai()==4)
                 {
-                    System.out.println("\nMã đơn: "+ donHang.getMaDonHang());
-                    System.out.println("Danh sách sản phẩm: " + donHang.getDsSanPham());
+                    System.out.println(donHang.toString());
                     ktraTrangThai=true;
                 }
+            }
             System.out.print("\n");
             if( ktraTrangThai)
             {
                 System.out.println("Nhập mã đơn hàng muốn đánh giá: " );
                 String maDon = scan.nextLine();
                 
-                for (CT_DonHang donhang : dsDonHang) {
-                    if ( maDon.equalsIgnoreCase(donhang.getMaDonHang())&& donhang.getTrangThai()==4) 
-                    {
+                for (CT_DonHang donHang : dsDonHang) {
+                    if ( maDon.equalsIgnoreCase(donHang.getMaDonHang())&& donHang.getTrangThai()==4) 
+                    { 
+                        System.out.println("\nCác sản phẩm trong đơn:");
+                        System.out.println("\t|-------------------------------------------------------------------|");
+                        for (CT_DonHang ctdonHang: dsCTDH)
+                        {
+                            if ( maDon.equalsIgnoreCase(ctdonHang.getMaDonHang()))
+                            {
+                                System.out.printf("\t| %-40s | %-10s | %-10s|\n",ctdonHang.getDsSanPham().getTenSach(),ctdonHang.getDsSanPham().getMaSach(),ctdonHang.getDsSanPham().getSoLuong());
+                                System.out.println("\t|-------------------------------------------------------------------|");
+                            }
+                                
+                        }
                         ktraMaDon=true;
                         System.out.println("Nhập mã sách muốn đánh giá: ");
                         String maSachDanhGia = scan.nextLine();
-                        String dulieu[] = donhang.getDsSanPham().split(";");
-                        int chon = 0;
-                        for (String dulieu1 : dulieu) {
-                            String info[] = dulieu1.split(" x ");
-                            if (maSachDanhGia.equalsIgnoreCase(info[1])) 
-                            {
+                        for (CT_DonHang don : dsCTDH) {
+                            int chon = 0;
+                            if (don.getMaDonHang().equalsIgnoreCase(donHang.getMaDonHang()) && maSachDanhGia.equalsIgnoreCase(don.getDsSanPham().getMaSach())) {
                                 flag=true;
                                 System.out.println("-------Đánh Giá-------");
                                 System.out.println("Nhập bình luận: ");
@@ -163,9 +148,8 @@ public class DanhGia {
                                 this.kiemTraNhapSoSao();
                                 System.out.println("Bạn muốn lưu đánh giá??");
                                 System.out.println("1. Lưu đánh giá || 2. Bỏ lưu đánh giá");
-                                chon=Integer.parseInt(scan.nextLine());
-                                switch (chon) 
-                                {
+                                chon = Integer.parseInt(scan.nextLine());
+                                switch (chon) {
                                     case 1: 
                                         LocalDateTime myDateObj = LocalDateTime.now();   
                                         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -176,7 +160,7 @@ public class DanhGia {
                                         {
                                             StringBuilder sb = new StringBuilder();
                                             sb.append(this.getMaKhachHang()).append("#");
-                                            sb.append(info[1].trim()).append("#");
+                                            sb.append(don.getDsSanPham().getMaSach()).append("#");
                                             sb.append(this.getNgayDG()).append("#");
                                             sb.append(this.getSao()).append("#");
                                             sb.append(this.getBinhLuan());
@@ -189,10 +173,11 @@ public class DanhGia {
                                         }
                                         break;
                                     case 2:
-                                         break;
+                                        break;
                                 }
                             }
                         }
+
                         if( !flag)
                         {
                             System.out.println("Mã sách không đúng");
@@ -267,4 +252,3 @@ public class DanhGia {
     }
     
 }
-

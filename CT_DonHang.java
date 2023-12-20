@@ -21,12 +21,12 @@ public class CT_DonHang {
     private String ptThanhToan;
     private int trangThai; //1: đang xử lý; 2: đã xác nhận , 3: đang giao; 4: đã nhận hàng
     private double tongTien=0.0;
-    private String dsSanPham="";
+    private CT_GioHang dsSanPham;
     
     public CT_DonHang() {
     }
 
-    public CT_DonHang(String maKH, String maDonHang, String email, String diaChi, String ngayDH, String dsSanPham,double tongTien,String ptThanhToan, int trangThai) {
+    public CT_DonHang(String maKH, String maDonHang, String email, String diaChi, String ngayDH,double tongTien,String ptThanhToan, int trangThai) {
         this.maDonHang = maDonHang;
         this.maKH = maKH;
         this.diaChi = diaChi;
@@ -35,8 +35,13 @@ public class CT_DonHang {
         this.ptThanhToan = ptThanhToan;
         this.trangThai = trangThai;
         this.tongTien = tongTien;
-        this.dsSanPham = dsSanPham;
     }
+
+    public CT_DonHang(String maDonHang, CT_GioHang dsSp) {
+        this.maDonHang = maDonHang;
+        this.dsSanPham = dsSp;
+    }
+
    
     private String taoMaDH() {
         Random rand = new Random();
@@ -112,12 +117,12 @@ public class CT_DonHang {
         this.maKH = maKH;
     }
 
-    public String getDsSanPham() {
+    public CT_GioHang getDsSanPham() {
         return dsSanPham;
     }
 
-    public void setDsSanPham(String dsSanPham) {
-        this.dsSanPham=this.dsSanPham.concat(dsSanPham);
+    public void setDsSanPham(CT_GioHang dsSanPham) {
+        this.dsSanPham = dsSanPham;
     }
       
     //
@@ -259,7 +264,6 @@ public class CT_DonHang {
         ArrayList<CT_GioHang> giohang_dachon = new ArrayList<>();       
         ArrayList<PhieuGiamGia> voucher_hople = new ArrayList<>();
         int luachon;
-        String sanPham="";
         boolean voucherFlag=false;
         double tongtien=0.0, thanhtien=0.0;
         if (gioHang.getDsSanPham().isEmpty()) {
@@ -287,7 +291,7 @@ public class CT_DonHang {
                     flag=true;
                     if (ktraSoLuongTonKho(maSachDuocChon, gioHang.getDsSanPham().get(i).getSoLuong()))
                     {
-                        sanPham+=gioHang.getDsSanPham().get(i).getTenSach().concat(" x ").concat(gioHang.getDsSanPham().get(i).getMaSach()).concat(" x ").concat(String.valueOf(gioHang.getDsSanPham().get(i).getSoLuong()).concat(";"));
+                       
                         tongtien+=gioHang.getDsSanPham().get(i).getThanhTien();
                         giohang_dachon.add(gioHang.getDsSanPham().get(i));
                         gioHang.getDsSanPham().remove(gioHang.getDsSanPham().get(i));
@@ -375,7 +379,6 @@ public class CT_DonHang {
             }
         }while(luachon !=2);
         
-        this.setDsSanPham(sanPham);
         if ( thanhtien != 0.0)
         this.setTongTien(thanhtien);
         else this.setTongTien(tongtien);
@@ -386,12 +389,10 @@ public class CT_DonHang {
     public String toString() {
        StringBuilder sb = new StringBuilder();
        sb.append("\n");
-       sb.append("\tMã khách hàng: ").append(this.getMaKH()).append("\n");
        sb.append("\tMã đơn: ").append(this.getMaDonHang()).append("\n");
        sb.append("\tEmail: ").append(this.getEmail()).append("\n");
        sb.append("\tĐịa chỉ: ").append(this.getDiaChi()).append("\n");
-       sb.append("\tNgay dat: ").append(this.getNgayDH()).append("\n");
-       sb.append("\tThong tin san pham: ").append(this.getDsSanPham()).append("\n");
+       sb.append("\tNgày đặt: ").append(this.getNgayDH()).append("\n");
        sb.append("\tTổng tiền: ").append(this.getTongTien()).append("\n");
        sb.append("\tPhương thức thanh toán: ").append(this.getPtThanhToan()).append("\n");
        if ( this.getTrangThai()==1)

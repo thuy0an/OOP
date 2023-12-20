@@ -248,7 +248,7 @@ public class TuSach {
                     dungLuong =sachDuocDoc[12];
                     soLuong=sachDuocDoc[13];
                 }
-                if(tenSach.contains(tenSachCanTim)){  //phần này để xét điều kiện để chọn các sách phù hợp yêu cầu để hiển thị
+                if(tenSach.toLowerCase().contains(tenSachCanTim.toLowerCase())){  //phần này để xét điều kiện để chọn các sách phù hợp yêu cầu để hiển thị
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -315,7 +315,7 @@ public class TuSach {
                     soLuong=sachDuocDoc[13];
                 }
                 
-                if(maSach.contains(maSachCanTim)){
+                if(maSach.toLowerCase().contains(maSachCanTim.toLowerCase())){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -373,7 +373,7 @@ public class TuSach {
                     dungLuong =sachDuocDoc[12];
                     soLuong=Integer.parseInt(sachDuocDoc[13]);
                 }
-                if(maSach.equalsIgnoreCase(maSachCanTim)){
+                if(maSach.toLowerCase().equalsIgnoreCase(maSachCanTim.toLowerCase())){
                     foundSach=new Sach(tenSach,maSach,tacGia,soTrang,theLoai,NXB,gia,moTa,loaiSach,soLuong);
                 }
             }
@@ -434,7 +434,7 @@ public class TuSach {
                     soLuong=sachDuocDoc[13];
                 }
                 
-                if(tacGia.contains(tgCanTim)){
+                if(tacGia.toLowerCase().contains(tgCanTim.toLowerCase())){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -499,7 +499,7 @@ public class TuSach {
                     soLuong=sachDuocDoc[13];
                 }
                 
-                if(nXB.contains(nxbCanTim)){
+                if(nXB.toLowerCase().contains(nxbCanTim.toLowerCase())){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -626,7 +626,7 @@ public class TuSach {
                     soLuong=sachDuocDoc[13];
                 }
                 
-                if(theloai.contains(theLoaiCanTim)){
+                if(theloai.toLowerCase().contains(theLoaiCanTim.toLowerCase())){
                     System.out.printf("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong,soLuong,"|");
                     System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
                     found = true;
@@ -641,22 +641,285 @@ public class TuSach {
         if(!found)
             System.out.println("Khong tim thay sach.....");
     }
+    
+    private List<String> tim2DieuKien(String dk1, String dk2){
+        List<String> timthay1 = new ArrayList<>();
+        File file = new File("book.txt");
+        boolean found = false;
+        try(Scanner scanner = new Scanner(file)){
+            while(scanner.hasNextLine()){ 
+               String line = scanner.nextLine();
+                String[] sachDuocDoc2 = line.split("#");
+                String tenSach = sachDuocDoc2[0];
+                String maSach = sachDuocDoc2[1];
+                String tacGia = sachDuocDoc2[2];
+                int soTrang = Integer.parseInt(sachDuocDoc2[3]);
+                String theloai = sachDuocDoc2[4];
+                String nXB = sachDuocDoc2[5];
+                double Gia = Double.parseDouble(sachDuocDoc2[6]);
+                String moTa = sachDuocDoc2[7];
+                String loaiSach = sachDuocDoc2[8];
+                String kichThuoc="";
+                String loaiBia="";
+                String kichCoDungLuong="";
+                String dungLuong="";
+                String soLuong="";
+                if ( loaiSach.equals("Giay")){
+                    kichThuoc = sachDuocDoc2[9];
+                    loaiBia = sachDuocDoc2[10];
+                    kichCoDungLuong="////";
+                    dungLuong="////";
+                    soLuong=sachDuocDoc2[13];
+                }
+                else if(loaiSach.equalsIgnoreCase("PDf")||loaiSach.equalsIgnoreCase("EPUB")){
+                    kichThuoc="////";
+                    loaiBia="////";
+                    kichCoDungLuong = sachDuocDoc2[11];
+                    dungLuong =sachDuocDoc2[12];
+                    soLuong=sachDuocDoc2[13];
+                }
+                
+                //String + string
+                //tenSach + something
+                if(tenSach.toLowerCase().contains(dk1.toLowerCase()) && tacGia.toLowerCase().contains(dk2.toLowerCase()) || tacGia.toLowerCase().contains(dk1.toLowerCase()) && tenSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tenSach.toLowerCase().contains(dk1.toLowerCase()) && maSach.toLowerCase().contains(dk2.toLowerCase()) || maSach.toLowerCase().contains(dk1.toLowerCase()) && tenSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tenSach.toLowerCase().contains(dk1.toLowerCase()) && theloai.toLowerCase().contains(dk2.toLowerCase()) || theloai.toLowerCase().contains(dk1.toLowerCase()) && tenSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tenSach.toLowerCase().contains(dk1.toLowerCase()) && nXB.toLowerCase().contains(dk2.toLowerCase()) || nXB.toLowerCase().contains(dk1.toLowerCase()) && tenSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tenSach.toLowerCase().contains(dk1.toLowerCase()) && loaiSach.toLowerCase().contains(dk2.toLowerCase()) || loaiSach.toLowerCase().contains(dk1.toLowerCase()) && tenSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tenSach.toLowerCase().contains(dk1.toLowerCase()) && loaiBia.toLowerCase().contains(dk2.toLowerCase()) || loaiBia.toLowerCase().contains(dk1.toLowerCase()) && tenSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tenSach.toLowerCase().contains(dk1.toLowerCase()) && kichThuoc.toLowerCase().contains(dk2.toLowerCase()) || kichThuoc.toLowerCase().contains(dk1.toLowerCase()) && tenSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tenSach.toLowerCase().contains(dk1.toLowerCase()) && kichCoDungLuong.toLowerCase().contains(dk2.toLowerCase()) || kichCoDungLuong.toLowerCase().contains(dk1.toLowerCase()) && tenSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                //maSach + something
+                else if(maSach.toLowerCase().contains(dk1.toLowerCase()) && tacGia.toLowerCase().contains(dk2.toLowerCase()) || tacGia.toLowerCase().contains(dk1.toLowerCase()) && maSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(maSach.toLowerCase().contains(dk1.toLowerCase()) && theloai.toLowerCase().contains(dk2.toLowerCase()) || theloai.toLowerCase().contains(dk1.toLowerCase()) && maSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(maSach.toLowerCase().contains(dk1.toLowerCase()) && nXB.toLowerCase().contains(dk2.toLowerCase()) || nXB.toLowerCase().contains(dk1.toLowerCase()) && maSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(maSach.toLowerCase().contains(dk1.toLowerCase()) && loaiSach.toLowerCase().contains(dk2.toLowerCase()) || loaiSach.toLowerCase().contains(dk1.toLowerCase()) && maSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(maSach.toLowerCase().contains(dk1.toLowerCase()) && kichThuoc.toLowerCase().contains(dk2.toLowerCase()) || kichThuoc.toLowerCase().contains(dk1.toLowerCase()) && maSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(maSach.toLowerCase().contains(dk1.toLowerCase()) && loaiBia.toLowerCase().contains(dk2.toLowerCase()) || loaiBia.toLowerCase().contains(dk1.toLowerCase()) && maSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(maSach.toLowerCase().contains(dk1.toLowerCase()) && kichCoDungLuong.toLowerCase().contains(dk2.toLowerCase()) || kichCoDungLuong.toLowerCase().contains(dk1.toLowerCase()) && maSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                //tacgia + something
+                else if(tacGia.toLowerCase().contains(dk1.toLowerCase()) && theloai.toLowerCase().contains(dk2.toLowerCase()) || theloai.toLowerCase().contains(dk1.toLowerCase()) && tacGia.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tacGia.toLowerCase().contains(dk1.toLowerCase()) && nXB.toLowerCase().contains(dk2.toLowerCase()) || nXB.toLowerCase().contains(dk1.toLowerCase()) && tacGia.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tacGia.toLowerCase().contains(dk1.toLowerCase()) && loaiSach.toLowerCase().contains(dk2.toLowerCase()) || loaiSach.toLowerCase().contains(dk1.toLowerCase()) && tacGia.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tacGia.toLowerCase().contains(dk1.toLowerCase()) && kichThuoc.toLowerCase().contains(dk2.toLowerCase()) || kichThuoc.toLowerCase().contains(dk1.toLowerCase()) && tacGia.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tacGia.toLowerCase().contains(dk1.toLowerCase()) && loaiBia.toLowerCase().contains(dk2.toLowerCase()) || loaiBia.toLowerCase().contains(dk1.toLowerCase()) && tacGia.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(tacGia.toLowerCase().contains(dk1.toLowerCase()) && kichCoDungLuong.toLowerCase().contains(dk2.toLowerCase()) || kichCoDungLuong.toLowerCase().contains(dk1.toLowerCase()) && tacGia.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                //theloai + something
+                else if(theloai.toLowerCase().contains(dk1.toLowerCase()) && nXB.toLowerCase().contains(dk2.toLowerCase()) || nXB.toLowerCase().contains(dk1.toLowerCase()) && theloai.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(theloai.toLowerCase().contains(dk1.toLowerCase()) && loaiSach.toLowerCase().contains(dk2.toLowerCase()) || loaiSach.toLowerCase().contains(dk1.toLowerCase()) && theloai.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(theloai.toLowerCase().contains(dk1.toLowerCase()) && kichThuoc.toLowerCase().contains(dk2.toLowerCase()) || kichThuoc.toLowerCase().contains(dk1.toLowerCase()) && theloai.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(theloai.toLowerCase().contains(dk1.toLowerCase()) && loaiBia.toLowerCase().contains(dk2.toLowerCase()) || loaiBia.toLowerCase().contains(dk1.toLowerCase()) && theloai.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(theloai.toLowerCase().contains(dk1.toLowerCase()) && kichCoDungLuong.toLowerCase().contains(dk2.toLowerCase()) || kichCoDungLuong.toLowerCase().contains(dk1.toLowerCase()) && theloai.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                //nxb + something
+                else if(nXB.toLowerCase().contains(dk1.toLowerCase()) && loaiSach.toLowerCase().contains(dk2.toLowerCase()) || loaiSach.toLowerCase().contains(dk1.toLowerCase()) && nXB.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(nXB.toLowerCase().contains(dk1.toLowerCase()) && kichThuoc.toLowerCase().contains(dk2.toLowerCase()) || kichThuoc.toLowerCase().contains(dk1.toLowerCase()) && nXB.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(nXB.toLowerCase().contains(dk1.toLowerCase()) && loaiBia.toLowerCase().contains(dk2.toLowerCase()) || loaiBia.toLowerCase().contains(dk1.toLowerCase()) && nXB.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(nXB.toLowerCase().contains(dk1.toLowerCase()) && kichCoDungLuong.toLowerCase().contains(dk2.toLowerCase()) || kichCoDungLuong.toLowerCase().contains(dk1.toLowerCase()) && nXB.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                //loaisach + something
+                else if(loaiSach.toLowerCase().contains(dk1.toLowerCase()) && kichThuoc.toLowerCase().contains(dk2.toLowerCase()) || kichThuoc.toLowerCase().contains(dk1.toLowerCase()) && loaiSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(loaiSach.toLowerCase().contains(dk1.toLowerCase()) && loaiBia.toLowerCase().contains(dk2.toLowerCase()) || loaiBia.toLowerCase().contains(dk1.toLowerCase()) && loaiSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(loaiSach.toLowerCase().contains(dk1.toLowerCase()) && kichCoDungLuong.toLowerCase().contains(dk2.toLowerCase()) || kichCoDungLuong.toLowerCase().contains(dk1.toLowerCase()) && loaiSach.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                //kichthuoc + something
+                else if(kichThuoc.toLowerCase().contains(dk1.toLowerCase()) && loaiBia.toLowerCase().contains(dk2.toLowerCase()) || loaiBia.toLowerCase().contains(dk1.toLowerCase()) && kichThuoc.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                else if(kichThuoc.toLowerCase().contains(dk1.toLowerCase()) && kichCoDungLuong.toLowerCase().contains(dk2.toLowerCase()) || kichCoDungLuong.toLowerCase().contains(dk1.toLowerCase()) && kichThuoc.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+                //loaibia + something
+                else if(loaiBia.toLowerCase().contains(dk1.toLowerCase()) && kichCoDungLuong.toLowerCase().contains(dk2.toLowerCase()) || kichCoDungLuong.toLowerCase().contains(dk1.toLowerCase()) && loaiBia.toLowerCase().contains(dk2.toLowerCase())){
+                    String bookInfo = String.format("| %-50s| %-10s| %-30s| %-9d| %-15s| %-15s| %-10.3f| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", tenSach, maSach, tacGia, soTrang, theloai, nXB, Gia, moTa, loaiSach, kichThuoc, loaiBia, kichCoDungLuong, dungLuong, soLuong, "|");
+                    timthay1.add(bookInfo);
+                    found = true;
+                }
+            }
+        }catch(IOException e){
+            System.out.println("Khong doc duoc file.....\n" + e.getMessage());
+        }
+        if(!found)
+            System.out.println("Khong tim thay sach.....");
+        else if(found){
+            System.out.println("\nCác sách tìm thấy:");
+            System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
+            System.out.printf("| %-50s| %-10s| %-30s| %-9s| %-15s| %-15s| %-10s| %-45s| %-9s| %-4s| %-9s| %-6s| %-10s| %-10s| %n", "Ten Sach", "Ma Sach", "Tac Gia", "So Trang", "The Loai", "NXB", "Gia", "Mo Ta", "Loai Sach","Size","Loai Bia","FSize","Dung Luong","So Luong", "|");
+            System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
+            for (String book : timthay1) {
+                
+                System.out.print(book);
+                System.out.println("+---------------------------------------------------+-----------+-------------------------------+----------+----------------+----------------+-----------+----------------------------------------------+----------+-----+----------+-------+-----------+-----------+");
+            }
+        }
+        
+        return timthay1;
+    }
+    
+    private void timNhieuDieuKien(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Số lượng điều kiện tìm kiếm(2): ");
+        System.out.println("Điều kiện 1: ");
+        String dk1 = input.nextLine();
+        System.out.println("Điều kiện 2: ");
+        String dk2 = input.nextLine();
+        if(dk1 instanceof String && dk2 instanceof String)
+           tim2DieuKien(dk1, dk2);
+
+
+    }
+        
+    
     public void timSach(){
         String code;
         Scanner input = new Scanner(System.in);
         
         System.out.println("\n");
-        System.out.println("\t+---------- Query Options ----------+");
-        System.out.println("\t|     1. Tim sach theo Ten          |");
-        System.out.println("\t|     2. Tim sach theo Ma Sach      |");
-        System.out.println("\t|     3. Tim sach theo Tac Gia      |");
-        System.out.println("\t|     4. Tim sach theo NXB          |");
-        System.out.println("\t|     5. Tim sach theo Gia          |");
-        System.out.println("\t|     6. Tim sach theo The Loai     |");
-        System.out.println("\t+-----------------------------------+");
+        System.out.println("\t+---------- Query Options -----------------+");
+        System.out.println("\t|     1. Tim sach theo Ten                 |");
+        System.out.println("\t|     2. Tim sach theo Ma Sach             |");
+        System.out.println("\t|     3. Tim sach theo Tac Gia             |");
+        System.out.println("\t|     4. Tim sach theo NXB                 |");
+        System.out.println("\t|     5. Tim sach theo Gia                 |");
+        System.out.println("\t|     6. Tim sach theo The Loai            |");
+        System.out.println("\t|     7. Tim sach theo nhieu dieu kien     |");
+        System.out.println("\t+------------------------------------------+");
         System.out.print("\n Moi ban nhap:  ");
         code = input.nextLine();
-        while(!code.equals("1")&&!code.equals("2")&&!code.equals("3")&&!code.equals("4")&&!code.equals("5")&&!code.equals("6")){
+        while(!code.equals("1")&&!code.equals("2")&&!code.equals("3")&&!code.equals("4")&&!code.equals("5")&&!code.equals("6")&&!code.equals("7")){
             System.out.println("Lua chon khong hop le, vui long nhap lai.....");
             code=input.nextLine();
         }
@@ -684,6 +947,10 @@ public class TuSach {
             case "6":
                 System.out.println("\n\n\t\t\tTIM SACH THEO THE LOAI");
                 timSachTheoTheLoai();
+                break;
+            case "7":
+                System.out.println("\n\n\t\t\tTIM SACH THEO NHIEU DIEU KIEN");
+                timNhieuDieuKien();
                 break;
         }
         System.out.println("Ban co muon tiep tuc tim kiem? (Y/N)");
