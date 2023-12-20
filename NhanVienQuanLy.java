@@ -1,6 +1,3 @@
-package BookStore;
-
-
 
 
 import java.io.File;
@@ -345,13 +342,14 @@ public class NhanVienQuanLy extends NhanVien {
 	                        (e1, e2) -> e1,
 	                        LinkedHashMap::new
 	                ));
-		for(Map.Entry<String,Integer> sach:dsSachDaSapXep.entrySet()) {
-			System.out.println("\t+----------------------------------------------+");
+		 System.out.println("\t+----------------------------------------------+");
 			System.out.println("\t     THỐNG KÊ TẤT CẢ SÁCH                 ");
 			System.out.println("\t| Mã sách || Số lượng ||  Doanh Thu");
-			System.out.printf("\t %-6s || %-10s || %8-s",sach.getKey(),sach.getValue(),sach.getValue()*tusach.timSachTheoID(sach.getKey()).getGia());
+		for(Map.Entry<String,Integer> sach:dsSachDaSapXep.entrySet()) {
+			
+			System.out.printf("\n\t %-6s || %-10s || %-8s",sach.getKey(),sach.getValue(),sach.getValue()*tusach.timSachTheoID(sach.getKey()).getGia());
 		 }
-		System.out.println("+\t----------------------------------------------+");
+		System.out.println("\n+----------------------------------------------+");
 		System.out.println("\tTong doanh thu: "+tongDoanhThu);
 }
 
@@ -428,7 +426,7 @@ public class NhanVienQuanLy extends NhanVien {
 		for (Map.Entry<String, double[]> set :thongKeTheoTGDH.entrySet()) {
 			String ngayDH = set.getKey();
 			double[] dulieu = set.getValue();
-			System.out.printf("\t| %-9s || %-15s || %-40s || %-10s|\n",ngayDH,Double.toString(dulieu[0]),Double.toString(dulieu[1]));
+			System.out.printf("\t| %-9s || %-15s || %-10s|\n",ngayDH,Double.toString(dulieu[0]),Double.toString(dulieu[1]));
 			System.out.println("\t+---------------------------------------------------+");
 //			try {
 //				Thread.sleep(150);
@@ -488,6 +486,7 @@ public class NhanVienQuanLy extends NhanVien {
 				if(thongKeTheoTheLoaiSach.containsKey(sach.getTheLoai())) {
 					double[] dulieu=thongKeTheoTheLoaiSach.get(sach.getTheLoai());
 					dulieu[0]+=soLuong;
+					System.out.println(sach.getTenSach()+" "+soLuong+"\n");
 					dulieu[1]+=soLuong*sach.getGia();
 					thongKeTheoTheLoaiSach.put(sach.getTheLoai(), dulieu);
 					tongDoanhThu += dulieu[1];
@@ -535,14 +534,18 @@ public class NhanVienQuanLy extends NhanVien {
 		for (Map.Entry<String, double[]> set : thongKeTheoTheLoaiSach.entrySet()) {
 			String theLoai = set.getKey();
 			double[] dulieu = set.getValue();
+			int tongBanRa=0;
 			String topsale="";
 			int count=0;
 			for(Map.Entry<String,Integer> sach:dsSachDaSapXep.entrySet()) {
 				if(count==5) break;
-				if(tusach.timSachTheoID(sach.getKey()).getTheLoai().equalsIgnoreCase(theLoai)) topsale+= sach.getKey() +" x "+sach.getValue();
-				count++;
+				if(tusach.timSachTheoID(sach.getKey()).getTheLoai().equalsIgnoreCase(theLoai)) { topsale+= sach.getKey() +" x "+sach.getValue()+" | ";
+					count++;
+					tongBanRa+=sach.getValue();
+				}
+				
 			}
-			System.out.printf("\t| %-9s || %-15s || %-40s || %-10s|\n",theLoai,Double.toString(dulieu[0]),topsale,Double.toString(dulieu[1]));
+			System.out.printf("\t| %-9s || %-15s || %-40s || %-10s|\n",theLoai,Integer.toString(tongBanRa),topsale,Double.toString(dulieu[1]));
 			System.out.println("\t+---------------------------------------------------+");
 //			try {
 //				Thread.sleep(150);

@@ -1,4 +1,3 @@
-package BookStore;
 
 
 import java.io.File;
@@ -129,7 +128,6 @@ public class PhieuGiamGia {
 
     return dsSach;
 }
-
     
     public void themVoucher() {
         boolean flag = false; //Kiểm tra xem voucher đã có chưa
@@ -278,7 +276,7 @@ public class PhieuGiamGia {
             System.out.println("\n\t+------------------------------------------------------------------------------------+");
             System.out.println("\t|                                       PHIẾU GIẢM GIÁ                               |");
             System.out.println("\t|------------------------------------------------------------------------------------|");
-            System.out.printf("\t| %-15s | %-15s | %-15s | %-10s | %-15s |\n","Mã giảm giá","Mức giảm giá(%)","Đơn tối thiểu","Dành cho","Số lượng còn");
+            System.out.printf("\t| %-15s | %-15s | %-15s | %-10s | %-15s |\n","Mã giảm giá","Mức giảm giá","Đơn tối thiểu","Dành cho","Số lượng còn");
             System.out.println("\t|------------------------------------------------------------------------------------|");
             while(scanner.hasNextLine()){ 
                 String line = scanner.nextLine();

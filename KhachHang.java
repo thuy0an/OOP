@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package BookStore;
+
 
 
 import java.io.File;
@@ -24,6 +24,15 @@ public class KhachHang {
     private ArrayList<DiaChi> diaChi = new ArrayList<>();
     private String MaKH;
 
+    private void taoMaKH(){
+        String taoma="";
+        String tentat[]=this.getTenKH().split(" ");
+        for( String tmp : tentat)
+            taoma+=tmp.charAt(0);
+        taoma+=this.getSdt().substring(this.sdt.length()-4, this.sdt.length());
+        this.MaKH=taoma;
+    }
+  
     private String chuanHoaHoTen(String hoTen) {
         // Tách chuỗi ra thành các từ
         String[] tu = hoTen.trim().split("\\s+");
@@ -127,11 +136,6 @@ public class KhachHang {
         this.diaChi.add(dchi);
     }
 
-    public void setMaKH(String MaKH) {
-        this.MaKH = MaKH;
-    }
-
-    
    
     
     
@@ -164,8 +168,7 @@ public class KhachHang {
             else 
                 System.out.println("Vui lòng nhập đúng!!!");
         }
-        this.setMaKH(this.getSdt());
-        
+        taoMaKH();  
     }
     
     

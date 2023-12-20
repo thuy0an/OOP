@@ -1,6 +1,4 @@
 
-package BookStore;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -124,17 +122,6 @@ public class DanhGia {
                 for (CT_DonHang donHang : dsDonHang) {
                     if ( maDon.equalsIgnoreCase(donHang.getMaDonHang())&& donHang.getTrangThai()==4) 
                     { 
-                        System.out.println("\nCác sản phẩm trong đơn:");
-                        System.out.println("\t|-------------------------------------------------------------------|");
-                        for (CT_DonHang ctdonHang: dsCTDH)
-                        {
-                            if ( maDon.equalsIgnoreCase(ctdonHang.getMaDonHang()))
-                            {
-                                System.out.printf("\t| %-40s | %-10s | %-10s|\n",ctdonHang.getDsSanPham().getTenSach(),ctdonHang.getDsSanPham().getMaSach(),ctdonHang.getDsSanPham().getSoLuong());
-                                System.out.println("\t|-------------------------------------------------------------------|");
-                            }
-                                
-                        }
                         ktraMaDon=true;
                         System.out.println("Nhập mã sách muốn đánh giá: ");
                         String maSachDanhGia = scan.nextLine();
