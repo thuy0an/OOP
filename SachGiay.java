@@ -1,4 +1,7 @@
-
+    /*
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+     * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+     */
 
 import java.util.Scanner;
 
@@ -10,7 +13,6 @@ import java.util.Scanner;
         private String kichThuoc;
         private String loaiBia;
         private int hienCo;
-        private String maSachGiay;
 
         public SachGiay() {
         }
@@ -52,11 +54,11 @@ import java.util.Scanner;
                 try{
                     System.out.println("Nhap so luong: ");
                     String input = nhapttSachGiay.nextLine().trim();
-                    this.hienCo = Integer.parseInt(input);
-                    
-                    if(this.hienCo<=0){
+                    this.setHienCo(Integer.parseInt(input));
+                    int hienco = this.getHienCo();
+                    if(hienco<=0){
                         System.out.println("So luong phai lon 0, moi ban nhap lai.....");
-                        this.hienCo = Integer.parseInt(input); 
+                        this.setHienCo(Integer.parseInt(input));
                     }
                     else{
                         validHienCo = true;
@@ -66,65 +68,75 @@ import java.util.Scanner;
                 }
             }while(!validHienCo);
         }
-       public void checkKichThuoc(){
-            String kichThuoc = this.kichThuoc;
+        
+        private void nhapVaCheckKichThuoc(){
+            Scanner nhapttsach = new Scanner(System.in);
             boolean validSize = false;
             do{
-                if(!kichThuoc.equalsIgnoreCase("A4")&&!kichThuoc.equalsIgnoreCase("A5")){
-                    System.out.println("Kich thuoc sach khong hop le, moi ban nhap lai.....");
-                    this.kichThuoc=nhapttsach.nextLine();
-                    kichThuoc=this.kichThuoc;
-                }
-                else{
-                    validSize = true;
+                try{
+                    System.out.println("Nhap kich thuoc sach (A4-A5): ");
+                    String input = nhapttsach.nextLine().trim();
+                    this.setKichThuoc(input);
+                    String kichthuoC = this.getKichThuoc();
+                    if(!kichthuoC.equalsIgnoreCase("A4")&&!kichthuoC.equalsIgnoreCase("A5")){
+                        System.out.println("Kich thuoc khong hop le. Moi ban nhap lai.....");
+                    }
+                    else{
+                        validSize = true;
+                    }
+                }catch(Exception e){
+                    System.out.println("Kich thuoc khong hop le, moi ban nhap lai.....");
                 }
             }while(!validSize);
         }
-       public void checkLoaiBia(){
-            String loaiBia = this.loaiBia;
+        private void nhapVaCheckLoaiBia(){
+            Scanner nhapttsach = new Scanner(System.in);
             boolean validBia = false;
             do{
-                if(!loaiBia.toLowerCase().equalsIgnoreCase("Bia cung")&&!loaiBia.toLowerCase().equalsIgnoreCase("Bia mem")){
+                try{
+                    System.out.println("Nhap loai bia (Cung-Mem): ");
+                    String input = nhapttsach.nextLine().trim();
+                    this.setLoaiBia(input);
+                    String loaibiA = this.getLoaiBia();
+                    if(!loaibiA.toLowerCase().equalsIgnoreCase("Cung")&&!loaibiA.toLowerCase().equalsIgnoreCase("Mem")){
+                        System.out.println("Loai bia khong hop le. Moi ban nhap lai.....");
+                    }
+                    else{
+                        validBia = true;
+                    }
+                }catch(Exception e){
                     System.out.println("Loai bia khong hop le, moi ban nhap lai.....");
-                    this.loaiBia=nhapttsach.nextLine();
-                    loaiBia=this.loaiBia;
-                }
-                else{
-                    validBia=true;
                 }
             }while(!validBia);
         }
-        public void nhapThongTinSachGiay(){
-            // Call inherited methods to input common book information
-            super.nhapThongTinSachChoNhanVien(); // Utilize the input method from the Sach class
-            Scanner nhapttSachGiay = new Scanner(System.in);
-            
-            // Input specific information for paper books
-            System.out.println("Nhap kich thuoc sach: ");
-            this.kichThuoc = nhapttSachGiay.nextLine();
-            checkKichThuoc();
-            
-            System.out.println("Nhap loai bia: ");
-            this.loaiBia = nhapttSachGiay.nextLine();
-            checkLoaiBia();
-//            System.out.println("Nhap so luong: ");
-//            this.hienCo = Integer.parseInt(nhapttSachGiay.nextLine());
-            nhapVaCheckHienCo();
-        }
+        
+
+    @Override
+    public void nhapThongTinSachChoNhanVien() {
+        super.nhapThongTinSachChoNhanVien(); 
+        
+        nhapVaCheckKichThuoc();
+
+        nhapVaCheckLoaiBia();
+
+        nhapVaCheckHienCo();
+    }
+        
         @Override
         public String toString(){
             String superString = super.toString();
             StringBuilder sb = new StringBuilder(superString);
-            sb.append("Kich thuoc: ").append(this.kichThuoc).append("\n");
-            sb.append("Loai bia: ").append(this.loaiBia).append("\n");
-            sb.append("Hien co: ").append(this.hienCo).append("\n");
+            sb.append("Kich thuoc: ").append(this.getKichThuoc()).append("\n");
+            sb.append("Loai bia: ").append(this.getLoaiBia()).append("\n");
+            sb.append("Hien co: ").append(this.getHienCo()).append("\n");
             
             return sb.toString();
         }
         public static void main(String[] args){
             SachGiay sachgiay = new SachGiay();
-            sachgiay.nhapThongTinSachGiay();
+            sachgiay.nhapThongTinSachChoNhanVien();
             System.out.println("Thong tin sach giay: " + sachgiay.toString());
         }
 
     }
+

@@ -1,23 +1,33 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Admin
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-public class taiKhoanNhanVien {
+public class TaiKhoanNhanVien {
 	private String password;
 	private String username;
 
-	public taiKhoanNhanVien() {
+	public TaiKhoanNhanVien() {
 
 	}
 
-	public taiKhoanNhanVien(String password, String username) {
+	public TaiKhoanNhanVien(String password, String username) {
 		this.password = password;
 		this.username = username;
 
 	}
 
-	public taiKhoanNhanVien(taiKhoanNhanVien tk) {
+	public TaiKhoanNhanVien(TaiKhoanNhanVien tk) {
 		this.password = tk.getPassword();
 		this.username = tk.getUsername();
 	}
@@ -37,14 +47,18 @@ public class taiKhoanNhanVien {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+        
+        
+        
+        
 
 	public NhanVien dangNhapTaiKhoanNhanVien(String username) {
-		File file = new File("D:\\Lap trinh java\\BookStore\\nhanvien.txt");
+		File file = new File("nhanvien.txt");
 		try (Scanner scanner = new Scanner(file)) {
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				String[] nhanvien = line.split("#");
-				String maNhanVien = nhanvien[0];// 0
+				String maNhanVien = nhanvien[0];
 				String tenNhanVien = nhanvien[1];
 				String ngayVaoLam = nhanvien[2];
 				String viTri = nhanvien[3];
@@ -75,29 +89,53 @@ public class taiKhoanNhanVien {
 	}
 
 
-	public NhanVien xacMinhTaiKhoanNhanVien(String username, String password) {
-
-		File file = new File("D:\\Lap trinh java\\BookStore\\taikhoannhanvien.txt");
+	public NhanVien xacMinhTaiKhoanNhanVien() 
+        {
+            int tieptuc=1,flag=0;
+            do
+            {
+                Scanner input= new Scanner(System.in);
+                System.out.println("----------Dăng nhập vào tài khoản----------");
+                String tenDangNhap, matKhau;
+                System.out.print("1.Tên đăng nhập: ");
+                tenDangNhap=input.nextLine();
+                System.out.print("2.Mật khẩu: ");
+                matKhau=input.nextLine();
+                File file = new File("taikhoannhanvien.txt");
 		try (Scanner scanner = new Scanner(file)) {
-			while (scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				String[] nhanvien = line.split("#");
-				String maNhanVien = nhanvien[0];// 0
-				String matKhau = nhanvien[1];
-				if (maNhanVien.equals(username) && matKhau.equals(password)) {
-					NhanVien nv= dangNhapTaiKhoanNhanVien(username);
-					return nv;
-				}
-			}
-
-		} catch (
-
-		FileNotFoundException e) {
+                    while (scanner.hasNextLine()) {
+                        String line = scanner.nextLine();
+			String[] nhanvien = line.split("#");
+			String maNhanVien = nhanvien[0];
+			String mkNhanVien = nhanvien[1];
+			if (maNhanVien.equals(tenDangNhap) && mkNhanVien.equals(matKhau)) 
+                        {
+                            flag=1;
+                            NhanVien nv= dangNhapTaiKhoanNhanVien(tenDangNhap);
+                            return nv;
+                        }
+                    }
+                    if (flag !=1)
+                    {
+                        do{
+                            System.out.println("Tài khoản nhâp sai!");
+                            System.out.println("Bạn có muốn nhập lại ?");
+                            System.out.println("0.Không\t 1.Có");    
+                            tieptuc=Integer.parseInt(input.nextLine());
+                            if (tieptuc != 1 && tieptuc != 0)
+                                System.out.println("Vui lòng chọn đúng thao tác !!");
+                        }while (tieptuc != 1 && tieptuc != 0);
+                    }
+		}
+                catch (FileNotFoundException e) {
 			System.out.println("Khong tim duoc file: " + e.getMessage());
-		} catch (Exception e) {
+		} 
+                catch (Exception e) {
 			System.out.println("Da co loi xay ra: " + e.getMessage());
 		}
-		return null;
+		
+            }while ( tieptuc==1);
+            return null;
 	}
 	
 }

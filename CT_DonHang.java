@@ -1,5 +1,4 @@
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -19,13 +18,13 @@ public class CT_DonHang {
     private String ngayDH;
     private String ptThanhToan;
     private int trangThai; //1: đang xử lý; 2: đã xác nhận , 3: đang giao; 4: đã nhận hàng
-    private Double tongTien=0.0;
-    private String dsSanPham="";
+    private double tongTien=0.0;
+    private CT_GioHang dsSanPham;
     
     public CT_DonHang() {
     }
 
-    public CT_DonHang(String maKH, String maDonHang, String email, String diaChi, String ngayDH, String dsSanPham,Double tongTien,String ptThanhToan, int trangThai) {
+    public CT_DonHang(String maKH, String maDonHang, String email, String diaChi, String ngayDH,double tongTien,String ptThanhToan, int trangThai) {
         this.maDonHang = maDonHang;
         this.maKH = maKH;
         this.diaChi = diaChi;
@@ -34,13 +33,17 @@ public class CT_DonHang {
         this.ptThanhToan = ptThanhToan;
         this.trangThai = trangThai;
         this.tongTien = tongTien;
-        this.dsSanPham = dsSanPham;
+    }
+
+    public CT_DonHang(String maDonHang, CT_GioHang dsSp) {
+        this.maDonHang = maDonHang;
+        this.dsSanPham = dsSp;
     }
    
     private String taoMaDH() {
         Random rand = new Random();
-        int soNgauNhien = rand.nextInt(1000000); 
-        String maSoNgauNhien = String.format("%06d", soNgauNhien);
+        int soNgauNhien = rand.nextInt(1000); 
+        String maSoNgauNhien = String.format("%03d", soNgauNhien);
         
         String maDonHang = "DH" + this.getMaKH() + maSoNgauNhien;
         return maDonHang;
@@ -87,11 +90,11 @@ public class CT_DonHang {
         this.ptThanhToan = ptThanhToan;
     }
 
-    public Double getTongTien() {
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void setTongTien(Double tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
     
@@ -111,12 +114,12 @@ public class CT_DonHang {
         this.maKH = maKH;
     }
 
-    public String getDsSanPham() {
+    public CT_GioHang getDsSanPham() {
         return dsSanPham;
     }
 
-    public void setDsSanPham(String dsSanPham) {
-        this.dsSanPham=this.dsSanPham.concat(dsSanPham);
+    public void setDsSanPham(CT_GioHang dsSanPham) {
+        this.dsSanPham = dsSanPham;
     }
       
     //
@@ -143,11 +146,7 @@ public class CT_DonHang {
                 {
                     System.out.println("Vui lòng chọn đúng các thao tác đã hiển thị!!!");
                 }
-                catch ( Exception e)
-                {
-                    System.out.println(e.getMessage());
-                }
-            } while (chon != 2);
+            } while (chon !=1 && chon != 2);
         this.setPtThanhToan(ptThanhtoan);
     }
    
@@ -198,7 +197,7 @@ public class CT_DonHang {
                 System.out.println(e.getMessage());
             }
                     
-        }while (chon != 1 && chon!= 2);
+        }while (chon < 1 || chon > dchi.length);
         
         this.setDiaChi(dchi[chon-1]);
     }
@@ -237,22 +236,48 @@ public class CT_DonHang {
         return gioHangList;
     }
     
+    
+    private boolean ktraSoLuongTonKho(String maSachTrongGio, int soluongTrongGio)
+    {
+        TuSach tusach= new TuSach();
+        Sach sach=tusach.timSachTheoID(maSachTrongGio);
+        if ( sach.getSoLuong()<soluongTrongGio && sach.getLoaiSach().equalsIgnoreCase("Giay"))
+        {
+            System.out.println("Mã sản phẩm: "+ maSachTrongGio +" trong kho hiện không đủ để đặt hàng");
+            System.out.println("Số lượng còn trong kho của sản phẩm: " + sach.getSoLuong() +"\n");
+            return false;
+        }
+            
+        return true;
+        
+    }
+    
     public ArrayList<CT_GioHang> chonSachTuDanhSach(String tenfile) {
         ArrayList<CT_GioHang> danhsach = docGioHangTuFile(tenfile);
+        PhieuGiamGia phieu= new PhieuGiamGia();
+        ArrayList<PhieuGiamGia> voucherList = phieu.docVoucherTuFile();
         GioHang gioHang= new GioHang();
         gioHang.setDsSanPham(danhsach);
-        ArrayList<CT_GioHang> giohang_dachon = new ArrayList<>();
+        ArrayList<CT_GioHang> giohang_dachon = new ArrayList<>();       
+        ArrayList<PhieuGiamGia> voucher_hople = new ArrayList<>();
         int luachon;
-        String sanPham="";
-        Double tongtien=0.0;
+        //String sanPham="";
+        boolean voucherFlag=false;
+        double tongtien=0.0, thanhtien=0.0;
+        if (gioHang.getDsSanPham().isEmpty()) {
+            System.out.println("Giỏ hàng đang trống! Vui lòng thêm sách vào giỏ hàng! ");
+            return null;
+         }
         do
         {
             Scanner scan = new Scanner(System.in);
-            boolean flag=false;
-            if (gioHang.getDsSanPham().isEmpty()) {
-            System.out.println("Giỏ hàng đang trống! Vui lòng thêm sách vào giỏ hàng! ");
-            //return null;
+            boolean flag=false; // flag ktra sách có tồn tại trong giỏ
+            if ( gioHang.getDsSanPham().isEmpty())
+            {
+                System.out.println("Sản phẩm đã hết trong giỏ, tiến hành thanh toán nhé ^^");
+                luachon=2;
             }
+            else {
             gioHang.xemGioHang(tenfile);
             String maSachDuocChon;
             System.out.println("Chọn mã sách muốn đặt: " ); //cách bởi dấu ";"           
@@ -261,24 +286,100 @@ public class CT_DonHang {
             {
                 if ( maSachDuocChon.equalsIgnoreCase(gioHang.getDsSanPham().get(i).getMaSach()))
                 {
-                    sanPham+=gioHang.getDsSanPham().get(i).getTenSach().concat(" x ").concat(gioHang.getDsSanPham().get(i).getMaSach()).concat(" x ").concat(String.valueOf(gioHang.getDsSanPham().get(i).getSoLuong()));
-                    tongtien+=gioHang.getDsSanPham().get(i).getThanhTien();
-                    giohang_dachon.add(gioHang.getDsSanPham().get(i));
-                    gioHang.getDsSanPham().remove(gioHang.getDsSanPham().get(i));
-                    gioHang.ghiGioHangVaoFile(tenfile);
                     flag=true;
+                    if (ktraSoLuongTonKho(maSachDuocChon, gioHang.getDsSanPham().get(i).getSoLuong()))
+                    {
+                        //sanPham+=gioHang.getDsSanPham().get(i).getTenSach().concat(" x ").concat(gioHang.getDsSanPham().get(i).getMaSach()).concat(" x ").concat(String.valueOf(gioHang.getDsSanPham().get(i).getSoLuong()).concat(";"));
+                        tongtien+=gioHang.getDsSanPham().get(i).getThanhTien();
+                        giohang_dachon.add(gioHang.getDsSanPham().get(i));
+                        gioHang.getDsSanPham().remove(gioHang.getDsSanPham().get(i));
+                        gioHang.ghiGioHangVaoFile(tenfile);
+                    }
+                    else {
+                        gioHang.getDsSanPham().remove(gioHang.getDsSanPham().get(i));
+                        gioHang.ghiGioHangVaoFile(tenfile);
+                        break;
+                    }
+
                 }
             }
             if (!flag)
-                System.out.println("Vui lòng chọn đúng sách có trong giỏ!!!");
+                System.out.println("Vui lòng chọn đúng sách có trong giỏ!!!\n");
+
+                
+              
             System.out.println("Bạn muốn tiếp tục chon sản phẩm để thanh toán ?");
             System.out.println("1. Tiếp tục");
             System.out.println("2. Dừng lại");
             luachon=Integer.parseInt(scan.nextLine());
+            }
+            
+            
+            if ( luachon==2)
+            {
+                for (CT_GioHang giohang : giohang_dachon)
+                    for (PhieuGiamGia voucher : voucherList)
+                    {
+                        if (tongtien >= voucher.getDonToiThieu() && voucher.getDoiTuong().equalsIgnoreCase("Hoa don")) {
+                            if (!voucher_hople.contains(voucher)){
+                                voucher_hople.add(voucher);
+                                voucherFlag=true;
+                            }
+ 
+                        }else if (voucher.getDoiTuong().equalsIgnoreCase(giohang.getMaSach()) && tongtien >= voucher.getDonToiThieu()){
+                            if (!voucher_hople.contains(voucher))
+                            {
+                            voucher_hople.add(voucher);
+                            voucherFlag=true;
+                            }
+
+                        }
+                    }
+                        
+                if ( voucherFlag)
+                {
+                    System.out.println("\n\t+---------------------------------------------------------------------------------+");
+                    System.out.println("\t|                                       PHIẾU GIẢM GIÁ                            |");
+                    System.out.println("\t|---------------------------------------------------------------------------------|");
+                    System.out.printf("\t| %-15s | %-15s | %-15s | %-10s | %-10s |\n","Mã giảm giá","Mức giảm giá","Đơn tối thiểu","Dành cho","Số lượng còn");
+                    System.out.println("\t|---------------------------------------------------------------------------------|");
+                    for( int i=0; i < voucher_hople.size();i++)
+                    {
+                        if( voucher_hople.get(i).getSoLuong()>0)
+                        System.out.printf("\t| %-42s |\n",voucher_hople.get(i).toString());
+                    }
+                    System.out.println("\t+---------------------------------------------------------------------------------+");
+                    boolean chonVoucher=false;
+                    System.out.println("--Chọn voucher: --");
+                    String maVoucherChon = scan.nextLine();
+                    for (PhieuGiamGia voucher : voucher_hople) {
+                        if (maVoucherChon.equals(voucher.getMaPhieu()) && voucher.getDoiTuong().equalsIgnoreCase("Hoa don")) {
+                            chonVoucher=true;
+                            thanhtien = tongtien*(100 - voucher.getMucGiam())/100;
+                            voucher.xuLyKhiChonGiamGia(maVoucherChon);
+                        } 
+                        else if (maVoucherChon.equals(voucher.getMaPhieu()) && !voucher.getDoiTuong().equalsIgnoreCase("Hoa don")){
+                            for ( int i=0; i < giohang_dachon.size(); i++)
+                                if ( giohang_dachon.get(i).getMaSach().equalsIgnoreCase(voucher.getDoiTuong()))
+                                {
+                                    chonVoucher=true;
+                                    double tienSach=giohang_dachon.get(i).getThanhTien()*giohang_dachon.get(i).getSoLuong();
+                                    thanhtien=tongtien-tienSach+ tienSach*(100-voucher.getMucGiam())/100;
+                                    voucher.xuLyKhiChonGiamGia(maVoucherChon);
+                                }
+                        }
+                            
+                    }
+                    if ( !chonVoucher)
+                        System.out.println("Mã voucher không hợp lệ! ");
+                }
+                
+            }
         }while(luachon !=2);
-        this.setDsSanPham(sanPham);
-        this.setTongTien(tongtien);
-        System.out.println(giohang_dachon.toString());
+        
+        if ( thanhtien != 0.0)
+        this.setTongTien(thanhtien);
+        else this.setTongTien(tongtien);
         return giohang_dachon;
     }
     
@@ -290,8 +391,7 @@ public class CT_DonHang {
        sb.append("\tMã đơn: ").append(this.getMaDonHang()).append("\n");
        sb.append("\tEmail: ").append(this.getEmail()).append("\n");
        sb.append("\tĐịa chỉ: ").append(this.getDiaChi()).append("\n");
-       sb.append("\tNgay dat: ").append(this.getNgayDH()).append("\n");
-       sb.append("\tThong tin san pham: ").append(this.getDsSanPham()).append("\n");
+       sb.append("\tNgày đặt: ").append(this.getNgayDH()).append("\n");
        sb.append("\tTổng tiền: ").append(this.getTongTien()).append("\n");
        sb.append("\tPhương thức thanh toán: ").append(this.getPtThanhToan()).append("\n");
        if ( this.getTrangThai()==1)
@@ -305,21 +405,8 @@ public class CT_DonHang {
        
        return sb.toString();
     }
-    
-        
-//    public double giamGia() {
-//        if (this.tinhTongTien() >= 500000) {
-//            return (10/100)*this.tinhTongTien();
-//        } else { 
-//            if (this.tinhTongTien() >= 300000) {
-//                return (5/100)*this.tinhTongTien();
-//            } else return 0;
-//        }
-//    }
-//        
-//    public double giaSauKhiGiam() {
-//        this.tongTien = this.tinhTongTien() - this.giamGia();
-//        return this.tongTien;
-//    }
 
+    public static void main(String[] args) {
+		System.out.println("hehe");
+	}
 }
