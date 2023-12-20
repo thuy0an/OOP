@@ -1,11 +1,11 @@
 ABC#001P#M.L Huong;H.T Uyen#560#Giao duc#Da Nang#195000#Sach danh cho viec on luyen ngu phap#Giay#A4#Mem#\\\\#\\\\#11
-Giai thich ngu phap tieng Anh#002P#M.L Huong;H.T Uyen#560#Giao duc#Da Nang#285000#Sach danh cho viec on luyen ngu phap#Giay#A4#Cung#\\\\#\\\\#0
+Giai thich ngu phap tieng Anh#002P#M.L Huong;H.T Uyen#560#Giao duc#Da Nang#285000#Sach danh cho viec on luyen ngu phap#Giay#A4#Cung#\\\\#\\\\#5
 Su im lang cua bay cuu#003P#Thomas Harris#359#Trinh tham#Hoi Nha Van#115000#Tieu thuyet trinh tham kinh di day hap dan#Giay#A4#Mem#\\\\#\\\\#8
 Su im lang cua bay cuu#004P#Thomas Harris#359#Trinh tham#Hoi Nha Van#185000#Tieu thuyet trinh tham kinh di day hap dan#Giay#A4#Cung#\\\\#\\\\#4
 Nhan gui mot toi nguoi da yeu em#005P#Otono Yomoji#235#Tinh cam#Ha Noi#128000#Cau truyen tinh cam va noi buon#Giay#A5#Mem#\\\\#\\\\#20
 Nhan gui tat ca cac em nguoi toi da yeu#006P#Otono Yomoji#235#Tinh cam#Ha Noi#128000#Cau truyen tinh cam va noi buon#Giay#A5#Mem#\\\\#\\\\#30
 5centimet tren giay#007P#Shinkai Makoto#188#Tinh cam#Ha Noi#50000#Cau truyen tinh cam tuoi thanh xuan#Giay#A5#Mem#\\\\#\\\\#14
-Thi va su phoi hop thi trong tieng Anh#008P#M.L Huong; N.T.T Tam#183#Giao duc#Da Nang#56800#Sach danh cho viec on luyen ngu phap#Giay#A4#Mem#\\\\#\\\\#22
+Thi va su phoi hop thi trong tieng Anh#008P#M.L Huong; N.T.T Tam#183#Giao duc#Da Nang#56800#Sach danh cho viec on luyen ngu phap#Giay#A4#Mem#\\\\#\\\\#21
 Thi va su phoi hop thi trong tieng Anh#009P#M.L Huong; N.T.T Tam#183#Giao duc#Da Nang#122000#Sach danh cho viec on luyen ngu phap#Giay#A4#Cung#\\\\#\\\\#9
 Dong tu bat quy tac & ngu phap tieng Anh co ban#010P#M.LHuong#200#Giao duc#Da Nang#34400#Sach danh cho viec on luyen ngu phap#Giay#A4#Mem#\\\\#\\\\#0
 Hieu ve trai tim#011P#Minh Niem#480#Tam ly#TP.HCM#158000#Hieu them ve tam ly cua ban than#Giay#A4#Mem#\\\\#\\\\#10
@@ -23,8 +23,8 @@ O quan ca phe cua tuoi tre lac loi#022P#Patrick Modiano#153#Truyen ngan#NXB Van 
 Vo nhat#023P#Kim Lan#242#Truyen ngan#NXB Van Hoc#41500#Nhung cau truyen thi vi hap dan#Giay#A4#Mem#\\\\#\\\\#2
 Lap trinh ngon ngu C++#024P#V.V Vu; P.T.T Hien#300#Giao duc#NXB KHKT#108000#Lap trinh ngon ngu may tinh#Giay#A4#Mem#\\\\#\\\\#17
 Lap trinh huong doi tuong#025P#P.V At; L.T Thong#488#Giao duc#NXB BKHN#168000#Lap trinh huong doi tuong#Giay#A4#Mem#\\\\#\\\\#3
-Tra hoa nu#026P#Alexandre Dumas#303#Tinh cam#Hoi Nha Van#60000#nhung cau truyen tinh yeu lang man#Giay#A4#Mem#\\\\#\\\\#8
-Rung Na Uy#027P#Naruki Murakami#556#Tinh cam#Hoi Nha Van#126000#nhung cau truyen tinh yeu lang man#Giay#A4#Mem#\\\\#\\\\#10
+Tra hoa nu#026P#Alexandre Dumas#303#Tinh cam#Hoi Nha Van#60000#nhung cau truyen tinh yeu lang man#Giay#A4#Mem#\\\\#\\\\#7
+Rung Na Uy#027P#Naruki Murakami#556#Tinh cam#Hoi Nha Van#126000#nhung cau truyen tinh yeu lang man#Giay#A4#Mem#\\\\#\\\\#9
 An mang tren song Nile#028P#Agatha Christie#336#Trinh tham#NXB Tre#147000#Nhung cau truyen ly ki hap dan#Giay#A4#Mem#\\\\#\\\\#22
 An mang tren chuyen tau toc hanh Phuong Dong#029P#Agatha Christie#306#Trinh Tham#NXb Tre#110000#Nhung cau truyen ly ki hap dan#Giay#A4#Mem#\\\\#\\\\#0
 Giai thich ngu phap tieng Anh#030SF#M.L Huong;H.T Uyen#560#Giao duc#Da Nang#110000#Sach danh cho viec on luyen ngu phap#pdf#\\\\#\\\\#mb#4.5#1
@@ -57,6 +57,3 @@ Tra hoa nu#055SF#Alexandre Dumas#303#Tinh cam#Hoi Nha Van#50000#nhung cau truyen
 Rung Na Uy#056SF#Naruki Murakami#556#Tinh cam#Hoi Nha Van#110000#nhung cau truyen tinh yeu lang man#pdf#\\\\#\\\\#mb#2.2#1
 An mang tren song Nile#057SF#Agatha Christie#336#Trinh tham#NXB Tre#120000#Nhung cau truyen ly ki hap dan#pdf#\\\\#\\\\#mb#4.7#1
 An mang tren chuyen tau toc hanh Phuong Dong#058SF#Agatha Christie#306#Trinh Tham#NXb Tre#90000#Nhung cau truyen ly ki hap dan#pdf#\\\\#\\\\#mb#4.8#1
-sach diep tuiy an#100P#diep thuy an#3000#thu ya#thu yan#350000#sach nay hay lam#Giay#A4#Cung#////#////#2
-sachmoi#101P#thuyan#10#thuyanth#thuyan#2.13123132E8#rthty#Giay#A4#Cung#////#////#2
-sachmoi2#101SF#sdfb#456#rtb#rtbrsyn#15654.0#15ndrtynd#Giay#A5#Cung#////#////#2
