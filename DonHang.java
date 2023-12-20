@@ -326,6 +326,24 @@ public class DonHang {
         return dsSp;
     }
     
+    public ArrayList<CT_DonHang> docDonHangTuFile()
+    {
+        ArrayList<CT_DonHang> dsSp = new ArrayList<>();
+        File fileDonHang= new File("DonHang.txt");
+        try (Scanner scan= new Scanner(fileDonHang)){
+            while ( scan.hasNextLine())
+            {
+                String line=scan.nextLine();
+                String donhang[]=line.split("#");
+                CT_DonHang thongtin= new CT_DonHang(donhang[0],donhang[1],donhang[2],donhang[3],donhang[4], Double.parseDouble(donhang[5]), donhang[6],Integer.parseInt(donhang[7]));
+                dsSp.add(thongtin);
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("Không tìm được file DonHang.txt");
+        }
+        return dsSp;
+    }
+    
     public void xemChiTietDonHang(String makhach) {
         Scanner scanner = new Scanner(System.in);
         xemDonHang(makhach);
