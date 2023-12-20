@@ -1,8 +1,5 @@
 package BookStore;
 
-
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -345,13 +342,14 @@ public class NhanVienQuanLy extends NhanVien {
 	                        (e1, e2) -> e1,
 	                        LinkedHashMap::new
 	                ));
+		System.out.println("\t+----------------------------------------------+");
+		System.out.println("\t|             THỐNG KÊ TẤT CẢ SÁCH             |");
+                System.out.printf("\t| %-10s || %-10s || %-17s|","Mã Sách","Số lượng","Doanh Thu");
 		for(Map.Entry<String,Integer> sach:dsSachDaSapXep.entrySet()) {
-			System.out.println("\t+----------------------------------------------+");
-			System.out.println("\t     THỐNG KÊ TẤT CẢ SÁCH                 ");
-			System.out.println("\t| Mã sách || Số lượng ||  Doanh Thu");
-			System.out.printf("\t %-6s || %-10s || %8-s",sach.getKey(),sach.getValue(),sach.getValue()*tusach.timSachTheoID(sach.getKey()).getGia());
+			
+			System.out.printf("\n\t| %-10s || %-10s || %-17s|",sach.getKey(),sach.getValue(),sach.getValue()*tusach.timSachTheoID(sach.getKey()).getGia());
 		 }
-		System.out.println("+\t----------------------------------------------+");
+		System.out.println("\n\t+----------------------------------------------+");
 		System.out.println("\tTong doanh thu: "+tongDoanhThu);
 }
 
@@ -422,20 +420,20 @@ public class NhanVienQuanLy extends NhanVien {
 	
 
 		 
-		System.out.println("\n\t+-------------------------------------------------------+");
-		System.out.println("\t|            THỐNG KÊ THEO THỂ LOẠI SÁCH                | ");
-		System.out.println("\t| Ngày DH || Số lượng bán ra   || Doanh Thu ");
+		System.out.println("\n\t+------------------------------------------------------------+");
+		System.out.println("\t|               THỐNG KÊ CÁC ĐƠN THEO THỜI GIAN              |");
+                System.out.printf("\t| %-15s || %-20s || %-16s|\n","Ngày DH","Số lượng bán ra","Doanh thu");
 		for (Map.Entry<String, double[]> set :thongKeTheoTGDH.entrySet()) {
 			String ngayDH = set.getKey();
 			double[] dulieu = set.getValue();
-			System.out.printf("\t| %-9s || %-15s || %-40s || %-10s|\n",ngayDH,Double.toString(dulieu[0]),Double.toString(dulieu[1]));
-			System.out.println("\t+---------------------------------------------------+");
+			System.out.printf("\t| %-15s || %-20s || %-16s|\n",ngayDH,Double.toString(dulieu[0]),Double.toString(dulieu[1]));
+			System.out.println("\t+------------------------------------------------------------+");
 //			try {
 //				Thread.sleep(150);
 //			} catch (InterruptedException e) {
 //			}
 		}
-		System.out.println("Tong doanh thu: "+tongDoanhThu);
+		System.out.println("\tTong doanh thu: "+tongDoanhThu);
 	}
 	public void thongKeTheoTheLoaiSach() {
 		double tongDoanhThu=0;
@@ -488,6 +486,7 @@ public class NhanVienQuanLy extends NhanVien {
 				if(thongKeTheoTheLoaiSach.containsKey(sach.getTheLoai())) {
 					double[] dulieu=thongKeTheoTheLoaiSach.get(sach.getTheLoai());
 					dulieu[0]+=soLuong;
+					System.out.println(sach.getTenSach()+" "+soLuong+"\n");
 					dulieu[1]+=soLuong*sach.getGia();
 					thongKeTheoTheLoaiSach.put(sach.getTheLoai(), dulieu);
 					tongDoanhThu += dulieu[1];
@@ -528,28 +527,34 @@ public class NhanVienQuanLy extends NhanVien {
 		        ));
 
 		 
-		System.out.println("\n\t+-------------------------------------------------------+");
-		System.out.println("\t|            THỐNG KÊ THEO THỂ LOẠI SÁCH                | ");
-		System.out.println("\t| Thể Loại || Số lượng bán ra || Top sale của thể loại || Doanh Thu ");
-                System.out.println("\t+---------------------------------------------------+");
+		System.out.println("\n\t+--------------------------------------------------------------------------------------------------------------------------------------------------------------+");
+		System.out.println("\t|                                                                      THỐNG KÊ THEO THỂ LOẠI SÁCH                                                             |");
+                System.out.printf("\t| %-15s || %-15s || %-100s || %-15s|\n","Thể loại","Số lượng bán ra","Top sale của thể loại( mã x số lượng)","Doanh thu");
+		//System.out.println("\t| Thể Loại || Số lượng bán ra || Top sale của thể loại || Doanh Thu ");
+                System.out.println("\t+--------------------------------------------------------------------------------------------------------------------------------------------------------------+");
 		for (Map.Entry<String, double[]> set : thongKeTheoTheLoaiSach.entrySet()) {
 			String theLoai = set.getKey();
 			double[] dulieu = set.getValue();
+			int tongBanRa=0;
 			String topsale="";
 			int count=0;
 			for(Map.Entry<String,Integer> sach:dsSachDaSapXep.entrySet()) {
 				if(count==5) break;
-				if(tusach.timSachTheoID(sach.getKey()).getTheLoai().equalsIgnoreCase(theLoai)) topsale+= sach.getKey() +" x "+sach.getValue();
-				count++;
+				if(tusach.timSachTheoID(sach.getKey()).getTheLoai().equalsIgnoreCase(theLoai)) { 
+                                       topsale+= "Top "+(count+1) +": "+sach.getKey() +" x "+sach.getValue()+" | ";
+					count++;
+					tongBanRa+=sach.getValue();
+				}
+				
 			}
-			System.out.printf("\t| %-9s || %-15s || %-40s || %-10s|\n",theLoai,Double.toString(dulieu[0]),topsale,Double.toString(dulieu[1]));
-			System.out.println("\t+---------------------------------------------------+");
+			System.out.printf("\t| %-15s || %-15s || %-100s || %-15s|\n",theLoai,Integer.toString(tongBanRa),topsale,Double.toString(dulieu[1]));
+			System.out.println("\t+--------------------------------------------------------------------------------------------------------------------------------------------------------------+");
 //			try {
 //				Thread.sleep(150);
 //			} catch (InterruptedException e) {
 //			}
 		}
-		System.out.println("Tong doanh thu: "+tongDoanhThu);
+		System.out.println("\tTong doanh thu: "+tongDoanhThu);
 	}
 	public void luaChonThongKe() {
 		int luachon;
@@ -558,9 +563,9 @@ public class NhanVienQuanLy extends NhanVien {
                         System.out.println("\n\t+---------------------------------------------------+");
 			System.out.println("\t|                     THỐNG KÊ                      |");
 			System.out.println("\t|---------------------------------------------------|");
-			System.out.printf("\t| %-50s|\n","1.Thống kê doanh thu theo thể loại sách");
-			System.out.printf("\t| %-50s|\n","2.Thống kê doanh thu tất cả sách");
-			System.out.printf("\t| %-50s|\n","3.Thống kê doanh thu theo khoảng thời gian");
+			System.out.printf("\t| %-50s|\n","1.Thống kê doanh thu thể loại sách theo thời gian");
+			System.out.printf("\t| %-50s|\n","2.Thống kê doanh thu tất cả sách theo thời gian");
+			System.out.printf("\t| %-50s|\n","3.Thống kê doanh thu các đơn theo thời gian");
 			System.out.printf("\t| %-50s|\n","0.Thoát");
 			System.out.println("\t+---------------------------------------------------+");
                         try {
